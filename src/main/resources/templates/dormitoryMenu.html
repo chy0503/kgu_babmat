@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<style>
+    th, td { padding: 15px; }
+</style>
+<head>
+    <title>경기대 밥맛</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>기숙사 학식</h1>
+    <div>
+        <table>
+            <tr>
+                <th></th>
+                <th>아침</th>
+                <th>점심</th>
+                <th>저녁</th>
+            </tr>
+            <tr th:each="menu : ${dormitoryMenu}">
+                <td th:utext="${menu.date}"></td>
+                <td th:utext="${menu.breakfast}"></td>
+                <td th:utext="${menu.lunch}"></td>
+                <td th:utext="${menu.dinner}"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
