@@ -68,7 +68,7 @@ public class CafeteriaMenuService {
     }
 
     /**
-     *
+     * 감코 미운영 처리
      */
     public String checkMenu(String str) {
         if (str.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
