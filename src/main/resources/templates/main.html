@@ -11,5 +11,17 @@
     <a href="/todayFood">todayFood.html</a><br>
     <a href="/myPage">myPage.html</a><br>
     <a href="/writeReview">writeReview.html</a><br>
+
+    <br>
+    <div id="map" style="width:600px; height:500px;"></div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
+    <script>
+        const container = document.getElementById('map'); // 지도를 담을 영역
+        let options = { // 지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(37.3001, 127.0370), // 지도의 중심좌표
+            level: 4 // 지도의 레벨(확대, 축소 정도)
+        };
+        let map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
+    </script>
 </body>
 </html>
