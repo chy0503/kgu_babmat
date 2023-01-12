@@ -41,12 +41,11 @@ public class CafeteriaMenuService {
             CafeteriaMenu menu = CafeteriaMenu.builder()
                     .date(removeTag(String.valueOf(content.select("th"))))
                     .breakfast("미운영")
-                    .lunch(removeVerticalBar(removeTag((String.valueOf(content.select("td").get(1))))))
+                    .lunch(checkMenu(removeVerticalBar(removeTag((String.valueOf(content.select("td").get(1)))))))
                     .dinner("미운영")
                     .build();
             gamcoMenuList.add(menu);
         }
-        System.out.println(gamcoMenuList);
         return gamcoMenuList;
     }
 
@@ -54,7 +53,7 @@ public class CafeteriaMenuService {
     /**
      * <br>을 제외한 모든 HTML 태그를 제거
      */
-    public String removeTag(String str) throws Exception {
+    public String removeTag(String str) {
         str = str.replace("<br>", "\n");
         str = str.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
         str = str.replace("\n", "<br>");
@@ -64,7 +63,17 @@ public class CafeteriaMenuService {
     /**
      * Vertical Bar(|)을 <br> 변경
      */
-    public String removeVerticalBar(String str) throws Exception {
+    public String removeVerticalBar(String str) {
         return str.replace("|", "<br>");
+    }
+
+    /**
+     *
+     */
+    public String checkMenu(String str) {
+        if (str.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"))
+            return str;
+        else
+            return "미운영";
     }
 }
