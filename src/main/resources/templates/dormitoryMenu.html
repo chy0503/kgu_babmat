@@ -8,16 +8,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h1>기숙사 학식</h1>
+    <h1>기숙사 식당</h1>
     <div>
         <table>
             <tr>
-                <th></th>
+                <th>날짜</th>
                 <th>아침</th>
                 <th>점심</th>
                 <th>저녁</th>
             </tr>
-            <tr th:each="menu : ${dormitoryMenu}">
+            <tr th:each="menu : ${dormMenu}">
                 <td th:utext="${menu.date}"></td>
                 <td th:utext="${menu.breakfast}"></td>
                 <td th:utext="${menu.lunch}"></td>
