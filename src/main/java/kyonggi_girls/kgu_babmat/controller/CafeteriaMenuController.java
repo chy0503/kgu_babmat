@@ -29,6 +29,4 @@ public class CafeteriaMenuController {
         model.addAttribute("gamcoMenu", gamcoMenuList);
         return "gamcoMenu";
     }
-
-
 }

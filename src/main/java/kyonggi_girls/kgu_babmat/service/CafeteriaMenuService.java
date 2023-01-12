@@ -46,7 +46,6 @@ public class CafeteriaMenuService {
                     .build();
             gamcoMenuList.add(menu);
         }
-        System.out.println(gamcoMenuList);
         return gamcoMenuList;
     }
 
