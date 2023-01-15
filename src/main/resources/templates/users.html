@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<style>
+    th, td { padding: 15px; }
+</style>
+<head>
+    <title>경기대 밥맛</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>firebase users collection</h1>
+<div>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+        </tr>
+        <tr th:each="list : ${userList}">
+            <td th:utext="${list.id}"></td>
+            <td th:utext="${list.username}"></td>
+            <td th:utext="${list.email}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
