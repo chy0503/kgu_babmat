@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>login</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="/css/app.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<fieldset>
+		<div id="googleLoginBtn" style="cursor: pointer">
+			<!--<img id="googleLoginImg" src="../static/images/btn_google_signin_light_pressed_web.png">-->
+			<button id="button" class="btn btn-outline-danger bi bi-google">로그인</button>
+		</div>
+	</fieldset>
+</body>
+
+<script>
+ 	const onClickGoogleLogin = (e) => {
+ 		window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=256740754670-9dqugsuqdq6biotn935733be6cg12p6r.apps.googleusercontent.com&redirect_uri=http://localhost:8080/login/oauth2/code/google&response_type=code&scope=email%20profile%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file&access_type=offline")
+ 	}
+	
+	const googleLoginBtn = document.getElementById("googleLoginBtn");
+	googleLoginBtn.addEventListener("click", onClickGoogleLogin) 
+</script>
+</html>
