@@ -1,6 +1,6 @@
 package kyonggi_girls.kgu_babmat.service;
 
-import kyonggi_girls.kgu_babmat.domain.CafeteriaMenu;
+import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,6 +1,6 @@
 package kyonggi_girls.kgu_babmat.controller;
 
-import kyonggi_girls.kgu_babmat.domain.User;
+import kyonggi_girls.kgu_babmat.dto.User;
 import kyonggi_girls.kgu_babmat.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

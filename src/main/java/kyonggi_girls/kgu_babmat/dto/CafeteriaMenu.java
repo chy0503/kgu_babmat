@@ -1,4 +1,4 @@
-package kyonggi_girls.kgu_babmat.domain;
+package kyonggi_girls.kgu_babmat.dto;
 
 import lombok.Builder;
 import lombok.Getter;
