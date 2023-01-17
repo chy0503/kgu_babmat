@@ -1,7 +1,7 @@
 package kyonggi_girls.kgu_babmat.service;
 
 import kyonggi_girls.kgu_babmat.dao.UserDao;
-import kyonggi_girls.kgu_babmat.domain.User;
+import kyonggi_girls.kgu_babmat.dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
