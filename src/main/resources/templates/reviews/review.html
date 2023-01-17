@@ -2,9 +2,26 @@
 <html>
 <head>
     <title>경기대 밥맛</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h1>This is 'review.html'</h1><br>
+<table>
+    <tr>
+        <th>reviewId</th>
+        <th>reviewScore</th>
+        <th>review</th>
+        <th>StoreName</th>
+        <th>user_nickname</th>
+        <th>writeTime</th>
+    </tr>
+    <tr th:each="list : ${reviewList}">
+        <td th:utext="${list.reviewId}"></td>
+        <td th:utext="${list.reviewScore}"></td>
+        <td th:utext="${list.review}"></td>
+        <td th:utext="${list.StoreName}"></td>
+        <td th:utext="${list.user_nickname}"></td>
+        <td th:utext="${list.writeTime}"></td>
+    </tr>
+</table>
 </body>
 </html>
