@@ -5,6 +5,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1 th:text="${storeName}" >This is 'store.html'</h1><br>
+<h1 th:text="${storeName}" >This is 'store.html'</h1>
+<div>
+    <table>
+        <tr>
+            <th>name</th>
+            <th>business hours</th>
+            <th>description</th>
+        </tr>
+        <tr th:each="list : ${storeList}">
+            <td th:utext="${list.name}"></td>
+            <td th:utext="${list.businessHours}"></td>
+            <td th:utext="${list.description}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
