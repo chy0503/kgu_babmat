@@ -1,6 +1,6 @@
 package kyonggi_girls.kgu_babmat.controller;
 
-import kyonggi_girls.kgu_babmat.domain.CafeteriaMenu;
+import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
 import kyonggi_girls.kgu_babmat.service.CafeteriaMenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
