@@ -55,7 +55,10 @@ for (let i = 0; i < positions.length; i ++) {
     customOverlay.setMap(null);
 
     kakao.maps.event.addListener(marker, 'click', function () {
-        window.open('/store?storeName=' + storeNames[i]);
+        if (storeNames[i] == "경슐랭")
+            window.open('/selectStore?storeName=' + storeNames[i], "_self");
+        else
+            window.open('/store?storeName=' + storeNames[i], "_self");
     });
 
     kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, customOverlay));
@@ -64,7 +67,7 @@ for (let i = 0; i < positions.length; i ++) {
 
 function makeContent(storeName) {
     return '<div class="customoverlay">' +
-        '  <a href="/store" target="_self">' +
+        '  <a href="#">' +
         '    <span class="title">' + storeName + '</span>' +
         '  </a>' +
         '</div>'

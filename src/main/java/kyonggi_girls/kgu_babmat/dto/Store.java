@@ -13,4 +13,5 @@ public class Store {
     private String name;
     private String businessHours;
     private String description;
+    private boolean selectStore;
 }

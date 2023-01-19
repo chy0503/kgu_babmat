@@ -18,4 +18,10 @@ public class StoreServiceImpl implements StoreService {
     public List<Store> getStores() throws ExecutionException, InterruptedException {
         return storeDao.getStores();
     }
+
+    @Override
+    public List<Store> getStore(String storeName) throws ExecutionException, InterruptedException {
+        return storeDao.getStore(storeName);
+    }
+
 }

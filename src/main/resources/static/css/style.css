@@ -7,9 +7,10 @@
 .list-group::-webkit-scrollbar {width:8px;}
 .list-group::-webkit-scrollbar-thumb {background:#f0f0f0; border-radius:10px;}
 .list-group::-webkit-scrollbar-track {background:transparent;}
-.storeName {font-size:24px;}
+.storeName {font-size:20px;}
 .noOutline:focus {outline:none!important; box-shadow:none!important;}
 .form-control:focus {border-color:#cccccc!important;}
 .rounded-10 {border-radius:10px;}
-.bg-f0 {background-color:#f0f0f0;}
-/*.dropdown:hover .dropdown-menu {display:block; margin-top:0;}*/
+.rounded-8 {border-radius:8px;}
+.bg-f0 {background-color:#f0f0f0!important;}
+.text-point {color:#F9320C;}

@@ -7,4 +7,5 @@ import java.util.concurrent.ExecutionException;
 
 public interface StoreService {
     List<Store> getStores() throws ExecutionException, InterruptedException;
+    List<Store> getStore(String storeName) throws ExecutionException, InterruptedException;
 }
