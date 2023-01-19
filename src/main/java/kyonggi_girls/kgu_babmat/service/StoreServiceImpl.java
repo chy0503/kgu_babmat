@@ -24,4 +24,9 @@ public class StoreServiceImpl implements StoreService {
         return storeDao.getStore(storeName);
     }
 
+    @Override
+    public List<Store> getInnerStore(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
+        return storeDao.getInnerStore(selectStoreName, storeName);
+    }
+
 }

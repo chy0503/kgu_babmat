@@ -1,10 +1,7 @@
 package kyonggi_girls.kgu_babmat.dao;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +16,10 @@ import java.util.concurrent.ExecutionException;
 public class StoreDao {
 
     public static final String COLLECTION_NAME = "stores";
+    static Firestore db = FirestoreClient.getFirestore();
 
     public static List<Store> getStores() throws ExecutionException, InterruptedException {
         List<Store> list = new ArrayList<>();
-        Firestore db = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_NAME).get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
@@ -33,27 +30,25 @@ public class StoreDao {
 
     public static List<Store> getStore(String storeName) throws ExecutionException, InterruptedException {
         List<Store> list = new ArrayList<>();
-        Firestore db = FirestoreClient.getFirestore();
-        DocumentSnapshot document = db.collection(COLLECTION_NAME).document(storeName).get().get();
+        DocumentReference documentReference = db.collection(COLLECTION_NAME).document(storeName);
 
-        if (document.get("selectStore").equals(true)) {
-            List<QueryDocumentSnapshot> documents = db.collection(COLLECTION_NAME).document(storeName).collection(COLLECTION_NAME).get().get().getDocuments();
+        if (documentReference.get().get().get("selectStore").equals(true)) { // 푸드코트일 경우
+            List<QueryDocumentSnapshot> documents = documentReference.collection(COLLECTION_NAME).get().get().getDocuments();
             for (QueryDocumentSnapshot doc : documents) {
                 list.add(doc.toObject(Store.class));
             }
-        } else {
+        } else { // 일반 식당일 경우
+            DocumentSnapshot document = documentReference.get().get();
             list.add(document.toObject(Store.class));
         }
 
         return list;
     }
 
-    public static List<Store> getStore2(String storeName, String selectStore) throws ExecutionException, InterruptedException {
+    public static List<Store> getInnerStore(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
         List<Store> list = new ArrayList<>();
-        Firestore db = FirestoreClient.getFirestore();
-        DocumentSnapshot document = db.collection(COLLECTION_NAME).document(selectStore).collection(COLLECTION_NAME).document(storeName).get().get();
+        DocumentSnapshot document = db.collection(COLLECTION_NAME).document(selectStoreName).collection(COLLECTION_NAME).document(storeName).get().get();
         list.add(document.toObject(Store.class));
-
         return list;
     }
 
