@@ -15,5 +15,6 @@
 .rounded-8 {border-radius:8px;}
 .bg-f0 {background-color:#f0f0f0!important;}
 .text-point {color:#F9320C;}
-input:focus {box-shadow:none!important;}
-input:hover {color:#F9320C;}
+.text-black {color:black;}
+.hover-noUnderline:hover {text-decoration:none;}
+.hover-text-point:hover {color:#F9320C;}
