@@ -15,15 +15,34 @@
 </head>
 <body>
 <div class="container">
-    <div class="mt-5 mb-3">
-        <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+    <div class="mt-5">
+        <input type="button" value="뒤로가기" onclick="history.back();" class="btn bg-white" style="height: 30px"/>
     </div>
-    <div class="my-2 mx-3">
-        <div class="mb-2">
-            <td th:text="${store[0].businessHours}"></td>
+    <div class="row">
+        <div class="col-7">
+            <div class="mb-3">
+                <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+            </div>
+            <div class="my-2 mx-3">
+                <div class="mb-2">
+                    <td th:text="${store[0].businessHours}"></td>
+                </div>
+                <div style="max-width:500px;">
+                    <p th:text="${store[0].description}"></p>
+                </div>
+            </div>
         </div>
-        <div style="max-width:500px;">
-            <p th:text="${store[0].description}"></p>
+        <div class="col-5">
+            <div id="storeMap" class="rounded-10" style="height:85%;"></div>
+            <script type="text/javascript"
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
+            <script type="text/javascript" src="js/kakaoMap.js"></script>
+            <script type="text/javascript" th:inline="javascript">
+                makeStoreMap(/*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
+            </script>
+            <div class="mt-1 ml-1">
+                <td th:text="${store[0].location}"></td>
+            </div>
         </div>
     </div>
 </div>
