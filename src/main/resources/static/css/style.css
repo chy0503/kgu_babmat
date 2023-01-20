@@ -1,15 +1,20 @@
 .customoverlay {position:relative; right:2px; bottom:80px; border-radius:6px; border: 1px solid #ccc; border-bottom:2px solid #ddd; float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block; text-decoration:none; color:#000; text-align:center; border-radius:6px; font-size:14px; font-weight:bold; overflow:hidden;}
+.customoverlay a:hover {text-decoration:none!important; color:black;}
 .customoverlay .title {display:block; text-align:center; background:#fff; padding:10px 15px; font-size:14px; font-weight:bold;}
 .storeList .list-group {font-size:35px;}
 .list-group {overflow-y:scroll;}
 .list-group::-webkit-scrollbar {width:8px;}
 .list-group::-webkit-scrollbar-thumb {background:#f0f0f0; border-radius:10px;}
 .list-group::-webkit-scrollbar-track {background:transparent;}
-.storeName {font-size:24px;}
+.storeName {font-size:20px;}
 .noOutline:focus {outline:none!important; box-shadow:none!important;}
 .form-control:focus {border-color:#cccccc!important;}
 .rounded-10 {border-radius:10px;}
-.bg-f0 {background-color:#f0f0f0;}
-/*.dropdown:hover .dropdown-menu {display:block; margin-top:0;}*/
+.rounded-8 {border-radius:8px;}
+.bg-f0 {background-color:#f0f0f0!important;}
+.text-point {color:#F9320C;}
+.text-black {color:black;}
+.hover-noUnderline:hover {text-decoration:none;}
+.hover-text-point:hover {color:#F9320C;}
