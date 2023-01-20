@@ -59,6 +59,12 @@
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
         <script type="text/javascript" src="js/kakaoMap.js"></script>
+        <script type="text/javascript" th:inline="javascript">
+            /*[# th:each="list : ${storeList}"]*/
+            makeMarker(/*[[${list.name}]]*/ {}, /*[[${list.selectStore}]]*/ {}, /*[[${list.lat}]]*/ {}, /*[[${list.lng}]]*/ {});
+            /*[/]*/
+        </script>
+
         <div class="col-4 storeList">
             <ul class="list-group" style="height: 430px;">
                 <th:block th:each="list : ${storeList}">
@@ -67,6 +73,7 @@
                             class="noOutline list-group-item p-4 text-center">
                         <div th:text="${list.name}" class="storeName"></div>
                     </button>
+
                     <button th:unless="${list.selectStore == true}"
                             th:onclick="|location.href='@{/store(storeName=${list.name})}'|"
                             class="noOutline list-group-item p-4 text-center">
@@ -76,6 +83,9 @@
             </ul>
         </div>
     </div>
+
+    <!--    관리자 기능 : 지도를 클릭하면 마커 생성 후 clickLatlng div로 위도 경도 출력-->
+    <!--    <div id="clickLatlng"></div>-->
 
     <!-- 페이지 말고 바로 구현할 예정 -->
     <div class="rounded-10 bg-f0 my-5" style="height: 200px">

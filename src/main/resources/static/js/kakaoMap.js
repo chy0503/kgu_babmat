@@ -12,53 +12,31 @@ var imageSrc = 'https://user-images.githubusercontent.com/90389517/212600851-247
 var biggerImageSize = new kakao.maps.Size(65, 65), // 마커이미지의 크기
     biggerImageOption = {offset: new kakao.maps.Point(34, 74)};
 
-
 // 마커의 이미지정보를 가지고 있는 마커이미지 생성
 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 var biggerMarkerImage = new kakao.maps.MarkerImage(imageSrc, biggerImageSize, biggerImageOption);
 
-var positions = [
-    {
-        latlng: new kakao.maps.LatLng(37.30318, 127.0359)
-    },
-    {
-        latlng: new kakao.maps.LatLng(37.30053, 127.03715)
-    },
-    {
-        latlng: new kakao.maps.LatLng(37.30115, 127.03613)
-    },
-    {
-        latlng: new kakao.maps.LatLng(37.29775, 127.03852)
-    },
-    {
-        latlng: new kakao.maps.LatLng(37.3019, 127.03665)
-    }
-];
-
-var storeNames = ['경슐랭', '이스퀘어 식당', '감성코어', '기숙사 식당', '플랜비'];
-
-for (let i = 0; i < positions.length; i ++) {
+function makeMarker(name, selectStore, lat, lng) {
     var marker = new kakao.maps.Marker({
         map: map,
-        title: storeNames[i],
-        position: positions[i].latlng,
+        position: new kakao.maps.LatLng(lat, lng),
         image : markerImage
     });
 
     var customOverlay = new kakao.maps.CustomOverlay({
         map: map,
-        position: positions[i].latlng,
-        content: makeContent(storeNames[i]),
+        position: new kakao.maps.LatLng(lat, lng),
+        content: makeContent(name),
         yAnchor: 1
     });
 
     customOverlay.setMap(null);
 
     kakao.maps.event.addListener(marker, 'click', function () {
-        if (storeNames[i] == "경슐랭")
-            window.open('/selectStore?storeName=' + storeNames[i], "_self");
+        if (selectStore == true)
+            window.open('/selectStore?storeName=' + name, "_self");
         else
-            window.open('/store?storeName=' + storeNames[i], "_self");
+            window.open('/store?storeName=' + name, "_self");
     });
 
     kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, customOverlay));
@@ -86,3 +64,21 @@ function makeOutListener(map, marker, customOverlay) {
         customOverlay.setMap(null)
     };
 }
+
+// 지도에 클릭 이벤트를 등록합니다
+// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+    // 클릭한 위도, 경도 정보를 가져옵니다
+    var latlng = mouseEvent.latLng;
+
+    // 마커 위치를 클릭한 위치로 옮깁니다
+    marker.setPosition(latlng);
+
+    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+    message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+    var resultDiv = document.getElementById('clickLatlng');
+    resultDiv.innerHTML = message;
+
+});
