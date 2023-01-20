@@ -13,4 +13,8 @@ public class Store {
     private String name;
     private String businessHours;
     private String description;
+    private boolean selectStore;
+    private double lat;
+    private double lng;
+    private String location;
 }
