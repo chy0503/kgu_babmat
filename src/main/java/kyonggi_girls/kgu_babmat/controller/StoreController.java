@@ -1,5 +1,7 @@
 package kyonggi_girls.kgu_babmat.controller;
 
+import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
+import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.service.StoreService;
 import org.springframework.stereotype.Controller;
@@ -19,15 +21,21 @@ public class StoreController {
     }
 
     @GetMapping("store")
-    public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model) throws ExecutionException, InterruptedException {
+    public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model) throws Exception {
 
         if (selectStoreName == null) { // 일반 식당일 경우
             List<Store> store = storeService.getStore(storeName);
             model.addAttribute("store", store);
+            List<Menu> menuList = storeService.getMenu(null, storeName);
+            model.addAttribute("menuList", menuList);
         } else { // 푸드코트 내의 식당일 경우
             List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
             model.addAttribute("store", store);
+            List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
+            model.addAttribute("menuList", menuList);
         }
+        List<CafeteriaMenu> cafeteriaMenuList = storeService.getCafeteriaMenu(storeName);
+        model.addAttribute("cafeteriaMenuList", cafeteriaMenuList);
         model.addAttribute("storeName", storeName);
         return "store";
     }
@@ -40,7 +48,3 @@ public class StoreController {
         return "selectStore";
     }
 }
-
-// 관리자가 식당 리스트를 조회할 때 사용할 예정
-// List<Store> storeList = storeService.getStores();
-// model.addAttribute("storeList", storeList);
