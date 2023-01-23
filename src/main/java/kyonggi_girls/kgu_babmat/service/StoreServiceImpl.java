@@ -45,4 +45,9 @@ public class StoreServiceImpl implements StoreService {
         return cafeteriaMenuDao.getCafeteriaMenu(storeName);
     }
 
+    @Override
+    public String getToday() {
+        return cafeteriaMenuDao.getToday();
+    }
+
 }

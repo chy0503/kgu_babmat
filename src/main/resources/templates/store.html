@@ -4,12 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
@@ -18,7 +17,7 @@
     <div class="mt-5 ml-2">
         <a class="text-black hover-noUnderline hover-text-point" href="/main">뒤로가기</a>
     </div>
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-7">
             <div class="mb-3">
                 <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
@@ -45,26 +44,100 @@
             </div>
         </div>
     </div>
-    <div class="mt-5">
-        <div th:if="${cafeteriaMenuList.size() != 0}">
-            <div>
-                <table>
+
+    <th:block th:if="${(cafeteriaMenuList.size() == 0)}">
+        <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
+            <div class="col-3">
+                <table class="table table-bordered text-center">
                     <tr>
-                        <th>날짜</th>
-                        <th>아침</th>
-                        <th>점심</th>
-                        <th>저녁</th>
+                        <th></th>
+                        <th th:utext="${today}" scope="col"></th>
                     </tr>
-                    <tr th:each="menu : ${cafeteriaMenuList}">
-                        <td th:utext="${menu.date}"></td>
-                        <td th:utext="${menu.breakfast}"></td>
-                        <td th:utext="${menu.lunch}"></td>
-                        <td th:utext="${menu.dinner}"></td>
+                    <tr>
+                        <th scope="row">아침</th>
+                        <td>미운영</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">점심</th>
+                        <td>미운영</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">저녁</th>
+                        <td>미운영</td>
+                    </tr>
+                </table>
+            </div>
+        </th:block>
+    </th:block>
+
+    <div th:if="${cafeteriaMenuList.size() != 0}">
+        <div class="row" id="todayMenu">
+            <th:block th:each="menu : ${cafeteriaMenuList}">
+                <th:block th:if="${menu.today} == true">
+                    <div class="col-3">
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th></th>
+                                <th th:utext="${menu.date}" scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">아침</th>
+                                <td th:utext="${menu.breakfast}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">점심</th>
+                                <td th:utext="${menu.lunch}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">저녁</th>
+                                <td th:utext="${menu.dinner}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </th:block>
+            </th:block>
+            <div class="align-self-end mb-3">
+                <img class="arrow-drop"
+                     width="30px"
+                     src="https://user-images.githubusercontent.com/90389517/214092313-5bbf5830-3fde-4cf6-b196-0d7a6f2ad7c9.png">
+            </div>
+        </div>
+        <div class="mt-2 row" id="weekMenu">
+            <div class="col-12">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th></th>
+                        <th:block th:each="menu : ${cafeteriaMenuList}">
+                            <th th:utext="${menu.date}" scope="col"
+                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></th>
+                        </th:block>
+                    </tr>
+                    <tr>
+                        <th scope="row">아침</th>
+                        <th:block th:each="menu : ${cafeteriaMenuList}">
+                            <td th:utext="${menu.breakfast}"
+                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                        </th:block>
+                    </tr>
+                    <tr>
+                        <th scope="row">점심</th>
+                        <th:block th:each="menu : ${cafeteriaMenuList}">
+                            <td th:utext="${menu.lunch}"
+                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                        </th:block>
+                    </tr>
+                    <tr>
+                        <th scope="row">저녁</th>
+                        <th:block th:each="menu : ${cafeteriaMenuList}">
+                            <td th:utext="${menu.dinner}"
+                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                        </th:block>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
+
     <div class="mt-5">
         <div th:if="${menuList.size() != 0}">
             <table>
@@ -79,7 +152,6 @@
             </table>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

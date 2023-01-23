@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 @Controller
@@ -36,6 +38,10 @@ public class StoreController {
         }
         List<CafeteriaMenu> cafeteriaMenuList = storeService.getCafeteriaMenu(storeName);
         model.addAttribute("cafeteriaMenuList", cafeteriaMenuList);
+
+        String today = storeService.getToday();
+        model.addAttribute("today", today);
+
         model.addAttribute("storeName", storeName);
         return "store";
     }

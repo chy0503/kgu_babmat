@@ -14,4 +14,5 @@ public interface StoreService {
 
     List<Menu> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException;
     List<CafeteriaMenu> getCafeteriaMenu(String storeName) throws Exception;
+    String getToday();
 }

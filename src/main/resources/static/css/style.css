@@ -18,3 +18,5 @@
 .text-black {color:black;}
 .hover-noUnderline:hover {text-decoration:none;}
 .hover-text-point:hover {color:#F9320C;}
+#weekMenu {display:none;}
+.arrow-drop {cursor:pointer;}

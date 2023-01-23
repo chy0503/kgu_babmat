@@ -12,4 +12,5 @@ public class CafeteriaMenu {
     private String breakfast;   // 아침 메뉴
     private String lunch;       // 점심 메뉴
     private String dinner;      // 저녁 메뉴
+    private boolean today;      // 오늘 날짜 체크
 }

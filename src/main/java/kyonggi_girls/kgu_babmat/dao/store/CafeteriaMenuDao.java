@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,13 +18,16 @@ public class CafeteriaMenuDao {
     private String dorm_url = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list&board_no=1";
     private String gamco_url = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
 
+    String today = (new SimpleDateFormat("MM.dd (EEE)", Locale.KOREAN)).format(new java.util.Date());
+    boolean isToday = false;
+
     public List<CafeteriaMenu> getCafeteriaMenu(String store) throws Exception {
         List<CafeteriaMenu> menuList = new ArrayList<>();
         switch (store) {
-            case "기숙사 식당" :
+            case "기숙사 식당":
                 menuList = getDormMenuList();
                 break;
-            case "감성코어" :
+            case "감성코어":
                 menuList = getGamcoMenuList();
                 break;
         }
@@ -34,13 +38,22 @@ public class CafeteriaMenuDao {
         List<CafeteriaMenu> dormMenuList = new ArrayList<>();
         Document document = Jsoup.connect(dorm_url).get();
         Elements contents = document.select(".boxstyle02").get(1).select("tbody");
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 6; i++) {
             Element content = contents.select("tr").get(i);
+            String date = removeTag(String.valueOf(content.select("th")));
+            date = (date.replace("-", ".")).substring(6);
+
+            if (date.contains(today))
+                isToday = true;
+            else
+                isToday = false;
+
             CafeteriaMenu menu = CafeteriaMenu.builder()
-                    .date(removeTag(String.valueOf(content.select("th"))))
+                    .date(date)
                     .breakfast(checkMenu(removeTag((String.valueOf(content.select("td").get(0))))))
                     .lunch(checkMenu(removeTag((String.valueOf(content.select("td").get(1))))))
                     .dinner(checkMenu(removeTag((String.valueOf(content.select("td").get(2))))))
+                    .today(isToday)
                     .build();
             dormMenuList.add(menu);
         }
@@ -54,29 +67,29 @@ public class CafeteriaMenuDao {
         if (!contents.select("tr").isEmpty()) {
             for (int i = 0; i < 5; i++) {
                 Element content = contents.select("tr").get(i);
+                String date = removeTag(String.valueOf(content.select("th")));
+
+                if (date.contains(today))
+                    isToday = true;
+                else
+                    isToday = false;
+
                 CafeteriaMenu menu = CafeteriaMenu.builder()
-                        .date(removeTag(String.valueOf(content.select("th"))))
+                        .date(removeTag(date))
                         .breakfast("미운영")
                         .lunch(checkMenu(removeVerticalBar(removeTag((String.valueOf(content.select("td").get(1)))))))
                         .dinner("미운영")
+                        .today(false)
                         .build();
                 gamcoMenuList.add(menu);
             }
-        } else {
-            java.util.Date today = new java.util.Date();
-            SimpleDateFormat formatTime = new SimpleDateFormat("MM.dd (EEE)", Locale.KOREAN);
-            String todayString = formatTime.format(today);
-            CafeteriaMenu menu = CafeteriaMenu.builder()
-                    .date(todayString)
-                    .breakfast("미운영")
-                    .lunch("미운영")
-                    .dinner("미운영")
-                    .build();
-            gamcoMenuList.add(menu);
         }
         return gamcoMenuList;
     }
 
+    public String getToday() {
+        return today;
+    }
 
     /**
      * <br>을 제외한 모든 HTML 태그를 제거
