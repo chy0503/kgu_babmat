@@ -43,8 +43,8 @@ function makeMarker(name, selectStore, lat, lng) {
     kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(map, marker, customOverlay));
 }
 
-function makeStoreMap(name, lat, lng) {
-    const container = document.getElementById('storeMap'); // 지도를 담을 영역
+function makeStoreMap(id, name, lat, lng) {
+    const container = document.getElementById(id); // 지도를 담을 영역
     let options = { // 지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(lat+0.001, lng), // 지도의 중심좌표
         level: 4 // 지도의 레벨(확대, 축소 정도)

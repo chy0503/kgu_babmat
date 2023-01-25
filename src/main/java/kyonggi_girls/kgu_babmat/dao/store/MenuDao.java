@@ -23,12 +23,12 @@ public class MenuDao {
     public static List<Menu> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
         List<Menu> list = new ArrayList<>();
         if (selectStoreName == null) {
-            List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(storeName).collection("menus").get().get().getDocuments();
+            List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(storeName).collection("menus").orderBy("price", Query.Direction.DESCENDING).get().get().getDocuments();
             for (QueryDocumentSnapshot menu : menus) {
                 list.add(menu.toObject(Menu.class));
             }
         } else {
-            List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(selectStoreName).collection(COLLECTION_NAME).document(storeName).collection("menus").get().get().getDocuments();
+            List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(selectStoreName).collection(COLLECTION_NAME).document(storeName).collection("menus").orderBy("price", Query.Direction.DESCENDING).get().get().getDocuments();
             for (QueryDocumentSnapshot menu : menus) {
                 list.add(menu.toObject(Menu.class));
             }

@@ -31,125 +31,145 @@
                 </div>
             </div>
         </div>
-        <div class="col-5">
-            <div id="storeMap" class="rounded-10" style="height:85%;"></div>
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
-            <script type="text/javascript" src="js/kakaoMap.js"></script>
-            <script type="text/javascript" th:inline="javascript">
-                makeStoreMap(/*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
-            </script>
-            <div class="mt-1 ml-1">
-                <td th:text="${store[0].location}"></td>
-            </div>
-        </div>
-    </div>
-
-    <th:block th:if="${(cafeteriaMenuList.size() == 0)}">
-        <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
-            <div class="col-3">
-                <table class="table table-bordered text-center">
-                    <tr>
-                        <th></th>
-                        <th th:utext="${today}" scope="col"></th>
-                    </tr>
-                    <tr>
-                        <th scope="row">아침</th>
-                        <td>미운영</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">점심</th>
-                        <td>미운영</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">저녁</th>
-                        <td>미운영</td>
-                    </tr>
-                </table>
+        <th:block th:if="${(storeName !='기숙사 식당') && (storeName !='감성코어')}">
+            <!-- 날짜별 학식이 없는 경우 지도를 식당 설명 옆으로 가도록 함 -->
+            <div class="col-5">
+                <div id="storeMap-right" class="rounded-10" style="height:85%;"></div>
+                <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
+                <script type="text/javascript" src="js/kakaoMap.js"></script>
+                <script type="text/javascript" th:inline="javascript">
+                    makeStoreMap("storeMap-right", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
+                </script>
+                <div class="mt-1 ml-1">
+                    <td th:text="${store[0].location}"></td>
+                </div>
             </div>
         </th:block>
-    </th:block>
-
-    <div th:if="${cafeteriaMenuList.size() != 0}">
-        <div class="row" id="todayMenu">
-            <th:block th:each="menu : ${cafeteriaMenuList}">
-                <th:block th:if="${menu.today} == true">
-                    <div class="col-3">
-                        <table class="table table-bordered text-center">
-                            <tr>
-                                <th></th>
-                                <th th:utext="${menu.date}" scope="col"></th>
-                            </tr>
-                            <tr>
-                                <th scope="row">아침</th>
-                                <td th:utext="${menu.breakfast}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">점심</th>
-                                <td th:utext="${menu.lunch}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">저녁</th>
-                                <td th:utext="${menu.dinner}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </th:block>
+    </div>
+    <div class="row justify-content-around">
+        <!-- 날짜별 학식이 있는 경우 -->
+        <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
+            <!-- 지도를 오늘 학식 옆으로 가도록 함 -->
+            <div class="col-7">
+                <div id="storeMap-left" class="rounded-10" style="min-height:300px;"></div>
+                <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
+                <script type="text/javascript" src="js/kakaoMap.js"></script>
+                <script type="text/javascript" th:inline="javascript">
+                    makeStoreMap("storeMap-left", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
+                </script>
+                <div class="mt-1 ml-1">
+                    <td th:text="${store[0].location}"></td>
+                </div>
+            </div>
+            <th:block th:if="${(cafeteriaMenuList.size() == 0)}">
+                <!-- 일주일 학식이 뜨지 않는 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
+                <div class="col-4 align-self-center">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th></th>
+                            <th th:utext="${today}" scope="col"></th>
+                        </tr>
+                        <tr>
+                            <th scope="row">아침</th>
+                            <td>미운영</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">점심</th>
+                            <td>미운영</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">저녁</th>
+                            <td>미운영</td>
+                        </tr>
+                    </table>
+                </div>
             </th:block>
-            <div class="align-self-end mb-3">
-                <img class="arrow-drop"
-                     width="30px"
-                     src="https://user-images.githubusercontent.com/90389517/214092313-5bbf5830-3fde-4cf6-b196-0d7a6f2ad7c9.png">
-            </div>
-        </div>
-        <div class="mt-2 row" id="weekMenu">
-            <div class="col-12">
-                <table class="table table-bordered text-center">
-                    <tr>
-                        <th></th>
-                        <th:block th:each="menu : ${cafeteriaMenuList}">
-                            <th th:utext="${menu.date}" scope="col"
-                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></th>
-                        </th:block>
-                    </tr>
-                    <tr>
-                        <th scope="row">아침</th>
-                        <th:block th:each="menu : ${cafeteriaMenuList}">
-                            <td th:utext="${menu.breakfast}"
-                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
-                        </th:block>
-                    </tr>
-                    <tr>
-                        <th scope="row">점심</th>
-                        <th:block th:each="menu : ${cafeteriaMenuList}">
-                            <td th:utext="${menu.lunch}"
-                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
-                        </th:block>
-                    </tr>
-                    <tr>
-                        <th scope="row">저녁</th>
-                        <th:block th:each="menu : ${cafeteriaMenuList}">
-                            <td th:utext="${menu.dinner}"
-                                th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
-                        </th:block>
-                    </tr>
-                </table>
-            </div>
+            <th:block th:if="${cafeteriaMenuList.size() != 0}">
+                <!-- 일주일 학식 뜨는 경우, 오늘 학식 테이블과 일주일 학식 테이블 생성 -->
+                <div class="col-4 align-self-center" id="todayMenu"
+                     th:each="menu : ${cafeteriaMenuList}" th:if="${menu.today} == true">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th></th>
+                            <th th:utext="${menu.date}" scope="col"></th>
+                        </tr>
+                        <tr>
+                            <th scope="row">아침</th>
+                            <td th:utext="${menu.breakfast}"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">점심</th>
+                            <td th:utext="${menu.lunch}"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">저녁</th>
+                            <td th:utext="${menu.dinner}"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-1 align-self-end mb-3">
+                    <img class="arrow-drop"
+                         width="30px"
+                         src="https://user-images.githubusercontent.com/90389517/214092313-5bbf5830-3fde-4cf6-b196-0d7a6f2ad7c9.png">
+                </div>
+            </th:block>
+        </th:block>
+    </div>
+    <div class="mt-2 row" id="weekMenu">
+        <div class="col-12">
+            <table class="table table-bordered text-center">
+                <tr>
+                    <th></th>
+                    <th:block th:each="menu : ${cafeteriaMenuList}">
+                        <th th:utext="${menu.date}" scope="col"
+                            th:classappend="${menu.today == true} ? 'table-danger' : ''"></th>
+                    </th:block>
+                </tr>
+                <tr>
+                    <th scope="row">아침</th>
+                    <th:block th:each="menu : ${cafeteriaMenuList}">
+                        <td th:utext="${menu.breakfast}"
+                            th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                    </th:block>
+                </tr>
+                <tr>
+                    <th scope="row">점심</th>
+                    <th:block th:each="menu : ${cafeteriaMenuList}">
+                        <td th:utext="${menu.lunch}"
+                            th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                    </th:block>
+                </tr>
+                <tr>
+                    <th scope="row">저녁</th>
+                    <th:block th:each="menu : ${cafeteriaMenuList}">
+                        <td th:utext="${menu.dinner}"
+                            th:classappend="${menu.today == true} ? 'table-danger' : ''"></td>
+                    </th:block>
+                </tr>
+            </table>
         </div>
     </div>
 
-    <div class="mt-5">
-        <div th:if="${menuList.size() != 0}">
-            <table>
-                <tr>
-                    <th>메뉴명</th>
-                    <th>가격</th>
-                </tr>
-                <tr th:each="menu : ${menuList}">
-                    <td th:utext="${menu.name}"></td>
-                    <td th:utext="${menu.price}"></td>
-                </tr>
-            </table>
+    <div class="mt-5 row align-content-between" th:if="${menuList.size() != 0}">
+        <div class="col-3 p-3" th:each="menu : ${menuList}">
+            <div class="card">
+                <div style="position:relative;">
+                    <img src="https://via.placeholder.com/150x100" class="card-img-top">
+                    <div style="position:absolute;top:10px;right:10px;">
+                        <a href="#" class="btn btn-danger float-right ml-3">리뷰보기</a>
+                    </div>
+                    <div style="position:absolute;bottom:15px;left:15px;">
+                        <img id="like" width="25px" height="25px"
+                             src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title ml-3" th:utext="${menu.name}"></h5>
+                    <h5 class="card-title text-secondary text-right mt-1" th:utext="'₩' + ${menu.price}"></h5>
+                </div>
+            </div>
         </div>
     </div>
 </div>
