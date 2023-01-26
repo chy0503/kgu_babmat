@@ -28,7 +28,7 @@
             </form>
 
             <div class="row">
-                <h3 class="mr-3 align-self-center">username</h3>
+                <h3 class="mr-3 align-self-center"><div th:text="|${member.memberId}님|"></div></h3>
                 <div class="dropdown mr-4">
                     <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="false">
@@ -41,7 +41,9 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+                        <li><form th:action="@{/logout}" method="post" class="dropdown-item">
+                            <button type="submit">로그아웃</button>
+                        </form></li>
                     </ul>
                 </div>
             </div>
