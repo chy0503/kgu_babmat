@@ -1,109 +1,71 @@
 package kyonggi_girls.kgu_babmat.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.domain.model.Member;
+import kyonggi_girls.kgu_babmat.repository.MemberRepository;
+import kyonggi_girls.kgu_babmat.service.LoginService;
+import kyonggi_girls.kgu_babmat.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 
-    /*
+    private final MemberRepository memberRepository;
+
+    private final LoginService loginService;
+
     @GetMapping("login")
-    public String login() {return "login";}
+    public String home(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
 
-    final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
-    final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
-    final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
+        if(session == null) {
+            return "login";
+        }
 
-    @Value("${api.client_id}")
-    String clientId;
-    @Value("${api.client_secret}")
-    String clientSecret;
+        String memberId = (String)session.getAttribute(SessionConst.sessionId);
+        Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
+        Member member = findMemberOptional.orElse(null);
 
-     */
+        if(member == null) {
+            return "login";
+        }
 
-
-    /**
-     * Authentication Code를 전달 받는 엔드포인트
-     **/
-    /*
-
-    @GetMapping("google/auth")
-    public String googleAuth(Model model, @RequestParam(value = "code") String authCode)
-            throws JsonProcessingException {
-
-        //HTTP Request를 위한 RestTemplate
-        RestTemplate restTemplate = new RestTemplate();
-
-        //Google OAuth Access Token 요청을 위한 파라미터 세팅
-        GoogleOAuthRequest googleOAuthRequestParam = GoogleOAuthRequest
-                .builder()
-                .clientId(clientId)
-                .clientSecret(clientSecret)
-                .code(authCode)
-                .redirectUri("http://localhost:8080/login/google/auth")
-                .grantType("authorization_code")
-                .build();
-
-
-        //JSON 파싱을 위한 기본값 세팅
-        //요청시 파라미터는 스네이크 케이스로 세팅되므로 Object mapper에 미리 설정해준다.
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        //AccessToken 발급 요청
-        ResponseEntity<String> resultEntity = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, googleOAuthRequestParam, String.class);
-
-        //Token Request
-        GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
-        });
-
-        System.out.println(resultEntity.getBody());
-
-        //ID Token만 추출 (사용자의 정보는 jwt로 인코딩 되어있다)
-        String jwtToken = result.getIdToken();
-        String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
-                .queryParam("id_token", jwtToken).encode().toUriString();
-
-        String resultJson = restTemplate.getForObject(requestUrl, String.class);
-
-        Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
-        model.addAllAttributes(userInfo);
-        model.addAttribute("token", result.getAccessToken());
-        System.out.println(userInfo);
-
-
-        return "/google.html";
-
-    }
-*/
-
-
-    /**
-     * 토큰 무효화
-     **/
-
-    /*
-    @GetMapping("google/revoke/token")
-    @ResponseBody
-    public Map<String, String> revokeToken(@RequestParam(value = "token") String token) throws JsonProcessingException {
-
-        Map<String, String> result = new HashMap<>();
-        RestTemplate restTemplate = new RestTemplate();
-        final String requestUrl = UriComponentsBuilder.fromHttpUrl(GOOGLE_REVOKE_TOKEN_BASE_URL)
-                .queryParam("token", token).encode().toUriString();
-
-        System.out.println("TOKEN ? " + token);
-
-        String resultJson = restTemplate.postForObject(requestUrl, null, String.class);
-        result.put("result", "success");
-        result.put("resultJson", resultJson);
-
-        return result;
-
+        model.addAttribute("member", member);
+        return "main";
     }
 
-     */
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute Member member, HttpServletRequest request) {
+        Member loginMember = loginService.login(member.getMemberId(), member.getPassword());
+
+        if(loginMember == null) {
+            return "redirect:/";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.sessionId, loginMember.getMemberId());
+
+        return "main";
+    }
 
 
-
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session == null) {
+            return "redirect:/";
+        }
+        session.invalidate();
+        return "intro";
+    }
 }
