@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class CafeteriaMenuDao {
     private String dorm_url = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list&board_no=1";
     private String gamco_url = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
 
-    String today = (new SimpleDateFormat("MM.dd (EEE)", Locale.KOREAN)).format(new java.util.Date());
+    private String today = (new SimpleDateFormat("MM.dd (EEE)", Locale.KOREAN)).format(new java.util.Date());
     boolean isToday = false;
 
     public List<CafeteriaMenu> getCafeteriaMenu(String store) throws Exception {
@@ -60,12 +61,28 @@ public class CafeteriaMenuDao {
         return dormMenuList;
     }
 
+    public List<String> getDates() throws IOException {
+        List<String> dates = new ArrayList<>();
+        Document document = Jsoup.connect(dorm_url).get();
+        Elements contents = document.select(".boxstyle02").get(1).select("tbody");
+        for (int i = 1; i < 6; i++) {
+            Element content = contents.select("tr").get(i);
+            String date = removeTag(String.valueOf(content.select("th")));
+            date = (date.replace("-", ".")).substring(6);
+            dates.add(date);
+        }
+        return dates;
+    }
+
     public List<CafeteriaMenu> getGamcoMenuList() throws Exception {
         List<CafeteriaMenu> gamcoMenuList = new ArrayList<>();
         Document document = Jsoup.connect(gamco_url).get();
         Elements contents = document.select("table.table_t1 tbody");
+        List<String> dates = getDates();
+        int i = 0;
+        int j = 0;
         if (!contents.select("tr").isEmpty()) {
-            for (int i = 0; i < 5; i++) {
+            while (j  < 5) {
                 Element content = contents.select("tr").get(i);
                 String date = removeTag(String.valueOf(content.select("th")));
 
@@ -74,14 +91,29 @@ public class CafeteriaMenuDao {
                 else
                     isToday = false;
 
-                CafeteriaMenu menu = CafeteriaMenu.builder()
-                        .date(removeTag(date))
-                        .breakfast("미운영")
-                        .lunch(checkMenu(removeVerticalBar(removeTag((String.valueOf(content.select("td").get(1)))))))
-                        .dinner("미운영")
-                        .today(false)
-                        .build();
-                gamcoMenuList.add(menu);
+                if (!date.contains(returnStringDOW(j))) {
+                    CafeteriaMenu menu = CafeteriaMenu.builder()
+                            .date(dates.get(j))
+                            .breakfast("미운영")
+                            .lunch("미운영")
+                            .dinner("미운영")
+                            .today(isToday)
+                            .build();
+                    gamcoMenuList.add(menu);
+                    j++;
+                }
+                else {
+                    CafeteriaMenu menu = CafeteriaMenu.builder()
+                            .date(removeTag(date))
+                            .breakfast("미운영")
+                            .lunch(checkMenu(removeVerticalBar(removeTag((String.valueOf(content.select("td").get(1)))))))
+                            .dinner("미운영")
+                            .today(isToday)
+                            .build();
+                    gamcoMenuList.add(menu);
+                    i++;
+                    j++;
+                }
             }
         }
         return gamcoMenuList;
@@ -116,5 +148,13 @@ public class CafeteriaMenuDao {
             return str;
         else
             return "미운영";
+    }
+
+    /**
+     * 요일 : int -> String
+     */
+    public String returnStringDOW(int n) {
+        final String[] week = {"월", "화", "수", "목", "금"};
+        return week[n];
     }
 }
