@@ -23,7 +23,6 @@ public class LoginController {
 
     private final LoginService loginService;
 
-
     @GetMapping("login")
     public String home(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);

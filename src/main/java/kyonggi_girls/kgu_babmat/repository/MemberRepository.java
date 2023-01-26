@@ -14,11 +14,9 @@ public class MemberRepository {
 
     private static Map<Long, Member> store = new ConcurrentHashMap<>();
     private static long idSequence = 0;
-
     public void save(Member member) {
         store.put(++idSequence, member);
     }
-
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
     }
