@@ -43,6 +43,7 @@ public class StoreController {
         model.addAttribute("today", today);
 
         model.addAttribute("storeName", storeName);
+
         return "store";
     }
 

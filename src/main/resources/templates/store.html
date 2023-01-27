@@ -63,7 +63,7 @@
                     <td th:text="${store[0].location}"></td>
                 </div>
             </div>
-            <th:block th:if="${(cafeteriaMenuList.size() == 0)}">
+            <th:block th:if="${((cafeteriaMenuList.size() == 0) || (today.contains('토') || today.contains('일')))}">
                 <!-- 일주일 학식이 뜨지 않는 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
                 <div class="col-4 align-self-center">
                     <table class="table table-bordered text-center">
@@ -88,27 +88,29 @@
             </th:block>
             <th:block th:if="${cafeteriaMenuList.size() != 0}">
                 <!-- 일주일 학식 뜨는 경우, 오늘 학식 테이블과 일주일 학식 테이블 생성 -->
-                <div class="col-4 align-self-center" id="todayMenu"
-                     th:each="menu : ${cafeteriaMenuList}" th:if="${menu.today} == true">
-                    <table class="table table-bordered text-center">
-                        <tr>
-                            <th></th>
-                            <th th:utext="${menu.date}" scope="col"></th>
-                        </tr>
-                        <tr>
-                            <th scope="row">아침</th>
-                            <td th:utext="${menu.breakfast}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">점심</th>
-                            <td th:utext="${menu.lunch}"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">저녁</th>
-                            <td th:utext="${menu.dinner}"></td>
-                        </tr>
-                    </table>
-                </div>
+                <th:block th:if="${!today.contains('토') || !today.contains('일')}">
+                    <div class="col-4 align-self-center" id="todayMenu"
+                         th:each="menu : ${cafeteriaMenuList}" th:if="${menu.today} == true">
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th></th>
+                                <th th:utext="${menu.date}" scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">아침</th>
+                                <td th:utext="${menu.breakfast}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">점심</th>
+                                <td th:utext="${menu.lunch}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">저녁</th>
+                                <td th:utext="${menu.dinner}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </th:block>
                 <div class="col-1 align-self-end mb-3">
                     <img class="arrow-drop"
                          width="30px"
