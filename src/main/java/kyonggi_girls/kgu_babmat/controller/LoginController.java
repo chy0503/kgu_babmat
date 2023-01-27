@@ -29,7 +29,7 @@ public class LoginController {
 
 
     @GetMapping("login")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
@@ -45,6 +45,10 @@ public class LoginController {
         }
 
         model.addAttribute("member", member);
+
+        List<Store> storeList = storeService.getStores();
+        model.addAttribute("storeList", storeList);
+
         return "main";
     }
 
