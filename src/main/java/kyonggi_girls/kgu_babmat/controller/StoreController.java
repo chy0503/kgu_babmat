@@ -1,5 +1,6 @@
 package kyonggi_girls.kgu_babmat.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
@@ -23,7 +24,7 @@ public class StoreController {
     }
 
     @GetMapping("store")
-    public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model) throws Exception {
+    public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model, HttpServletRequest request) throws Exception {
 
         if (selectStoreName == null) { // 일반 식당일 경우
             List<Store> store = storeService.getStore(storeName);

@@ -3,10 +3,8 @@ package kyonggi_girls.kgu_babmat.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kyonggi_girls.kgu_babmat.domain.model.Member;
-import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.repository.MemberRepository;
 import kyonggi_girls.kgu_babmat.service.LoginService;
-import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -25,11 +22,10 @@ public class LoginController {
 
     private final MemberRepository memberRepository;
     private final LoginService loginService;
-    private final StoreService storeService;
 
 
     @GetMapping("login")
-    public String home(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
+    public String home(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
@@ -46,15 +42,12 @@ public class LoginController {
 
         model.addAttribute("member", member);
 
-        List<Store> storeList = storeService.getStores();
-        model.addAttribute("storeList", storeList);
-
-        return "main";
+        return "redirect:/main";
     }
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute Member member, HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
+    public String login(@ModelAttribute Member member, HttpServletRequest request) {
         Member loginMember = loginService.login(member.getMemberId(), member.getPassword());
 
         if (loginMember == null) {
@@ -64,10 +57,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.sessionId, loginMember.getMemberId());
 
-        List<Store> storeList = storeService.getStores();
-        model.addAttribute("storeList", storeList);
-
-        return "main";
+        return "redirect:/main";
     }
 
 
@@ -78,7 +68,7 @@ public class LoginController {
             return "redirect:/";
         }
         session.invalidate();
-        return "intro";
+        return "redirect:/";
     }
 
 }

@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <div class="mt-5 ml-2">
-        <a class="text-black hover-noUnderline hover-text-point" href="/login">뒤로가기</a>
+        <a class="text-black hover-noUnderline hover-text-point" href="/main">뒤로가기</a>
     </div>
     <div class="row mb-5">
         <div class="col-7">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <th:block th:if="${((cafeteriaMenuList.size() == 0) || (today.contains('토') || today.contains('일')))}">
-                <!-- 일주일 학식이 뜨지 않는 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
+                <!-- 일주일 학식이 뜨지 않는 경우 or 주말인 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
                 <div class="col-4 align-self-center">
                     <table class="table table-bordered text-center">
                         <tr>
