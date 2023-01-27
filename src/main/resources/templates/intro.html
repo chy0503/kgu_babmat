@@ -3,10 +3,39 @@
 <head>
     <title>경기대 밥맛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    <style>
+        .box {
+            position: relative;
+            margin: 20px auto;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--padding);
+            background-color: #f0f0f0;
+            border-radius: 7px;
+        }
+    </style>
 </head>
 <body>
-    <h1>This is 'intro.html'</h1><br>
-    <a href="/login">login.html</a><br>
-    <a href="/main">main.html</a><br>
+
+<div class="container">
+    <!-- 페이지 로고 및 이름 -->
+    <div class="d-flex justify-content-center my-5">
+        <h1>경기대 밥맛</h1>
+    </div>
+
+    <!-- 헤더 -->
+    <header>
+            <div style="float: right" class="box">
+                <h4 class="mr-3 align-self-center"><a href="#">google</a></h4>
+                <h4 class="mr-3 align-self-center"><a href="/login">login</a></h4>
+                <h4 class="mr-3 align-self-center"><a href="#">signup</a></h4>
+        </div>
+    </header>
+</div>
 </body>
 </html>
