@@ -27,20 +27,14 @@ public class MainController {
 
     @GetMapping("main")
     public String main(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
+        // session
         HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "login";
-        }
-
         String memberId = (String) session.getAttribute(SessionConst.sessionId);
         Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
         Member member = findMemberOptional.orElse(null);
-
-        if (member == null) {
-            return "login";
-        }
-
         model.addAttribute("member", member);
+
+        // store list
         List<Store> storeList = storeService.getStores();
         model.addAttribute("storeList", storeList);
         return "main";
