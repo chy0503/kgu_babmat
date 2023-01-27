@@ -11,5 +11,4 @@ public class Member {
         this.memberId = memberId;
         this.password = password;
     }
-
 }

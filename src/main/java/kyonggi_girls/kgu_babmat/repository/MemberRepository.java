@@ -30,5 +30,4 @@ public class MemberRepository {
     public void clear() {
         store.clear();
     }
-
 }

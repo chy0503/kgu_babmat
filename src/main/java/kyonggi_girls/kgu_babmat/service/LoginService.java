@@ -16,5 +16,4 @@ public class LoginService {
                 .filter(member -> member.getPassword().equals(password))
                 .orElse(null);
     }
-
 }

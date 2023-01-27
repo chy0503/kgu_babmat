@@ -21,4 +21,5 @@ public class MemberInit {
         Member member1 = new Member("chy0503", "5678");
         memberRepository.save(member1);
     }
+
 }
