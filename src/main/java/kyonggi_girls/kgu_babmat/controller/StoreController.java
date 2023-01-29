@@ -32,8 +32,8 @@ public class StoreController {
     public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model, HttpServletRequest request) throws Exception {
         // session
         HttpSession session = request.getSession(false);
-        String memberId = (String) session.getAttribute(SessionConst.sessionId);
-        Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
+        String email = (String) session.getAttribute(SessionConst.sessionId);
+        Optional<Member> findMemberOptional = memberRepository.findByEmail(email);
         Member member = findMemberOptional.orElse(null);
         model.addAttribute("member", member);
 

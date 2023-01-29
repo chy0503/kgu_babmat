@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class Member {
-    private String memberId;
-    private String password;
+    private String email;
+    private String username;
 
-    public Member(String memberId, String password) {
-        this.memberId = memberId;
-        this.password = password;
+    public Member(String email, String username) {
+        this.email = email;
+        this.username = username;
     }
 }
