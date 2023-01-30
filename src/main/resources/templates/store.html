@@ -50,6 +50,14 @@
     <div class="row justify-content-around">
         <!-- 날짜별 학식이 있는 경우 -->
         <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
+            <div class="col-12 mb-2">
+                <div>
+                    <a href="#" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-danger float-right ml-3">리뷰 작성</a>
+                </div>
+            </div>
             <!-- 지도를 오늘 학식 옆으로 가도록 함 -->
             <div class="col-7">
                 <div id="storeMap-left" class="rounded-10" style="min-height:300px;"></div>
@@ -65,14 +73,14 @@
             </div>
 
             <div class="row col-5 float-right mr-1">
-                <div class="col-12">
-                    <div>
-                        <a href="#" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-danger float-right ml-3">리뷰 작성</a>
-                    </div>
-                </div>
+<!--                <div class="col-12 mb-2">-->
+<!--                    <div>-->
+<!--                        <a href="#" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <a href="#" class="btn btn-danger float-right ml-3">리뷰 작성</a>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <th:block th:if="${((cafeteriaMenuList.size() == 0) || (today.contains('토') || today.contains('일')))}">
                     <!-- 일주일 학식이 뜨지 않는 경우 or 주말인 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
                     <div class="col-10 align-self-end"

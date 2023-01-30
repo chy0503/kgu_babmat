@@ -27,7 +27,7 @@
                 <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
             </form>
             <div class="row">
-                <h4 class="mr-3 align-self-center"><div th:text="|${member.email}님|"></div></h4>
+                <h4 class="mr-3 align-self-center"><div th:text="|${user.getUsername()}님|"></div></h4>
                 <div class="dropdown mr-4">
                     <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="false">
