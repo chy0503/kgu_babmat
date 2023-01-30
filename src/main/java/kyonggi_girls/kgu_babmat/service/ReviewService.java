@@ -1,23 +1,14 @@
 package kyonggi_girls.kgu_babmat.service;
 
-
-import kyonggi_girls.kgu_babmat.domain.storeReview;
-import kyonggi_girls.kgu_babmat.dao.ReviewDao;
-import org.springframework.stereotype.Service;
+import kyonggi_girls.kgu_babmat.dto.storeReview;
 
 import java.util.List;
-@Service
-public class ReviewService {
 
-    private  final ReviewDao reviewDao;
+public interface ReviewService {
 
-    public ReviewService(ReviewDao reviewDao) {
-        this.reviewDao = reviewDao;
-    }
+     List<storeReview> getReviews() throws Exception;
 
-    public List<storeReview> getReviews() throws Exception {
-        List<storeReview> reviewList = reviewDao.getReviews();
-        return reviewDao.getReviews();
-    }
+     String insertReview(String reviewId, String storeName,
+                       String reviewScore, String review, String writeTime, String user_nickname ) throws Exception;
 }
 
