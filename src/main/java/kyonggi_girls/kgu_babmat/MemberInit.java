@@ -15,10 +15,10 @@ public class MemberInit {
 
     @PostConstruct
     public void memberInit() {
-        Member member = new Member("sohyun", "1234");
+        Member member = new Member("pshsh0516@kyonggi.ac.kr", "sohyun");
         memberRepository.save(member);
 
-        Member member1 = new Member("chy0503", "5678");
+        Member member1 = new Member("202015006@kyonggi.ac.kr", "chy0503");
         memberRepository.save(member1);
     }
 

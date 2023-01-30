@@ -29,8 +29,8 @@ public class MainController {
     public String main(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
         // session
         HttpSession session = request.getSession(false);
-        String memberId = (String) session.getAttribute(SessionConst.sessionId);
-        Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
+        String email = (String) session.getAttribute(SessionConst.sessionId);
+        Optional<Member> findMemberOptional = memberRepository.findByEmail(email);
         Member member = findMemberOptional.orElse(null);
         model.addAttribute("member", member);
 

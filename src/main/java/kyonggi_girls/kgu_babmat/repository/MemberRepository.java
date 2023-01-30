@@ -21,9 +21,9 @@ public class MemberRepository {
         return new ArrayList<>(store.values());
     }
 
-    public Optional<Member> findByMemberId(String memberId) {
+    public Optional<Member> findByEmail(String email) {
         return findAll().stream()
-                .filter(member -> member.getMemberId().equals(memberId))
+                .filter(member -> member.getEmail().equals(email))
                 .findFirst();
     }
 

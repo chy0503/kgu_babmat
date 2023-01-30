@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,8 +31,8 @@ public class LoginController {
             return "login";
         }
 
-        String memberId = (String) session.getAttribute(SessionConst.sessionId);
-        Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
+        String email = (String) session.getAttribute(SessionConst.sessionId);
+        Optional<Member> findMemberOptional = memberRepository.findByEmail(email);
         Member member = findMemberOptional.orElse(null);
 
         if (member == null) {
@@ -48,14 +47,14 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute Member member, HttpServletRequest request) {
-        Member loginMember = loginService.login(member.getMemberId(), member.getPassword());
+        Member loginMember = loginService.login(member.getEmail(), member.getUsername());
 
         if (loginMember == null) {
-            return "redirect:/";
+            return "login";
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.sessionId, loginMember.getMemberId());
+        session.setAttribute(SessionConst.sessionId, loginMember.getEmail());
 
         return "redirect:/main";
     }
