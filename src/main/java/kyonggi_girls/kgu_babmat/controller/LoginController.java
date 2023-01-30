@@ -2,68 +2,48 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kyonggi_girls.kgu_babmat.domain.model.Member;
-import kyonggi_girls.kgu_babmat.dto.Store;
-import kyonggi_girls.kgu_babmat.repository.MemberRepository;
+import kyonggi_girls.kgu_babmat.dto.User;
 import kyonggi_girls.kgu_babmat.service.LoginService;
-import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final MemberRepository memberRepository;
     private final LoginService loginService;
-    private final StoreService storeService;
 
 
     @GetMapping("login")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
             return "login";
         }
 
-        String memberId = (String) session.getAttribute(SessionConst.sessionId);
-        Optional<Member> findMemberOptional = memberRepository.findByMemberId(memberId);
-        Member member = findMemberOptional.orElse(null);
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        model.addAttribute("user", user);
 
-        if (member == null) {
-            return "login";
-        }
-
-        model.addAttribute("member", member);
-        return "main";
+        return "redirect:/main";
     }
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute Member member, HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
-        Member loginMember = loginService.login(member.getMemberId(), member.getPassword());
-
-        if (loginMember == null) {
-            return "redirect:/";
-        }
-
+    public String login(@RequestParam String email, HttpServletRequest request) throws ExecutionException, InterruptedException {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.sessionId, loginMember.getMemberId());
-
-        List<Store> storeList = storeService.getStores();
-        model.addAttribute("storeList", storeList);
-
-        return "main";
+        if (loginService.isUser(email)) {
+            session.setAttribute(SessionConst.sessionId, loginService.getUser(email));
+            return "redirect:/main";
+        }
+        return "login";
     }
 
 
@@ -74,7 +54,7 @@ public class LoginController {
             return "redirect:/";
         }
         session.invalidate();
-        return "intro";
+        return "redirect:/";
     }
 
 }

@@ -59,4 +59,10 @@ public class StoreDao {
         list.add(document.toObject(Store.class));
         return list;
     }
+
+    public static void addLike(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
+//        DocumentSnapshot document = db.collection(COLLECTION_NAME).document(selectStoreName).collection(COLLECTION_NAME).document(storeName).update("likes", )
+//        ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture = db.collection("stores").document(member.getId()).set(member);
+
+    }
 }

@@ -1,19 +1,27 @@
 package kyonggi_girls.kgu_babmat.service;
 
-import kyonggi_girls.kgu_babmat.domain.model.Member;
-import kyonggi_girls.kgu_babmat.repository.MemberRepository;
+import kyonggi_girls.kgu_babmat.dao.UserDao;
+import kyonggi_girls.kgu_babmat.dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
+    private final UserDao userDao;
 
-    private final MemberRepository memberRepository;
+    public List<User> getUsers() throws ExecutionException, InterruptedException {
+        return userDao.getUsers();
+    }
 
-    public Member login(String memberId, String password) {
-        return memberRepository.findByMemberId(memberId)
-                .filter(member -> member.getPassword().equals(password))
-                .orElse(null);
+    public boolean isUser(String email) throws ExecutionException, InterruptedException {
+        return userDao.isUser(email);
+    }
+
+    public User getUser(String email) throws ExecutionException, InterruptedException {
+        return userDao.getUser(email);
     }
 }
