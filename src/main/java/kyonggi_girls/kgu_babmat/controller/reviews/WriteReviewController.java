@@ -20,17 +20,18 @@ public class WriteReviewController {
         return "reviews/writeReview";
     }
     @PostMapping("/reviewCreate")
-    public String login(@ModelAttribute storeReview storeReview) throws Exception {
-        String writeReview = reviewService.insertReview(storeReview.getReviewId(), storeReview.getStoreName(),
-        storeReview.getReviewScore(), storeReview.getReview(), storeReview.getWriteTime(), storeReview.getUser_nickname());
+    public String writeReview(@ModelAttribute storeReview storeReview) throws Exception {
+//        String writeReview =
+                reviewService.insertReview(storeReview.getStoreName(),
+                storeReview.getReviewScore(), storeReview.getReview(), storeReview.getWriteTime(), storeReview.getUser_nickname());
 
-        if (writeReview == null) {
-            return "redirect:/";
-        }else{
+//        if (writeReview == null) {
+//            return "redirect:/";
+//        } else {
             //writeReview
             return "redirect:reviews/review";
         }
 
-    }
 
+//    }
 }

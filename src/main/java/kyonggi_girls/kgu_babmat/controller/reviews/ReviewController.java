@@ -3,10 +3,12 @@ package kyonggi_girls.kgu_babmat.controller.reviews;
 import kyonggi_girls.kgu_babmat.dto.storeReview;
 import kyonggi_girls.kgu_babmat.service.ReviewService;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +23,8 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/review")
-    public String reviewPage(Model model) throws Exception {
+    public String reviewPage(Model model
+    ) throws Exception {
         List<storeReview> reviewList = reviewService.getReviews();
         model.addAttribute("reviewList", reviewList);
         return "/reviews/review";
