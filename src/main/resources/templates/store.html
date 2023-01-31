@@ -20,7 +20,8 @@
     <div class="row mb-5">
         <div class="col-7">
             <div class="mb-3">
-                <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+                <h1 th:id="storeName" th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+                <h1 th:id="selectStoreName" th:text="${selectStoreName}" class="hidden"></h1>
             </div>
             <div class="my-2 mx-2">
                 <div class="mb-2">
@@ -41,9 +42,13 @@
                 <script type="text/javascript" th:inline="javascript">
                     makeStoreMap("storeMap-right", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
                 </script>
-                <div class="mt-1 ml-1">
-                    <td th:text="${store[0].location}"></td>
-                </div>
+                    <div class="mt-1 ml-1 row">
+                        <p th:text="${store[0].location}"></p>
+                        <th:block th:if="${(selectStoreName != null) && (store[0].location != null)}">
+                            <p>, </p>
+                        </th:block>
+                        <p class="selectStoreName" th:text="${selectStoreName}"></p>
+                    </div>
             </div>
         </th:block>
     </div>
@@ -68,7 +73,13 @@
                     makeStoreMap("storeMap-left", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
                 </script>
                 <div class="mt-1 ml-1">
-                    <td th:text="${store[0].location}"></td>
+                    <div class="mt-1 ml-1 row">
+                        <p th:text="${store[0].location}"></p>
+                        <th:block th:if="${(selectStoreName != null) && (store[0].location != null)}">
+                            <p>, </p>
+                        </th:block>
+                        <p class="selectStoreName" th:text="${selectStoreName}"></p>
+                    </div>
                 </div>
             </div>
 
@@ -191,8 +202,10 @@
                     <div style="position:relative;">
                         <img src="https://via.placeholder.com/150x100" class="card-img-top">
                         <div style="position:absolute;bottom:15px;left:15px;">
-                            <img id="like" width="25px" height="25px"
-                                 src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png">
+                            <img height="25px"src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png"
+                                 th:id="${menu.name}"
+                                 onclick="clickLike(this.id)"
+                                 width="25px">
                         </div>
                     </div>
                     <div class="card-body">

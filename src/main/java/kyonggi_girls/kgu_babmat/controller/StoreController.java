@@ -2,17 +2,14 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
-import kyonggi_girls.kgu_babmat.dto.Menu;
-import kyonggi_girls.kgu_babmat.dto.Store;
-import kyonggi_girls.kgu_babmat.dto.User;
+import kyonggi_girls.kgu_babmat.dto.*;
 import kyonggi_girls.kgu_babmat.service.LoginService;
 import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -31,6 +28,9 @@ public class StoreController {
     public String store(@RequestParam(value = "selectStoreName", required = false) String selectStoreName, @RequestParam("storeName") String storeName, Model model, HttpServletRequest request) throws Exception {
         // session
         HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
 
@@ -38,29 +38,42 @@ public class StoreController {
         if (selectStoreName == null) { // 일반 식당일 경우
             List<Store> store = storeService.getStore(storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(null, storeName);
-            model.addAttribute("menuList", menuList);
         } else { // 푸드코트 내의 식당일 경우
             List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
-            model.addAttribute("menuList", menuList);
         }
+        List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
+        model.addAttribute("menuList", menuList);
         List<CafeteriaMenu> cafeteriaMenuList = storeService.getCafeteriaMenu(storeName);
         model.addAttribute("cafeteriaMenuList", cafeteriaMenuList);
-
-        // 학식 불러올 때 - 오늘 날짜
         String today = storeService.getToday();
         model.addAttribute("today", today);
-
-        // 식당 이름
+        model.addAttribute("selectStoreName", selectStoreName);
         model.addAttribute("storeName", storeName);
 
         return "store";
     }
 
+    @PostMapping("store")
+    public String store(@ModelAttribute Like like , RedirectAttributes redirect, HttpServletRequest request) throws Exception {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        storeService.updateLike(user.getEmail(), like.getMenu(), like.getSelectStore(), like.getStore());
+        redirect.addAttribute("selectStoreName", like.getSelectStore());
+        redirect.addAttribute("storeName", like.getStore());
+        return "redirect:/store";
+    }
+
     @GetMapping("selectStore")
-    public String selectStore(@RequestParam("storeName") String storeName, Model model) throws ExecutionException, InterruptedException {
+    public String selectStore(@RequestParam("storeName") String storeName, Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+
         List<Store> store = storeService.getStore(storeName);
         model.addAttribute("store", store);
         model.addAttribute("storeName", storeName);

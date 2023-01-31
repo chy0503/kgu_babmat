@@ -28,6 +28,9 @@ public class MainController {
     public String main(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
         // session
         HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
 

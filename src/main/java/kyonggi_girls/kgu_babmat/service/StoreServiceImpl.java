@@ -1,5 +1,6 @@
 package kyonggi_girls.kgu_babmat.service;
 
+import kyonggi_girls.kgu_babmat.dao.LikeDao;
 import kyonggi_girls.kgu_babmat.dao.store.CafeteriaMenuDao;
 import kyonggi_girls.kgu_babmat.dao.store.MenuDao;
 import kyonggi_girls.kgu_babmat.dao.store.StoreDao;
@@ -19,6 +20,7 @@ public class StoreServiceImpl implements StoreService {
     private final StoreDao storeDao;
     private final MenuDao menuDao;
     private final CafeteriaMenuDao cafeteriaMenuDao;
+    private final LikeDao likeDao;
 
     @Override
     public List<Store> getStores() throws ExecutionException, InterruptedException {
@@ -48,6 +50,11 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public String getToday() {
         return cafeteriaMenuDao.getToday();
+    }
+
+    @Override
+    public void updateLike(String email, String menu, String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
+        likeDao.updateLike(email, menu, selectStoreName, storeName);
     }
 
 }
