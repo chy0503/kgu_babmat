@@ -1,6 +1,7 @@
 package kyonggi_girls.kgu_babmat.service;
 
 import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
+import kyonggi_girls.kgu_babmat.dto.Like;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 
@@ -15,6 +16,7 @@ public interface StoreService {
     List<Menu> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException;
     List<CafeteriaMenu> getCafeteriaMenu(String storeName) throws Exception;
     String getToday();
-
-    void updateLike(String email, String menu, String selectStoreName, String storeName) throws ExecutionException, InterruptedException;
+    void updateLike(String email, String menu, long price, String selectStoreName, String storeName) throws ExecutionException, InterruptedException;
+    List showLike_menu(String storeName, String email) throws ExecutionException, InterruptedException;
+    List<Like> showLike_all(String email) throws ExecutionException, InterruptedException;
 }

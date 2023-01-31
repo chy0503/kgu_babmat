@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class Like {
     private String menu;
+    private long price;
     private String selectStore;
     private String store;
 }
