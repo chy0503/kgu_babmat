@@ -17,11 +17,31 @@ $(document).ready(function(){
     });
 });
 
-const empty = 'https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png';
-const full = 'https://user-images.githubusercontent.com/90389517/214608922-ab6c4c5c-9b94-4645-bfdb-d98fd2e06949.png';
-$(document).on("click", "#like", function () {
-    let src = ($(this).attr('src') == empty)
-        ? full
-        : empty;
-    $(this).attr('src', src);
-});
+function clickLike(menu, action) {
+    let f = document.createElement('form');
+    function returnObj(name, value) {
+        let obj;
+        obj = document.createElement('input');
+        obj.setAttribute('type', 'hidden');
+        obj.setAttribute('name', name);
+        obj.setAttribute('value', value);
+        return obj;
+    }
+
+    f.appendChild(returnObj('menu', menu));
+    f.appendChild(returnObj('price', Number(document.getElementById(menu+'price').innerText.replace("₩", ""))));
+    f.appendChild(returnObj('store', document.getElementById('storeName').innerText));
+    f.appendChild(returnObj('selectStore', document.getElementById('selectStoreName').innerText));
+    f.setAttribute('method', 'post');
+    f.setAttribute('action', action);
+    document.body.appendChild(f);
+    f.submit();
+}
+
+function clickLogout() {
+    let f = document.createElement('form');
+    f.setAttribute('method', 'post');
+    f.setAttribute('action', '/logout');
+    document.body.appendChild(f);
+    f.submit();
+}
