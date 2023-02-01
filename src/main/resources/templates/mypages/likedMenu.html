@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>경기대 밥맛</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="mt-5 ml-2">
+        <a class="text-black hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+    </div>
+    <div class="mb-5">
+        <h1 class="display-2 font-weight-bold">좋아요</h1>
+    </div>
+    <div class="mt-5 row align-content-between">
+        <div class="col-3 p-3" th:each="like : ${likeMenuList}">
+            <div class="card">
+                <div style="position:relative;">
+                    <img src="https://via.placeholder.com/150x100" class="card-img-top">
+                    <div style="position:absolute;bottom:15px;left:15px;">
+                        <img height="25px"
+                             class="like-ture cursor-pointer"
+                             src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png"
+                             th:id="${like.menu}"
+                             onclick="clickLike(this.id, '/likedMenu')"
+                             width="25px">
+                    </div>
+                </div>
+
+                <div class="card-body cursor-pointer"
+                     th:onclick="|location.href='@{/store(selectStoreName=${like.selectStore}, storeName=${like.store})}'|">
+                    <div class="row mx-2">
+                        <th:block th:if="${!like.selectStore.isEmpty()}">
+                            <p>[</p>
+                            <p id="selectStoreName" th:utext="${like.selectStore}"></p>
+                            <p class="mr-1">]</p>
+                        </th:block>
+                        <p class="mr-2" id="storeName" th:utext="${like.store}"></p>
+                    </div>
+                    <h5 class="card-title ml-2" th:utext="${like.menu}"></h5>
+                    <h5 class="card-title text-secondary text-right mt-1" th:id="${like.menu + 'price'}"
+                        th:utext="'₩' + ${like.price}"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package kyonggi_girls.kgu_babmat.dao.store;
 
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import lombok.extern.slf4j.Slf4j;

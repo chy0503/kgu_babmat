@@ -15,12 +15,13 @@
 <body>
 <div class="container">
     <div class="mt-5 ml-2">
-        <a class="text-black hover-noUnderline hover-text-point" href="/main">뒤로가기</a>
+        <a class="text-black hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
     </div>
     <div class="row mb-5">
         <div class="col-7">
             <div class="mb-3">
-                <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+                <h1 th:id="storeName" th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+                <h1 th:id="selectStoreName" th:text="${selectStoreName}" class="hidden"></h1>
             </div>
             <div class="my-2 mx-2">
                 <div class="mb-2">
@@ -41,8 +42,12 @@
                 <script type="text/javascript" th:inline="javascript">
                     makeStoreMap("storeMap-right", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
                 </script>
-                <div class="mt-1 ml-1">
-                    <td th:text="${store[0].location}"></td>
+                <div class="mt-1 ml-1 row">
+                    <p th:text="${store[0].location}"></p>
+                    <th:block th:if="${(selectStoreName != null) && (store[0].location != null)}">
+                        <p>, </p>
+                    </th:block>
+                    <p class="selectStoreName" th:text="${selectStoreName}"></p>
                 </div>
             </div>
         </th:block>
@@ -68,19 +73,17 @@
                     makeStoreMap("storeMap-left", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
                 </script>
                 <div class="mt-1 ml-1">
-                    <td th:text="${store[0].location}"></td>
+                    <div class="mt-1 ml-1 row">
+                        <p th:text="${store[0].location}"></p>
+                        <th:block th:if="${(selectStoreName != null) && (store[0].location != null)}">
+                            <p>, </p>
+                        </th:block>
+                        <p class="selectStoreName" th:text="${selectStoreName}"></p>
+                    </div>
                 </div>
             </div>
 
             <div class="row col-5 float-right mr-1">
-<!--                <div class="col-12 mb-2">-->
-<!--                    <div>-->
-<!--                        <a href="#" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <a href="#" class="btn btn-danger float-right ml-3">리뷰 작성</a>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <th:block th:if="${((cafeteriaMenuList.size() == 0) || (today.contains('토') || today.contains('일')))}">
                     <!-- 일주일 학식이 뜨지 않는 경우 or 주말인 경우, 오늘 날짜를 받아서 미운영 테이블 생성 -->
                     <div class="col-10 align-self-end"
@@ -191,13 +194,18 @@
                     <div style="position:relative;">
                         <img src="https://via.placeholder.com/150x100" class="card-img-top">
                         <div style="position:absolute;bottom:15px;left:15px;">
-                            <img id="like" width="25px" height="25px"
-                                 src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png">
+                            <img height="25px"
+                                 class="cursor-pointer"
+                                 src="https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png"
+                                 th:id="${menu.name}"
+                                 th:classappend="${likedList.contains(menu.name)} ? 'like-ture' : 'like-false'"
+                                 onclick="clickLike(this.id, '/store')"
+                                 width="25px">
                         </div>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title ml-3" th:utext="${menu.name}"></h5>
-                        <h5 class="card-title text-secondary text-right mt-1" th:utext="'₩' + ${menu.price}"></h5>
+                        <h5 th:id="${menu.name + 'price'}" class="card-title text-secondary text-right mt-1" th:utext="'₩' + ${menu.price}"></h5>
                     </div>
                 </div>
             </div>
