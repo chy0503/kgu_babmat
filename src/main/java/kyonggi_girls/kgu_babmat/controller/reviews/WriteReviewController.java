@@ -23,7 +23,7 @@ public class WriteReviewController {
     public String writeReview(@ModelAttribute storeReview storeReview) throws Exception {
 //        String writeReview =
                 reviewService.insertReview(storeReview.getStoreName(),
-                storeReview.getReviewScore(), storeReview.getReview(), storeReview.getWriteTime(), storeReview.getUser_nickname());
+                storeReview.getReviewScore(), storeReview.getReview(), storeReview.getWriteTime(), storeReview.getEmail(), storeReview.getMenu());
 
 //        if (writeReview == null) {
 //            return "redirect:/";

@@ -47,12 +47,18 @@
     <form th:action="@{/reviewCreate}" method="post">
         <div class="box">
             <h1>리뷰 쓰기</h1><br>
-
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="display: none">
                 <div class="input-group-prepend">
                     <span class="input-group-text">식당 이름</span>
                 </div>
                 <input type="text" class="form-control" id="storeName" name="storeName">
+            </div>
+
+            <div class="input-group mb-3" >
+                <div class="input-group-prepend">
+                    <span class="input-group-text">메뉴</span>
+                </div>
+                <input type="text" class="form-control" id="menu" name="menu">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -62,17 +68,9 @@
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">리뷰</span>
+                <input type="text" class="form-control" id="review" name="review" placeholder="리뷰를 써주세요.">
                 </div>
-                <input type="text" class="form-control" id="review" name="review">
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">유저 이름</span>
-                </div>
-                <input type="text" class="form-control" id="user_nickname" name="user_nickname">
-            </div>
-
             <button type="sumbit">작성하기</button>
         </div>
     </form>
