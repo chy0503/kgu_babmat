@@ -1,18 +1,14 @@
 package kyonggi_girls.kgu_babmat.service;
 
-import kyonggi_girls.kgu_babmat.dto.storeReview;
-import org.springframework.http.ResponseEntity;
-
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface ReviewService {
 
-     List<storeReview> getReviews() throws Exception;
+     List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException;
 
-     String insertReview(String storeName,
-                         int reviewScore, String review, String writeTime, String email, String menu) throws Exception;
-
-     ResponseEntity<List<storeReview>> getUserPosts(String user_nickname);
+     void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException;
 }
 

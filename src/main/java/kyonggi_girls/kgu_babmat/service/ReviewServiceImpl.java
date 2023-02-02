@@ -1,13 +1,15 @@
 package kyonggi_girls.kgu_babmat.service;
 
 
+
 import kyonggi_girls.kgu_babmat.dao.ReviewDao;
-import kyonggi_girls.kgu_babmat.dto.storeReview;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
+
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -20,20 +22,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<storeReview> getReviews() throws Exception {
+    public void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException {
 
-        return reviewDao.getReviews();
+        reviewDao.updateReview(email, menu,  review, reviewScore);
     }
 
     @Override
-    public String insertReview(String storeName,
-                               int reviewScore, String review, String writeTime, String email, String menu) throws Exception {
-        return reviewDao.setRequiresId(storeName, reviewScore, review, writeTime, email, menu);
+    public List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException {
+        return reviewDao.showReview_all(email);
     }
-    @Override
-    public ResponseEntity<List<storeReview>> getUserPosts(String user_nickname) {
-        return new ResponseEntity<>(reviewDao.getUserPosts(user_nickname), HttpStatus.OK);
-    }
+
 
 
 }
