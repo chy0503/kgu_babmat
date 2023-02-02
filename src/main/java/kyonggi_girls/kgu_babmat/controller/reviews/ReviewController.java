@@ -1,12 +1,14 @@
 package kyonggi_girls.kgu_babmat.controller.reviews;
 
-import kyonggi_girls.kgu_babmat.domain.storeReview;
+import kyonggi_girls.kgu_babmat.dto.storeReview;
 import kyonggi_girls.kgu_babmat.service.ReviewService;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,14 +16,15 @@ import java.util.List;
 @Controller
 public class ReviewController {
 
-    ReviewService reviewService;
+    private final ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 
     @GetMapping("/reviews/review")
-    public String reviewPage(Model model) throws Exception {
+    public String reviewPage(Model model
+    ) throws Exception {
         List<storeReview> reviewList = reviewService.getReviews();
         model.addAttribute("reviewList", reviewList);
         return "/reviews/review";

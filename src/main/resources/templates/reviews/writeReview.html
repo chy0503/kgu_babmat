@@ -2,9 +2,80 @@
 <html>
 <head>
     <title>경기대 밥맛</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<h1>This is 'writeReview.html'</h1><br>
+<div class="container">
+    <header class="py-3 mb-3 border-bottom">
+        <div class="d-flex flex-row justify-content-between">
+            <form class="col-5" role="search">
+                <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+            </form>
+
+            <div class="row">
+                <h3 class="mr-3 align-self-center">username</h3>
+                <div class="dropdown mr-4">
+                    <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
+                        <img src="https://user-images.githubusercontent.com/90389517/212916931-321ab7a7-7f29-4c6d-acf7-3c7620f9ed09.jpeg"
+                             width="50" height="50" class="rounded-circle">
+                    </div>
+                    <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
+                        <li><a class="dropdown-item" href="/myPage">마이페이지</a></li>
+                        <li><a class="dropdown-item" href="/writeReview">리뷰 작성하기</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <form th:action="@{/reviewCreate}" method="post">
+        <div class="box">
+            <h1>리뷰 쓰기</h1><br>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">식당 이름</span>
+                </div>
+                <input type="text" class="form-control" id="storeName" name="storeName">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">별점</span>
+                </div>
+                <input type="text" class="form-control" id="reviewScore" name="reviewScore">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">리뷰</span>
+                </div>
+                <input type="text" class="form-control" id="review" name="review">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">유저 이름</span>
+                </div>
+                <input type="text" class="form-control" id="user_nickname" name="user_nickname">
+            </div>
+
+            <button type="sumbit">작성하기</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>
