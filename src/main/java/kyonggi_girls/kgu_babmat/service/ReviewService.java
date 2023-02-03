@@ -1,23 +1,14 @@
 package kyonggi_girls.kgu_babmat.service;
 
-
-import kyonggi_girls.kgu_babmat.domain.storeReview;
-import kyonggi_girls.kgu_babmat.dao.ReviewDao;
-import org.springframework.stereotype.Service;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
 
 import java.util.List;
-@Service
-public class ReviewService {
+import java.util.concurrent.ExecutionException;
 
-    private  final ReviewDao reviewDao;
+public interface ReviewService {
 
-    public ReviewService(ReviewDao reviewDao) {
-        this.reviewDao = reviewDao;
-    }
+     List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException;
 
-    public List<storeReview> getReviews() throws Exception {
-        List<storeReview> reviewList = reviewDao.getReviews();
-        return reviewDao.getReviews();
-    }
+     void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException;
 }
 

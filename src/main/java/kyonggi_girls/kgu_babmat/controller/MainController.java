@@ -2,6 +2,7 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.dto.User;
 import kyonggi_girls.kgu_babmat.service.StoreService;
@@ -34,6 +35,9 @@ public class MainController {
         // store list
         List<Store> storeList = storeService.getStores();
         model.addAttribute("storeList", storeList);
+
+        List<Menu> menuLanking = storeService.showMenuLanking();
+        model.addAttribute("menuLanking", menuLanking);
         return "main";
     }
 }
