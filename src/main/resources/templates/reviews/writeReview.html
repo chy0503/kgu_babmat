@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>경기대 밥맛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -23,7 +24,9 @@
             </form>
 
             <div class="row">
-                <h3 class="mr-3 align-self-center">username</h3>
+                <h4 class="mr-3 align-self-center">
+                    <div th:text="|${user.getUsername()}님|"></div>
+                </h4>
                 <div class="dropdown mr-4">
                     <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="false">
@@ -47,12 +50,18 @@
     <form th:action="@{/reviewCreate}" method="post">
         <div class="box">
             <h1>리뷰 쓰기</h1><br>
-
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="display: none">
                 <div class="input-group-prepend">
                     <span class="input-group-text">식당 이름</span>
                 </div>
                 <input type="text" class="form-control" id="storeName" name="storeName">
+            </div>
+
+            <div class="input-group mb-3" >
+                <div class="input-group-prepend">
+                    <span class="input-group-text">메뉴</span>
+                </div>
+                <input type="text" class="form-control" id="menu" name="menu">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -62,17 +71,9 @@
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">리뷰</span>
+                <input type="text" class="form-control" id="review" name="review" placeholder="리뷰를 써주세요.">
                 </div>
-                <input type="text" class="form-control" id="review" name="review">
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">유저 이름</span>
-                </div>
-                <input type="text" class="form-control" id="user_nickname" name="user_nickname">
-            </div>
-
             <button type="sumbit">작성하기</button>
         </div>
     </form>

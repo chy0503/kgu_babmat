@@ -1,18 +1,14 @@
 package kyonggi_girls.kgu_babmat.service;
 
-import com.google.cloud.Timestamp;
-import kyonggi_girls.kgu_babmat.dto.storeReview;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface ReviewService {
 
-     List<storeReview> getReviews() throws Exception;
+     List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException;
 
-     String insertReview(String storeName,
-                         int reviewScore, String review, String writeTime, String user_nickname ) throws Exception;
+     void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException;
 }
 

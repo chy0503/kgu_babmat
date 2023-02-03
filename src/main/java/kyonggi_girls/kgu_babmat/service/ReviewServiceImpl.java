@@ -1,15 +1,15 @@
 package kyonggi_girls.kgu_babmat.service;
 
-import com.google.cloud.Timestamp;
+
+
 import kyonggi_girls.kgu_babmat.dao.ReviewDao;
-import kyonggi_girls.kgu_babmat.dto.storeReview;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
+
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -22,14 +22,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<storeReview> getReviews() throws Exception {
+    public void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException {
 
-        return reviewDao.getReviews();
+        reviewDao.updateReview(email, menu,  review, reviewScore);
     }
 
     @Override
-    public String insertReview(String storeName,
-                               int reviewScore, String review, String writeTime, String user_nickname) throws Exception {
-        return reviewDao.setRequiresId(storeName, reviewScore, review, writeTime, user_nickname);
+    public List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException {
+        return reviewDao.showReview_all(email);
     }
+
+
+
 }
