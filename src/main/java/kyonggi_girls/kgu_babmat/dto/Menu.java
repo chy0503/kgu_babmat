@@ -12,4 +12,6 @@ import lombok.ToString;
 public class Menu {
     private String name;
     private long price;
+    private float reviewScore;
+    private int reviewNum;
 }

@@ -3,7 +3,9 @@ package kyonggi_girls.kgu_babmat.controller.mypages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kyonggi_girls.kgu_babmat.dto.Like;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import kyonggi_girls.kgu_babmat.dto.User;
+import kyonggi_girls.kgu_babmat.service.ReviewService;
 import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
@@ -18,14 +20,36 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class MyPageController {
     private final StoreService storeService;
+    private final ReviewService reviewService;
 
-    public MyPageController(StoreService storeService) {
+    public MyPageController(StoreService storeService, ReviewService reviewService) {
         this.storeService = storeService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("myPage")
-    public String myPage() {
+    public String myReview(Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        model.addAttribute("user", user);
+
+        List<StoreReview> reviewList = reviewService.showReview_all(user.getEmail());
+        model.addAttribute("reviewList", reviewList);
         return "mypages/myPage";
+    }
+    @PostMapping("myPage")
+    public String reviewCollect(@ModelAttribute StoreReview storeReview, HttpServletRequest request) throws Exception {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        reviewService.updateReview(user.getEmail(), storeReview.getMenu(), storeReview.getReview(),  storeReview.getReviewScore());
+        System.out.println("리뷰 모아보기 : "+reviewService.showReview_all(user.getEmail()));
+        return "redirect:/myPage";
     }
 
     @GetMapping("likedMenu")
