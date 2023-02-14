@@ -1,5 +1,6 @@
 package kyonggi_girls.kgu_babmat.dao;
 
+
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import kyonggi_girls.kgu_babmat.dto.StoreReview;
@@ -15,31 +16,34 @@ import java.util.concurrent.ExecutionException;
 @Repository
 @Slf4j
 public class ReviewDao {
-
+    public static final String COLLECTION_NAME = "reviews";
     static Firestore db = FirestoreClient.getFirestore();
 
-    public static void updateReview(String email, String menu,  String review, int reviewScore) throws ExecutionException, InterruptedException {
-        StoreReview storeReview = new StoreReview();
-        storeReview.setMenu(menu);
-        storeReview.setReviewScore(reviewScore);
-        storeReview.setReview(review);
-        storeReview.setWriteTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    /**
+     * 작성된 리뷰 database 저장
+     */
 
-        StoreReview collectReview = db.collection("user").document(email).collection("reviews").document().get().get().toObject(StoreReview.class);
-        if (collectReview == null)
-            db.collection("users").document(email).collection("reviews").document().set(storeReview);
-        else
-            db.collection("users").document(email).collection("reviews").document().delete();
+    public static void updateReview(String email, String storeName, String selectStore, String menu, int reviewScore, String review) throws ExecutionException, InterruptedException {
+        Map<String, Object> reviewmap = new HashMap<>();
+        reviewmap.put("email", email);
+        reviewmap.put("storeName", storeName);
+        reviewmap.put("selectStore", selectStore);
+        reviewmap.put("menu", menu);
+        reviewmap.put("reviewScore", reviewScore);
+        reviewmap.put("review", review);
+        reviewmap.put("writeTime", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        db.collection("reviews").add(reviewmap);
 
     }
+    /**
+     * 작성된 리뷰 database에서 불러오기
+     */
 
     public static List<StoreReview> showReview_all(String email) throws ExecutionException, InterruptedException {
         List<StoreReview> List = new ArrayList<>();
-        List<QueryDocumentSnapshot> documents = db.collection("users").document(email)
-                .collection("reviews")
-                .orderBy("writeTime", Query.Direction.DESCENDING)
+        List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("email", email)
                 .get().get().getDocuments();
-        for(QueryDocumentSnapshot document :documents) {
+        for (QueryDocumentSnapshot document : documents) {
             List.add(document.toObject(StoreReview.class));
         }
         return List;
@@ -47,8 +51,16 @@ public class ReviewDao {
 
 
 
-}
 
+
+//    public static void delete(String id){
+//        db.collection("users").document(id).delete();
+//    }
+//
+
+
+
+}
 
 
 

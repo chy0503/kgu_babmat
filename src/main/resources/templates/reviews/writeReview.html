@@ -47,16 +47,21 @@
         </div>
     </header>
 
-    <form th:action="@{/reviewCreate}" method="post">
+    <form action="reviewCreate"  method="post">
         <div class="box">
             <h1>리뷰 쓰기</h1><br>
-            <div class="input-group mb-3" style="display: none">
+            <div class="input-group mb-3" style="display: none" >
+                <div class="input-group-prepend" t>
+                    <span class="input-group-text">상위 식당 이름</span>
+                </div>
+                <input  class="form-control" id="selectStore" name="selectStore" th:value="${selectStoreName}" readonly >
+            </div>
+            <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                     <span class="input-group-text">식당 이름</span>
                 </div>
-                <input type="text" class="form-control" id="storeName" name="storeName">
+                <input type="text" class="form-control" id="storeName" name="storeName" th:value="${storeName}" readonly  >
             </div>
-
             <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                     <span class="input-group-text">메뉴</span>
@@ -67,14 +72,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">별점</span>
                 </div>
-                <input type="text" class="form-control" id="reviewScore" name="reviewScore">
+                <input type="text" class="form-control" id="reviewScore" name="reviewScore" >
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <input type="text" class="form-control" id="review" name="review" placeholder="리뷰를 써주세요.">
+                <input type="text" class="form-control" id="review" name="review"
+                       placeholder="리뷰를 써주세요." >
                 </div>
             </div>
-            <button type="sumbit">작성하기</button>
+            <button type="submit">작성하기</button>
         </div>
     </form>
 </div>
