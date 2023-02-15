@@ -9,9 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Menu {
+public class MenuLank {
     private String name;
-    private long price;
     private float reviewScore;
     private int reviewNum;
+    private String storeName;
+    private String selectStore;
 }

@@ -37,12 +37,12 @@ public class StoreController {
         if ((selectStoreName == null) || (selectStoreName == "")) { // 일반 식당일 경우
             List<Store> store = storeService.getStore(storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(null, storeName);
+            List<MenuLank> menuList = storeService.getMenu(null, storeName);
             model.addAttribute("menuList", menuList);
         } else { // 푸드코트 내의 식당일 경우
             List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
+            List<MenuLank> menuList = storeService.getMenu(selectStoreName, storeName);
             model.addAttribute("menuList", menuList);
         }
         List<CafeteriaMenu> cafeteriaMenuList = storeService.getCafeteriaMenu(storeName); // 학식 리스트 받기
