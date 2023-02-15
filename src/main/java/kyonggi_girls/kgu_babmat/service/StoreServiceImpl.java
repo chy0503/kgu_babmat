@@ -7,7 +7,7 @@ import kyonggi_girls.kgu_babmat.dao.store.MenuDao;
 import kyonggi_girls.kgu_babmat.dao.store.StoreDao;
 import kyonggi_girls.kgu_babmat.dto.CafeteriaMenu;
 import kyonggi_girls.kgu_babmat.dto.Like;
-import kyonggi_girls.kgu_babmat.dto.Menu;
+import kyonggi_girls.kgu_babmat.dto.MenuLank;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Menu> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
+    public List<MenuLank> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
         return menuDao.getMenu(selectStoreName, storeName);
     }
 
@@ -71,7 +71,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Menu> showMenuLanking() throws ExecutionException, InterruptedException {
+    public List<MenuLank> showMenuLanking() throws ExecutionException, InterruptedException {
         return menuLankingDao.showMenuLanking();
     }
 }

@@ -24,3 +24,5 @@
 .cursor-pointer {cursor:pointer;}
 .like-false {content:url(https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png);}
 .like-ture {content:url(https://user-images.githubusercontent.com/90389517/214608922-ab6c4c5c-9b94-4645-bfdb-d98fd2e06949.png);}
+.menuLank:hover {cursor:pointer;}
+.menuLank:hover h4 {color:#F9320C;}

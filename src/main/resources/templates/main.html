@@ -24,8 +24,9 @@
     <!-- 헤더 -->
     <header class="py-3 mb-3 border-bottom">
         <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search">
+            <form class="col-5" role="search" action="/review" th:action="@{/search}" method="post">
                 <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+                <button type="submit">검색</button>
             </form>
             <div class="row">
                 <h4 class="mr-3 align-self-center">
@@ -55,14 +56,17 @@
     <div class="">
         <div class="my-5 row align-content-between">
             <div class="col-4 p-3" th:each="menu, menuStat : ${menuLanking}" th:if="${menuStat.index < 3}">
-                <div class="d-flex justify-content-center row">
-                    <h4 class="mr-2" th:utext="${menuStat.index+1}+'.'"></h4>
-                    <img height="25px"
-                         src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
-                         width="25px">
-                    <h4 class="mx-1"
-                        th:utext="${menu.getReviewScore() + '(' + menu.getReviewNum() + ')'}"></h4>
-                    <h4 class="ml-3" th:utext="${menu.name}"></h4>
+                <div class="d-flex justify-content-center"
+                     th:onclick="|location.href='@{/store(selectStoreName=${menu.selectStore}, storeName=${menu.storeName})}'|">
+                    <div class="row menuLank px-1">
+                        <h4 class="mr-2" th:utext="${menuStat.index+1}+'.'"></h4>
+                        <img height="25px"
+                             src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
+                             width="25px">
+                        <h4 class="mx-1"
+                            th:utext="${menu.getReviewScore() + '(' + menu.getReviewNum() + ')'}"></h4>
+                        <h4 class="ml-3" th:utext="${menu.name}"></h4>
+                    </div>
                 </div>
             </div>
         </div>
