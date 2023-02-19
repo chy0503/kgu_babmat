@@ -64,7 +64,7 @@
                              src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
                              width="25px">
                         <h4 class="mx-1"
-                            th:utext="${menu.getReviewScore() + '(' + menu.getReviewNum() + ')'}"></h4>
+                            th:utext="${#numbers.formatDecimal(menu.getReviewScore(), 0, 2) + '(' + menu.getReviewNum() + ')'}"></h4>
                         <h4 class="ml-3" th:utext="${menu.name}"></h4>
                     </div>
                 </div>
