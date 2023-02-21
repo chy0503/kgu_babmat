@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.css}">-->
+    <link rel="stylesheet" type="text/css" href="/board.css">
+</head>
+
+<body>
+<div class="container">
+
+
+    <div class="col-md-12 order-md-1">
+        <h4 class="mb-3">회원정보</h4>
+        <form class="needs-validation" novalidate th:action="@{/signup}" method="POST">
+
+
+           <!-- <div class="mb-3">
+                <label for="username">아이디 (username)</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="username" placeholder="Username" required name="user-id">
+&lt;!&ndash;                    <div class="invalid-feedback" style="width: 100%;">Your username is required.</div>&ndash;&gt;
+                </div>
+            </div>
+
+
+
+            <div class="mb-3">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" name="user-email">
+&lt;!&ndash;                <div class="invalid-feedback">올바른 이메일을 입력하세요.</div>&ndash;&gt;
+            </div>-->
+
+            <div class="mb-3">
+                <label for="username">username</label>
+                <div class="input-group">
+                <input type="text" class="form-control" id="username" placeholder="Username" required name="username">
+                </div>
+            </div>
+
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
+            <hr class="mb-4">
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+
+</html>

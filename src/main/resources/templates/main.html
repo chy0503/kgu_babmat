@@ -30,7 +30,8 @@
             </form>
             <div class="row">
                 <h4 class="mr-3 align-self-center">
-                    <div th:text="|${user.getUsername()}님|"></div>
+<!--                    <div th:text="|${user.getUsername()}님|"></div>-->
+                    <div th:text="'Email : ' + ${email}"></div>
                 </h4>
                 <div class="dropdown mr-4">
                     <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
