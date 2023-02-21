@@ -4,7 +4,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
-import kyonggi_girls.kgu_babmat.dto.MenuLank;
+import kyonggi_girls.kgu_babmat.dto.Menu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -22,17 +22,17 @@ public class MenuDao {
     /**
      * 식당 메뉴 불러오기
      */
-    public static List<MenuLank> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
-        List<MenuLank> list = new ArrayList<>();
+    public static List<Menu> getMenu(String selectStoreName, String storeName) throws ExecutionException, InterruptedException {
+        List<Menu> list = new ArrayList<>();
         if (selectStoreName == null) {
             List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(storeName).collection("menus").orderBy("price", Query.Direction.DESCENDING).get().get().getDocuments();
             for (QueryDocumentSnapshot menu : menus) {
-                list.add(menu.toObject(MenuLank.class));
+                list.add(menu.toObject(Menu.class));
             }
         } else {
             List<QueryDocumentSnapshot> menus = db.collection(COLLECTION_NAME).document(selectStoreName).collection(COLLECTION_NAME).document(storeName).collection("menus").orderBy("price", Query.Direction.DESCENDING).get().get().getDocuments();
             for (QueryDocumentSnapshot menu : menus) {
-                list.add(menu.toObject(MenuLank.class));
+                list.add(menu.toObject(Menu.class));
             }
         }
         return list;

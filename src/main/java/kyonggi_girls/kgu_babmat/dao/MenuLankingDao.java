@@ -3,7 +3,7 @@ package kyonggi_girls.kgu_babmat.dao;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
-import kyonggi_girls.kgu_babmat.dto.MenuLank;
+import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -33,7 +33,7 @@ public class MenuLankingDao {
 //        return list;
 //    }
 
-    public static List<MenuLank> showMenuLanking() throws ExecutionException, InterruptedException {
+    public static List<Menu> showMenuLanking() throws ExecutionException, InterruptedException {
         // 리뷰 저장
         List<StoreReview> reviews = new ArrayList<>();
         List<QueryDocumentSnapshot> documents = db.collection("reviews").get().get().getDocuments();
@@ -59,10 +59,10 @@ public class MenuLankingDao {
             cnt[menus.indexOf(review.getMenu())] += 1;
         }
         // 메뉴별 리뷰평균 구하고 내림차순으로 정렬해서 반환
-        List<MenuLank> list = new ArrayList<>();
+        List<Menu> list = new ArrayList<>();
         for (int i = 0; i < score.length; i++) {
             score[i] /= cnt[i];
-            MenuLank menu = new MenuLank();
+            Menu menu = new Menu();
             menu.setName(menus.get(i));
             menu.setReviewScore(score[i]);
             menu.setReviewNum(cnt[i]);
