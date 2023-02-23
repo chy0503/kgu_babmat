@@ -34,10 +34,10 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDao.showReview_all_store(storeName);
     }
 
-   @Override
-   public List Searching(String menu) throws ExecutionException, InterruptedException{
-        return searchDao.Searching(menu);
-   }
+//   @Override
+//   public List Searching(String menu) throws ExecutionException, InterruptedException{
+//        return searchDao.Searching(menu);
+//   }
 
    @Override
    public List modifyReview(String email, String writeTime) throws ExecutionException, InterruptedException {
