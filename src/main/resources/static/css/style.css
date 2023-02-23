@@ -1,28 +1,232 @@
-.customoverlay {position:relative; right:2px; bottom:80px; border-radius:6px; border: 1px solid #ccc; border-bottom:2px solid #ddd; float:left;}
-.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-.customoverlay a {display:block; text-decoration:none; color:#000; text-align:center; border-radius:6px; font-size:14px; font-weight:bold; overflow:hidden;}
-.customoverlay a:hover {text-decoration:none!important; color:black;}
-.customoverlay .title {display:block; text-align:center; background:#fff; padding:10px 15px; font-size:14px; font-weight:bold;}
-.storeList .list-group {font-size:35px;}
-.list-group {overflow-y:scroll;}
-.list-group::-webkit-scrollbar {width:8px;}
-.list-group::-webkit-scrollbar-thumb {background:#f0f0f0; border-radius:10px;}
-.list-group::-webkit-scrollbar-track {background:transparent;}
-.storeName {font-size:20px;}
-.noOutline:focus {outline:none!important; box-shadow:none!important;}
-.form-control:focus {border-color:#cccccc!important;}
-.rounded-10 {border-radius:10px;}
-.rounded-8 {border-radius:8px;}
-.bg-f0 {background-color:#f0f0f0!important;}
-.text-point {color:#F9320C;}
-.text-black {color:black;}
-.hover-noUnderline:hover {text-decoration:none;}
-.hover-text-point:hover {color:#F9320C;}
-#weekMenu {display:none;}
-.arrow-drop {cursor:pointer;}
-#like {cursor:pointer;}
-.cursor-pointer {cursor:pointer;}
-.like-false {content:url(https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png);}
-.like-ture {content:url(https://user-images.githubusercontent.com/90389517/214608922-ab6c4c5c-9b94-4645-bfdb-d98fd2e06949.png);}
-.menuLank:hover {cursor:pointer;}
-.menuLank:hover h4 {color:#F9320C;}
+.customoverlay {
+    position: relative;
+    right: 2px;
+    bottom: 80px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+}
+
+.customoverlay a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.customoverlay a:hover {
+    text-decoration: none !important;
+    color: black;
+}
+
+.customoverlay .title {
+    display: block;
+    text-align: center;
+    background: #fff;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.storeList .list-group {
+    font-size: 35px;
+}
+
+.list-group {
+    overflow-y: scroll;
+}
+
+.list-group::-webkit-scrollbar {
+    width: 8px;
+}
+
+.list-group::-webkit-scrollbar-thumb {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.list-group::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.storeName {
+    font-size: 20px;
+}
+
+.noOutline:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus {
+    border-color: #cccccc !important;
+}
+
+.rounded-10 {
+    border-radius: 10px;
+}
+
+.rounded-8 {
+    border-radius: 8px;
+}
+
+.bg-f0 {
+    background-color: #f0f0f0 !important;
+}
+
+.text-point {
+    color: #F9320C;
+}
+
+.text-black {
+    color: black;
+}
+
+.hover-noUnderline:hover {
+    text-decoration: none;
+}
+
+.hover-text-point:hover {
+    color: #F9320C;
+}
+
+#weekMenu {
+    display: none;
+}
+
+.arrow-drop {
+    cursor: pointer;
+}
+
+#like {
+    cursor: pointer;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.like-false {
+    content: url(https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png);
+}
+
+.like-ture {
+    content: url(https://user-images.githubusercontent.com/90389517/214608922-ab6c4c5c-9b94-4645-bfdb-d98fd2e06949.png);
+}
+
+.menuLank:hover {
+    cursor: pointer;
+}
+
+.menuLank:hover h4 {
+    color: #F9320C;
+}
+
+#myform fieldset {
+    display: inline-block;
+    direction: rtl;
+    border: 0;
+}
+
+#myform fieldset legend {
+    text-align: right;
+}
+
+#myform input[type=radio] {
+    display: none;
+}
+
+#myform label {
+    font-size: 2em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+
+#myform label:hover {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform label:hover ~ label {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform input[type=radio]:checked ~ label {
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+.form_radio_btn {
+    width: 10%;
+    height: 40px;
+    border: 1px solid #EAE7E7;
+    border-radius: 20px;
+}
+
+.form_radio_btn input[type=radio] {
+    display: none;
+}
+
+.form_radio_btn label {
+    font-size: 7px;
+    display: block;
+    border-radius: 20px;
+    margin: 0 auto;
+    text-align: center;
+    height: 40px;
+    width: 10%;
+    line-height: 45px;
+}
+
+/* Checked */
+.form_radio_btn input[type=radio]:checked + label {
+    background: #F9320C;
+    color: #fff;
+}
+
+/* Hover */
+.form_radio_btn label:hover {
+    color: #666;
+}
+
+/* Disabled */
+.form_radio_btn input[type=radio] + label {
+    background: #F9FAFC;
+    color: #666;
+}
+
+.form-controls {
+    /*display: block;*/
+    width: 100%;
+    height: 100px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+ .reviewContents {
+     width: 350px;
+     height: 200px;
+     padding: 10px;
+     box-sizing: border-box;
+     border: solid 1.5px #D3D3D3;
+     border-radius: 5px;
+     font-size: 16px;
+     resize: none;
+     margin-bottom: 30px;
+ }

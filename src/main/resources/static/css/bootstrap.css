@@ -2007,7 +2007,7 @@ pre code {
 }
 
 .form-control:disabled, .form-control[readonly] {
-  background-color: #e9ecef;
+  background-color: #fff;
   opacity: 1;
 }
 
@@ -2140,6 +2140,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   position: relative;
   display: block;
   padding-left: 1.25rem;
+  margin-right: 2rem;
 }
 
 .form-check-input {

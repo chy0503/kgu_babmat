@@ -27,12 +27,6 @@ public class MyPageController {
         this.reviewService = reviewService;
     }
 
-//    @GetMapping("/board/delete")
-//    public String boardDelete(String id){
-//        reviewService.deleteReview(id);
-//        return "mypages/myPage";
-//    }
-
     @GetMapping("myPage")
     public String myReview(Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
         // session
@@ -48,15 +42,16 @@ public class MyPageController {
     }
 
     @PostMapping("myPage")
-    public String reviewCollect(@ModelAttribute StoreReview storeReview, HttpServletRequest request) throws Exception {
+    public String reviewCollect(@ModelAttribute StoreReview storeReview,
+    HttpServletRequest request) throws Exception {
         // session
         HttpSession session = request.getSession(false);
         if (session == null)
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
 
-        reviewService.updateReview(user.getEmail(),storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
-                storeReview.getReviewScore(), storeReview.getReview());
+        reviewService.createReview(user.getEmail(),storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
+                storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
         System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
         return "redirect:/myPage";
     }

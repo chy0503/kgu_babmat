@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 <head>
     <title>경기대 밥맛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -61,29 +61,46 @@
 
         </div>
     </header>
+
     <!--    <from th:action="@{/reviewDelete}" method="post">-->
     <div id="reviewContents" th:each="list : ${reviewList}">
         <table>
+<!--            <tr colspan="4" style="display: none">-->
+
+<!--                <td>이메일</td>-->
+
+<!--                <td th:utext="${list.email}"></td>-->
+
+<!--            </tr>-->
 
             <tr colspan="4">
 
                 <td>식당 이름</td>
 
-                <td th:utext="${list.getStoreName()}"></td>
+                <td th:utext="${list.storeName}"></td>
 
+            </tr>
+            <tr>
+                <td>메뉴</td>
+                <td colspan="4" th:utext="${list.menu}"></td>
             </tr>
 
             <tr>
 
                 <td>별점</td>
 
-                <td colspan="4" th:utext="${list.reviewScore}"></td>
+                <td colspan="4" th:number="${list.reviewScore}"></td>
 
             </tr>
 
             <tr colspan="4" rowspan="3">
 
                 <td th:utext="${list.review}"></td>
+
+            </tr>
+            <tr colspan="4" rowspan="3">
+
+                <td th:utext="${list.tags}"></td>
 
             </tr>
 
@@ -99,12 +116,28 @@
 
         </table>
 
-        <button type="submit">수정하기</button>
+    <form action="/edit" method="get">
+        <a th:onclick="|location.href='@{/edit(email=${user.getEmail()}, writeTime=${list.writeTime})}'|" >수정하기</a>
 
-<!--        <button type="submit" th:href="@{/board/delete(id=${board.id})}">삭제하기</button>-->
-
+<!--        th:onclick="|location.href='@{/edit(writeTime=${writeTime})}'|"-->
+    </form>
+        <a href="javascript:void(0);"  th:onclick="|location.href='@{/delete(email=${user.getEmail()}, writeTime=${list.writeTime})}'|" class="delete">삭제하기</a>
     </div>
 
+    <script layout:fragment="script" type='text/javascript'>
+        const delete_elements = document.getElementsByClassName("delete");
+        Array.from(delete_elements).forEach(function(element) {
+            element.addEventListener('click', function() {
+                if(confirm("정말로 삭제하시겠습니까?")) {
+                    let frm = $("#frm")
+                    frm.attr('action', '/delete');
+                    frm.attr("method", "get");
+                    frm.submit();
+
+                };
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
