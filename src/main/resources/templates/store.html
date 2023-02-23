@@ -57,7 +57,7 @@
         <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
             <div class="col-12 mb-2">
                 <div>
-                    <a href="review" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
+                    <a th:onclick="|location.href='@{/review(storeName=${storeName})}'|" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
                 </div>
                 <div>
                     <button th:onclick="|location.href='@{/writeReview(selectStoreName=${selectStoreName},storeName=${storeName})}'|" class="btn btn-danger float-right ml-3">리뷰 작성</button>
@@ -186,7 +186,7 @@
                 <button th:onclick="|location.href='@{/writeReview(selectStoreName=${selectStoreName},storeName=${storeName})}'|" class="btn btn-danger float-right ml-3">리뷰 작성</button>
             </div>
             <div>
-                <a href="#" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
+                <button th:onclick="|location.href='@{/review(storeName=${storeName})}'|" class="btn btn-outline-danger float-right ml-3">리뷰 보기</button>
             </div>
         </div>
         <div class="mt-5 row align-content-between">

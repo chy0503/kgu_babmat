@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <title>경기대 밥맛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,28 +14,15 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 
-    <style>
-        #reviewContents {
-            width: 350px;
-            height: 200px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: solid 1.5px #D3D3D3;
-            border-radius: 5px;
-            font-size: 16px;
-            resize: none;
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
     <header class="py-3 mb-3 border-bottom">
         <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search">
-                <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+            <form class="col-5" role="search" action="Searching" method="get"  >
+                <input type="text" name="menu" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+                <button type="submit">검색</button>
             </form>
-
             <div class="row">
                 <h4 class="mr-3 align-self-center">
 
@@ -59,28 +46,59 @@
 
         </div>
     </header>
-    <div id="reviewContents" th:each="list, reviewSet : ${reviewList}">
+    <div class="reviewContents" th:each="list : ${storeReviews}">
         <table>
+            <tr colspan="4"  style="display: none">
+
+                <td>이메일</td>
+
+                <td th:utext="${list.email}"></td>
+
+            </tr>
+
             <tr colspan="4">
+
                 <td>식당 이름</td>
-                <td th:utext="${list.storeName}" ></td>
+
+                <td th:utext="${list.storeName}"></td>
+
             </tr>
             <tr>
+                <td>메뉴</td>
+                <td colspan="4" th:utext="${list.menu}"></td>
+            </tr>
+
+            <tr>
+
                 <td>별점</td>
+
                 <td colspan="4" th:utext="${list.reviewScore}"></td>
+
+            </tr>
+
+            <tr colspan="4" rowspan="3">
+
+                <td th:utext="${list.review}"></td>
+
             </tr>
             <tr colspan="4" rowspan="3">
-                <td th:utext="${list.review}"></td>
+
+                <td th:utext="${list.tags}"></td>
+
             </tr>
+
             <tr>
-                <td >작성 시간</td>
-                <td colspan="2" th:utext="${list.writeTime}" style="width: 100px" >
+
+                <td>작성 시간</td>
+
+                <td colspan="2" th:utext="${list.writeTime}" style="width: 100px">
+
                 </td>
+
             </tr>
 
         </table>
     </div>
-
 </div>
 </body>
 </html>

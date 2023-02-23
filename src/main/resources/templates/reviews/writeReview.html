@@ -14,6 +14,7 @@
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -47,40 +48,93 @@
         </div>
     </header>
 
-    <form action="reviewCreate"  method="post">
+    <form action="reviewCreate" method="post">
         <div class="box">
             <h1>리뷰 쓰기</h1><br>
-            <div class="input-group mb-3" style="display: none" >
+            <div class="input-group mb-3" style="display: none">
                 <div class="input-group-prepend" t>
                     <span class="input-group-text">상위 식당 이름</span>
                 </div>
-                <input  class="form-control" id="selectStore" name="selectStore" th:value="${selectStoreName}" readonly >
+                <input class="form-control" id="selectStore" name="selectStore" th:value="${selectStoreName}" readonly>
             </div>
-            <div class="input-group mb-3" >
+            <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">식당 이름</span>
                 </div>
-                <input type="text" class="form-control" id="storeName" name="storeName" th:value="${storeName}" readonly  >
+                <input type="text" class="form-control" id="storeName" name="storeName" th:value="${storeName}"
+                       readonly>
             </div>
-            <div class="input-group mb-3" >
+            <div class="input-group mb-3" th:if="${(storeName =='기숙사 식당') }">
                 <div class="input-group-prepend">
                     <span class="input-group-text">메뉴</span>
                 </div>
-                <input type="text" class="form-control" id="menu" name="menu">
+                <select name="menu" type="text" class="form-control">
+                    <option value="">==메뉴 선택==</option>
+                    <option value="기숙사 한식">기숙사 한식</option>
+                </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" th:if="${(storeName =='감성코어') }">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">별점</span>
+                    <span class="input-group-text">메뉴</span>
                 </div>
-                <input type="text" class="form-control" id="reviewScore" name="reviewScore" >
+                <select name="menu" type="text" class="form-control">
+                    <option value="">==메뉴 선택==</option>
+                    <option value="감성코어 한식">감성코어 한식</option>
+                </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" th:if="${(storeName !='기숙사 식당') && (storeName !='감성코어')}">
                 <div class="input-group-prepend">
-                <input type="text" class="form-control" id="review" name="review"
-                       placeholder="리뷰를 써주세요." >
+                    <span class="input-group-text">메뉴</span>
+                </div>
+                <select id="menu" name="menu" type="text" class="form-control">
+                    <option value="">==메뉴 선택==</option>
+                    <option th:each="menu : ${menuList}" th:utext="${menu.name}"></option>
+                </select>
+            </div>
+            <div name="myform" id="myform" class="input-group mb-3">
+                <fieldset>
+                    <input type="radio" name="reviewScore" value="5" id="rate1"><label
+                        for="rate1">★</label>
+                    <input type="radio" name="reviewScore" value="4" id="rate2"><label
+                        for="rate2">★</label>
+                    <input type="radio" name="reviewScore" value="3" id="rate3"><label
+                        for="rate3">★</label>
+                    <input type="radio" name="reviewScore" value="2" id="rate4"><label
+                        for="rate4">★</label>
+                    <input type="radio" name="reviewScore" value="1" id="rate5"><label
+                        for="rate5">★</label>
+                </fieldset>
+            </div>
+            <div class="input-group mb-3 ">
+                <div th:each="tags : ${tags}" class="form-check ">
+                    <input type="radio" th:value="${tags.key}" class="form-check-input" id="tags" name="tags">
+                    <label th:text="${tags.value}" class="form-check-label"></label>
                 </div>
             </div>
-            <button type="submit">작성하기</button>
+            <div class=" mb-3">
+                <div class="input-group-prepend">
+                    <input type="text" class="form-controls " id="review" name="review"
+                           placeholder="리뷰를 써주세요.">
+                </div>
+            </div>
+            <div class="input-group mb-3" style="display: none">
+                <div class="input-group-prepend">
+                    <input class="writeTime" id="writeTime" name="writeTime">
+                </div>
+            </div>
+            <script>
+                date = new Date();
+                year = date.getFullYear();
+                month = date.getMonth() + 1;
+                day = date.getDate();
+                hours = ('0' + date.getHours()).slice(-2);
+                minutes = ('0' + date.getMinutes()).slice(-2);
+                seconds = ('0' + date.getSeconds()).slice(-2);
+                time = document.getElementById("writeTime").innerHTML = year + "-" + month + "-" + day + "-" + hours + ":" + minutes + ":" + seconds;
+                $('input[class=writeTime]').attr('value', time);
+            </script>
+            <button type="submit" class=" btn btn-danger float-right ml-3">작성하기</button>
+            <!--            th:onclick="|location.href='@{/review(storeName=${storeName})}'|"-->
         </div>
     </form>
 </div>
