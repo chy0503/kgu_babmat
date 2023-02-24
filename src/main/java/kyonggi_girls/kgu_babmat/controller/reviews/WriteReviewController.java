@@ -18,47 +18,9 @@ import java.util.Map;
 @Controller
 public class WriteReviewController {
     private final ReviewService reviewService;
-    private final StoreService storeService;
 
-    public WriteReviewController(ReviewService reviewService, StoreService storeService) {
+    public WriteReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
-        this.storeService = storeService;
-    }
-
-    @GetMapping("writeReview")
-    public String reviewPage(@RequestParam(value = "storeName", required = false) String storeName, @RequestParam(value = "selectStoreName", required = false) String selectStoreName, Model model, HttpServletRequest request) throws Exception {
-//
-        // session
-        HttpSession session = request.getSession(false);
-        if (session == null) return "redirect:/";
-        User user = (User) session.getAttribute(SessionConst.sessionId);
-        model.addAttribute("user", user);
-
-        if ((selectStoreName == null) || (selectStoreName == "")) {
-            List<Store> store = storeService.getStore(storeName);
-            model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(null, storeName);
-            model.addAttribute("menuList", menuList);
-        } else {
-            List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
-            model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
-            model.addAttribute("menuList", menuList);
-        }
-        model.addAttribute("storeReview", new StoreReview());
-        model.addAttribute("selectStoreName", selectStoreName);
-        model.addAttribute("storeName", storeName);
-
-        Map<String, String> tags = new LinkedHashMap<>();
-        tags.put("추천 해요", "추천 해요");
-        tags.put("정말 맛있어요", "정말 맛있어요");
-        tags.put("맛있어요", "맛있어요");
-        tags.put("그냥 그래요", "그냥 그래요");
-        tags.put("맛없어요", "맛없어요");
-        tags.put("추천 안해요", "추천 안해요");
-        model.addAttribute("tags", tags);
-
-        return "reviews/writeReview";
     }
 
     @PostMapping("/reviewCreate")
