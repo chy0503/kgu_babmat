@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Ansungtangmyun-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#main_logo {
+    font-family: 'Ansungtangmyun-Bold';
+    font-size: 60px;
+}
+
 .customoverlay {
     position: relative;
     right: 2px;
@@ -72,6 +84,10 @@
     border-color: #cccccc !important;
 }
 
+.radius-20 {
+    border-radius: 20px;
+}
+
 .rounded-10 {
     border-radius: 10px;
 }
@@ -82,6 +98,10 @@
 
 .bg-f0 {
     background-color: #f0f0f0 !important;
+}
+
+.bg-none {
+    background: none;
 }
 
 .text-point {
@@ -98,6 +118,10 @@
 
 .hover-text-point:hover {
     color: #F9320C;
+}
+
+hover-text-black:hover {
+    color: black;
 }
 
 #weekMenu {
@@ -120,7 +144,7 @@
     content: url(https://user-images.githubusercontent.com/90389517/214607565-4f95f8d6-2ca0-4b5d-98da-fca4637aac41.png);
 }
 
-.like-ture {
+.like-true {
     content: url(https://user-images.githubusercontent.com/90389517/214608922-ab6c4c5c-9b94-4645-bfdb-d98fd2e06949.png);
 }
 
@@ -218,15 +242,38 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.reviewContents {
+    width: 350px;
+    height: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-bottom: 30px;
+}
 
- .reviewContents {
-     width: 350px;
-     height: 200px;
-     padding: 10px;
-     box-sizing: border-box;
-     border: solid 1.5px #D3D3D3;
-     border-radius: 5px;
-     font-size: 16px;
-     resize: none;
-     margin-bottom: 30px;
- }
+.center-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.border-none {
+    border: none;
+}
+
+.focus-none:focus {
+    outline: none;
+    border: none;
+}
+
+
+.hover-cursor-pointer:hover {
+    cursor: pointer;
+}
+
+.hover-decoration-none:hover {
+    text-decoration: none;
+}
