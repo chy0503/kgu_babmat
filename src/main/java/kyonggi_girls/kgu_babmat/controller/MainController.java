@@ -43,6 +43,4 @@ public class MainController {
         model.addAttribute("menuLanking", menuLanking);
         return "main";
     }
-
-
 }
