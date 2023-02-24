@@ -6,6 +6,7 @@ import kyonggi_girls.kgu_babmat.dao.SearchDao;
 import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

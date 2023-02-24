@@ -99,7 +99,7 @@ public class SignupController {
         model.addAttribute("isSuccess", isAllValidate);
         model.addAttribute("resultMsg", results);
 
-        return "main";
+        return "redirect:/main";
     }
 }
 
