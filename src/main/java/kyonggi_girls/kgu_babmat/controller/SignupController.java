@@ -51,9 +51,8 @@ public class SignupController {
 
 
         String email = params.get("email");
-        //String userPwd = params.get("user-password");
         String username = params.get("name");
-        //String userFood = params.get("user-food");
+
 
 
         // back-end validation

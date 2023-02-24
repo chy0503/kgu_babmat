@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public class SearchDao {
     static Firestore db = FirestoreClient.getFirestore();
 
-
-
 }

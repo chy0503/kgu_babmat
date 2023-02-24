@@ -17,7 +17,6 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewDao reviewDao;
     private final SearchDao searchDao;
 
-
     @Override
     public void createReview(String email, String storeName, String selectStore, String menu, int reviewScore,
                              List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException {

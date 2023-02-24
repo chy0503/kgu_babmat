@@ -45,28 +45,13 @@ public class GoogleController {
     }
 
 
-    /**
-     * Authentication Code? ?? ?? ?????
-     **/
     @GetMapping("google/auth")
     public String googleAuth(HttpServletRequest request, Model model, @RequestParam(value = "code") String authCode, Map<String, String> params)
             throws JsonProcessingException {
 
-       /* HttpSession session = request.getSession(false);
 
-        if (session == null) {
-            return "signin";
-        }
-
-        User user = (User) session.getAttribute(SessionConst.sessionId);
-        model.addAttribute("user", user);
-
-        */
-
-        //HTTP Request? ?? RestTemplate
         RestTemplate restTemplate = new RestTemplate();
 
-        //Google OAuth Access Token ??? ?? ???? ??
         GoogleOAuthRequest googleOAuthRequestParam = GoogleOAuthRequest
                 .builder()
                 .clientId(clientId)
@@ -76,22 +61,20 @@ public class GoogleController {
                 .grantType("authorization_code").build();
 
 
-        //JSON ??? ?? ??? ??
-        //??? ????? ???? ???? ????? Object mapper? ?? ?????.
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        //AccessToken ?? ??
+
         ResponseEntity<String> resultEntity = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, googleOAuthRequestParam, String.class);
 
-        //Token Request
+
         GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
         });
 
         System.out.println(resultEntity.getBody());
 
-        //ID Token? ?? (???? ??? jwt? ??? ????)
+
         String jwtToken = result.getIdToken();
         String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
                 .queryParam("id_token", jwtToken).encode().toUriString();
@@ -107,9 +90,8 @@ public class GoogleController {
 
 
         String email = params.get("email");
-        //String userPwd = params.get("user-password");
         String username = params.get("username");
-        //String userFood = params.get("user-food");
+
 
         // back-end validation
         String results = "";

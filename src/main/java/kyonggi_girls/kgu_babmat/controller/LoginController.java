@@ -20,7 +20,6 @@ public class LoginController {
 
     private final LoginService loginService;
 
-
     @GetMapping("login")
     public String home(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
         HttpSession session = request.getSession(false);
