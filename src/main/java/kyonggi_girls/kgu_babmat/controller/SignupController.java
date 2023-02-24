@@ -80,7 +80,7 @@ public class SignupController {
             session.setAttribute(SessionConst.sessionId, loginService.isUser(email));
 
             try {
-                int insertResult = userDao.nickname(username);
+                int insertResult = userDao.insertUser(email, username);
                 if (insertResult >= 1) {
                     results += "You have successfully registered.";
                 } else {
@@ -101,5 +101,5 @@ public class SignupController {
 
         return "main";
     }
-    }
+}
 

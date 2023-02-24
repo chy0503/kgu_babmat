@@ -10,10 +10,7 @@ import kyonggi_girls.kgu_babmat.dto.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Repository
@@ -34,8 +31,8 @@ public class UserDao {
         return 0;
     }
 
-    public static int nickname(String username) throws Exception {
-        DocumentReference docRef = db.collection("users").document();
+    public static int nickname(String email, String username) throws Exception {
+        DocumentReference docRef = db.collection("users").document(email);
         Map<String, Object> data = new HashMap<>();
         data.put("username", username);
        // data.put("email", email);
