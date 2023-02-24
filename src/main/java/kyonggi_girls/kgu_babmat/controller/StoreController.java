@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Controller
@@ -49,6 +51,15 @@ public class StoreController {
         String today = storeService.getToday(); // 오늘 날짜 받기
         List likedList = storeService.showLike_menu(storeName, user.getEmail()); // 좋아요 눌린 메뉴 리스트 받기
 
+        Map<String, String> tags = new LinkedHashMap<>();
+        tags.put("추천 해요", "추천 해요");
+        tags.put("정말 맛있어요", "정말 맛있어요");
+        tags.put("맛있어요", "맛있어요");
+        tags.put("그냥 그래요", "그냥 그래요");
+        tags.put("맛없어요", "맛없어요");
+        tags.put("추천 안해요", "추천 안해요");
+
+        model.addAttribute("tags", tags);
         model.addAttribute("cafeteriaMenuList", cafeteriaMenuList);
         model.addAttribute("today", today);
         model.addAttribute("storeName", storeName);

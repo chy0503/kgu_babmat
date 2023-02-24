@@ -17,18 +17,16 @@
 <body>
 <div class="container">
     <!-- 페이지 로고 및 이름 -->
-    <div class="d-flex justify-content-center my-5">
-        <h1>경기대 밥맛</h1>
-    </div>
+    <div id="main_logo" class="d-flex justify-content-center my-5" style="user-select: none;">경기대 밥맛┘</div>
 
     <!-- 헤더 -->
     <header class="py-3 mb-3 border-bottom">
         <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search" action="/review" th:action="@{/search}" method="post">
-                <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
-                <button type="submit">검색</button>
+            <form id="search_form" class="col-5" method="get" action="search">
+                <input id="search_input" name="search" type="search" class="form-control noOutline"
+                       style="height: 50px;" placeholder="Search...">
             </form>
-            <div class="row">
+            <div class="row align-items-center mb-1">
                 <h4 class="mr-3 align-self-center">
 <!--                    <div th:text="|${user.getUsername()}님|"></div>-->
 <!--                    <div th:text="'Email : ' + ${email}"></div>-->
@@ -68,7 +66,7 @@
                              src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
                              width="25px">
                         <h4 class="mx-1"
-                            th:utext="${menu.getReviewScore() + '(' + menu.getReviewNum() + ')'}"></h4>
+                            th:utext="${#numbers.formatDecimal(menu.getReviewScore(), 0, 2) + '(' + menu.getReviewNum() + ')'}"></h4>
                         <h4 class="ml-3" th:utext="${menu.name}"></h4>
                     </div>
                 </div>
@@ -108,7 +106,7 @@
         </div>
     </div>
 
-    <!-- 푸터 -->
+    <div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </div>
 </body>
 </html>

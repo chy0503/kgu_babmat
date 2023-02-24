@@ -35,20 +35,24 @@ public class MyPageController {
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
-
         List<StoreReview> reviewList = reviewService.showReview_all(user.getEmail());
         model.addAttribute("reviewList", reviewList);
+
         return "mypages/myPage";
     }
+
     @PostMapping("myPage")
-    public String reviewCollect(@ModelAttribute StoreReview storeReview, HttpServletRequest request) throws Exception {
+    public String reviewCollect(@ModelAttribute StoreReview storeReview,
+    HttpServletRequest request) throws Exception {
         // session
         HttpSession session = request.getSession(false);
         if (session == null)
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
-        reviewService.updateReview(user.getEmail(), storeReview.getMenu(), storeReview.getReview(),  storeReview.getReviewScore());
-        System.out.println("리뷰 모아보기 : "+reviewService.showReview_all(user.getEmail()));
+
+        reviewService.createReview(user.getEmail(),storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
+                storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
+        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
         return "redirect:/myPage";
     }
 
@@ -74,7 +78,7 @@ public class MyPageController {
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
         storeService.updateLike(user.getEmail(), like.getMenu(), like.getPrice(), like.getSelectStore(), like.getStore());
-        System.out.println("좋아요 모아보기 : "+storeService.showLike_all(user.getEmail())); // 지우면 새로고침 해야지 반영됨
+        System.out.println("좋아요 모아보기 : " + storeService.showLike_all(user.getEmail())); // 지우면 새로고침 해야지 반영됨
         return "redirect:/likedMenu";
     }
 }
