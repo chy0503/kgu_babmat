@@ -48,12 +48,13 @@ public class ReviewController {
         if ((selectStoreName == null) || (selectStoreName == "")) { // 일반 식당일 경우
             List<Store> store = storeService.getStore(storeName);
             model.addAttribute("store", store);
+            model.addAttribute("selectStoreName", null);
         } else { // 푸드코트 내의 식당일 경우
             List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
             model.addAttribute("store", store);
+            model.addAttribute("selectStoreName", selectStoreName);
         }
         model.addAttribute("storeName", storeName);
-        model.addAttribute("selectStoreName", selectStoreName);
 
         // store review
         List<StoreReview> storeReviews = reviewService.showReview_all_store(storeName);
