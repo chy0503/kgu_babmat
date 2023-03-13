@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -38,7 +39,6 @@ public class ReviewDao {
         reviewmap.put("review", review);
         reviewmap.put("writeTime", writeTime);
         db.collection("reviews").document().set(reviewmap);
-
     }
 
     /**
@@ -60,11 +60,9 @@ public class ReviewDao {
     public List showReview_all_store(String storeName) throws ExecutionException, InterruptedException {
         List<StoreReview> reviewList = new ArrayList<>();
         List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("storeName", storeName).get().get().getDocuments();
-        System.out.println("showReview_all_store >> " + documents.size());
         for (QueryDocumentSnapshot document : documents) {
             reviewList.add(document.toObject(StoreReview.class));
         }
-        System.out.println("reviewList = " + reviewList);
         return reviewList;
     }
 
@@ -73,7 +71,6 @@ public class ReviewDao {
      */
     public void modifyAndDeleteReview(String email, String writeTime) throws ExecutionException, InterruptedException {
         List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("email", email).whereEqualTo("writeTime", writeTime).get().get().getDocuments();
-        System.out.println("showReview_all_store >> " + documents.size());
         for (QueryDocumentSnapshot document : documents) {
             String reviewID = document.getId().toString();
             db.collection("reviews").document(reviewID).delete();
