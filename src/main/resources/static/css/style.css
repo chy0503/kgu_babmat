@@ -243,14 +243,8 @@ hover-text-black:hover {
 }
 
 .reviewContents {
-    width: 350px;
-    height: 200px;
-    padding: 10px;
-    box-sizing: border-box;
     border: solid 1.5px #D3D3D3;
     border-radius: 5px;
-    font-size: 16px;
-    resize: none;
     margin-bottom: 30px;
 }
 
@@ -269,6 +263,9 @@ hover-text-black:hover {
     border: none;
 }
 
+.click-none {
+    pointer-events: none;
+}
 
 .hover-cursor-pointer:hover {
     cursor: pointer;
@@ -276,4 +273,12 @@ hover-text-black:hover {
 
 .hover-decoration-none:hover {
     text-decoration: none;
+}
+
+.hover-color-white:hover {
+    color: white;
+}
+
+.hover-text-bold:hover {
+    font-weight: bold;
 }

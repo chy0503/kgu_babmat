@@ -27,7 +27,7 @@ public class MyPageController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("myPage")
+    @GetMapping("myReview")
     public String myReview(Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
         // session
         HttpSession session = request.getSession(false);
@@ -38,22 +38,7 @@ public class MyPageController {
         List<StoreReview> reviewList = reviewService.showReview_all(user.getEmail());
         model.addAttribute("reviewList", reviewList);
 
-        return "mypages/myPage";
-    }
-
-    @PostMapping("myPage")
-    public String reviewCollect(@ModelAttribute StoreReview storeReview,
-    HttpServletRequest request) throws Exception {
-        // session
-        HttpSession session = request.getSession(false);
-        if (session == null)
-            return "redirect:/";
-        User user = (User) session.getAttribute(SessionConst.sessionId);
-
-        reviewService.createReview(user.getEmail(),storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
-                storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
-        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
-        return "redirect:/myPage";
+        return "mypages/myReview";
     }
 
     @GetMapping("likedMenu")

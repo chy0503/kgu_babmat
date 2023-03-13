@@ -20,7 +20,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void createReview(String email, String storeName, String selectStore, String menu, int reviewScore,
                              List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException {
-
         reviewDao.createReview(email, storeName, selectStore, menu, reviewScore, tags, review, writeTime);
     }
 
@@ -34,19 +33,23 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDao.showReview_all_store(storeName);
     }
 
-//   @Override
-//   public List Searching(String menu) throws ExecutionException, InterruptedException{
-//        return searchDao.Searching(menu);
-//   }
+    @Override
+    public void modifyReview(String email, String writeTime) throws ExecutionException, InterruptedException {
+        reviewDao.modifyAndDeleteReview(email, writeTime);
+    }
 
-   @Override
-   public List modifyReview(String email, String writeTime) throws ExecutionException, InterruptedException {
-        return reviewDao.modifyAndDeleteReview(email, writeTime);
-   }
-   @Override
-   public void update(String email, int reviewScore, List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException {
+    @Override
+    public void update(String email, int reviewScore, List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException {
         reviewDao.updates(email, reviewScore, tags, review, writeTime);
-   }
+    }
 
+    @Override
+    public StoreReview getOnlyOneReview(String email, String writeTime) throws ExecutionException, InterruptedException {
+        return reviewDao.getOnlyUpdate(email, writeTime);
+    }
 
+    @Override
+    public List Searching(String search) throws ExecutionException, InterruptedException {
+        return searchDao.SearchReview(search);
+    }
 }

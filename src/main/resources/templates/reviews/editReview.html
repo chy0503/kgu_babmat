@@ -16,106 +16,76 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <header class="py-3 mb-3 border-bottom">
-        <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search">
-                <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
-            </form>
-
-            <div class="row">
-                <h4 class="mr-3 align-self-center">
-                    <div th:text="|${user.getUsername()}님|"></div>
-                </h4>
-                <div class="dropdown mr-4">
-                    <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
-                         aria-haspopup="true" aria-expanded="false">
-                        <img src="https://user-images.githubusercontent.com/90389517/212916931-321ab7a7-7f29-4c6d-acf7-3c7620f9ed09.jpeg"
-                             width="50" height="50" class="rounded-circle">
+<div class="container d-flex justify-content-center">
+    <div style="width: 600px;">
+        <form action="modify" method="post">
+            <div class="mt-5">
+                <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+            </div>
+            <div class="mb-5 d-flex justify-content-between row align-items-end">
+                <div class="display-2 font-weight-bold">리뷰 수정</div>
+                <button class="btn btn-warning mb-2" type="submit">작성하기</button>
+            </div>
+            <div class="box" th:each="list : ${reviewList}">
+                <div class="input-group mb-3" style="display: none">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">상위 식당 이름</span>
                     </div>
-                    <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
-                        <li><a class="dropdown-item" href="/myPage">마이페이지</a></li>
-                        <li><a class="dropdown-item" href="/writeReview">리뷰 작성하기</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">로그아웃</a></li>
-                    </ul>
+                    <input class="form-control" id="selectStore" name="selectStore" th:value="${list.selectStore}"
+                           readonly>
+                </div>
+                <div name="myform" id="myform" class="input-group mb-3 d-flex justify-content-center">
+                    <fieldset>
+                        <input type="radio" name="reviewScore" value="5" id="rate1"><label
+                            for="rate1">★</label>
+                        <input type="radio" name="reviewScore" value="4" id="rate2"><label
+                            for="rate2">★</label>
+                        <input type="radio" name="reviewScore" value="3" id="rate3"><label
+                            for="rate3">★</label>
+                        <input type="radio" name="reviewScore" value="2" id="rate4"><label
+                            for="rate4">★</label>
+                        <input type="radio" name="reviewScore" value="1" id="rate5"><label
+                            for="rate5">★</label>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="input-group col-6 mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text click-none">식당 이름</span>
+                        </div>
+                        <input type="text" class="form-control focus-none click-none" id="storeName" name="storeName"
+                               th:value="${list.storeName}"
+                               readonly>
+                    </div>
+                    <div class="input-group col-6 mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text click-none">메뉴</span>
+                        </div>
+                        <input class="form-control focus-none click-none" id="menu" name="menu" th:value="${list.menu}"
+                               readonly>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div th:each="tags : ${tags}" class="form-check form-check-inline">
+                        <input type="checkbox" th:value="${tags.key}" class="form-check-input" id="tags" name="tags">
+                        <label th:text="${tags.value}" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group-prepend">
+                    <textarea type="text" class="w-100 rounded focus-none p-2" id="review" name="review"
+                              th:value="${list.review}" style="resize: none; height: 200px; border: 1px solid #dee2e6;"
+                              placeholder="리뷰를 써주세요."></textarea>
+                    </div>
+                </div>
+                <div class="input-group mb-3" style="display:none;">
+                    <div class="input-group-prepend">
+                        <input name="writeTime" th:value="${list.writeTime}">
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </header>
-
-    <form action="modify" method="post">
-        <div class="box" th:each="list : ${reviewList}">
-            <h1>리뷰 쓰기</h1><br>
-            <div class="input-group mb-3" style="display: none">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">상위 식당 이름</span>
-                </div>
-                <input class="form-control" id="selectStore" name="selectStore" th:value="${list.selectStore}" readonly>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">식당 이름</span>
-                </div>
-                <input type="text" class="form-control" id="storeName" name="storeName" th:value="${list.storeName}"
-                       readonly>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">메뉴</span>
-                </div>
-                <input class="form-control" id="menu" name="menu" th:value="${list.menu}" readonly>
-            </div>
-            <div name="myform" id="myform" class="input-group mb-3">
-                <fieldset>
-                    <input type="radio" name="reviewScore" value="5" id="rate1"><label
-                        for="rate1">★</label>
-                    <input type="radio" name="reviewScore" value="4" id="rate2"><label
-                        for="rate2">★</label>
-                    <input type="radio" name="reviewScore" value="3" id="rate3"><label
-                        for="rate3">★</label>
-                    <input type="radio" name="reviewScore" value="2" id="rate4"><label
-                        for="rate4">★</label>
-                    <input type="radio" name="reviewScore" value="1" id="rate5"><label
-                        for="rate5">★</label>
-                </fieldset>
-            </div>
-            <div class="input-group mb-3">
-                <div th:each="tags : ${tags}" class="form-check form-check-inline">
-                    <input type="checkbox" th:value="${tags.key}" class="form-check-input" id="tags" name="tags">
-                    <label th:text="${tags.value}" class="form-check-label"></label>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="input-group-prepend">
-                    <input type="text" class="form-controls " id="review" name="review" th:value="${list.review}"
-                           placeholder="리뷰를 써주세요.">
-                </div>
-            </div>
-            <!--           -->
-            <div class="input-group mb-3" style="display: none">
-                <div class="input-group-prepend">
-                    <input class="writeTime" id="writeTime" name="writeTime" th:value="${list.writeTime}">
-                </div>
-            </div>
-            <script>
-                date = new Date();
-                year = date.getFullYear();
-                month = date.getMonth() + 1;
-                day = date.getDate();
-                hours = ('0' + date.getHours()).slice(-2);
-                minutes = ('0' + date.getMinutes()).slice(-2);
-                seconds = ('0' + date.getSeconds()).slice(-2);
-                time = document.getElementById("writeTime").innerHTML = year + "-" + month + "-" + day + "-" + hours + ":" + minutes + ":" + seconds;
-                $('input[class=writeTime]').attr('value', time);
-            </script>
-            <button type="submit">작성하기</button>
-            <!--            th:onclick="|location.href='@{/review(storeName=${storeName})}'|"-->
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

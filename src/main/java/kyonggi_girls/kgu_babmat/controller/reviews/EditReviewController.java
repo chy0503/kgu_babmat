@@ -27,7 +27,7 @@ public class EditReviewController {
     }
 
     @GetMapping("/edit")
-    public String myReview(@RequestParam(required = false) String writeTime,
+    public String myReview(@ModelAttribute StoreReview storeReview, @RequestParam(required = false) String writeTime,
                            Model model, HttpServletRequest request) throws Exception {
 
 
@@ -37,11 +37,12 @@ public class EditReviewController {
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
-        List<StoreReview> storeReviews = reviewService.modifyReview(user.getEmail(), writeTime);
+        StoreReview storeReviews =reviewService.getOnlyOneReview(user.getEmail(),writeTime);
         model.addAttribute("reviewList", storeReviews);
+
         model.addAttribute("writeTime", writeTime);
 
-        System.out.println("->>>>>>>>>>>" + storeReviews);
+//        System.out.println("->>>>>>>>>>>" + storeReviews);
         Map<String, String> tags = new LinkedHashMap<>();
         tags.put("추천 해요", "추천 해요");
         tags.put("정말 맛있어요", "정말 맛있어요");
@@ -54,23 +55,6 @@ public class EditReviewController {
 
         return "reviews/editReview";
     }
-    @GetMapping("/delete")
-    public String deleteReview(@RequestParam(required = false) String writeTime,
-                           Model model, HttpServletRequest request) throws Exception {
-
-        // session
-        HttpSession session = request.getSession(false);
-        if (session == null)
-            return "redirect:/";
-        User user = (User) session.getAttribute(SessionConst.sessionId);
-        model.addAttribute("user", user);
-        List<StoreReview> storeReviews = reviewService.modifyReview(user.getEmail(), writeTime);
-        model.addAttribute("reviewList", storeReviews);
-        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
-        return "redirect:/myPage";
-    }
-
-
 
     @PostMapping("/modify")
     public String reviewCollect(@ModelAttribute StoreReview storeReview, HttpServletRequest request) throws Exception {
@@ -79,14 +63,29 @@ public class EditReviewController {
         if (session == null)
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
-        reviewService.createReview(user.getEmail(), storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(), storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
+        reviewService.update(user.getEmail(), storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
         System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
 
         return "redirect:/myPage";
     }
 
+    @GetMapping("/delete")
+    public String deleteReview(@RequestParam(required = false) String writeTime,
+                               Model model, HttpServletRequest request) throws Exception {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
 
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        model.addAttribute("user", user);
 
+        reviewService.modifyReview(user.getEmail(), writeTime);
+        List<StoreReview> storeReviews = reviewService.showReview_all(user.getEmail());
+        model.addAttribute("reviewList", storeReviews);
+        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
+        return "redirect:/myPage";
+    }
 }
 
 
