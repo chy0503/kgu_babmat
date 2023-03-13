@@ -12,7 +12,7 @@ public interface ReviewService {
      void createReview(String email, String storeName, String selectStore, String menu, int reviewScore, List<String> tags, String review, String writeTime ) throws ExecutionException, InterruptedException;
      List showReview_all_store(String storeName) throws ExecutionException, InterruptedException;
      List Searching(String search) throws ExecutionException, InterruptedException;
-     void modifyReview(String email,String writeTime ) throws ExecutionException, InterruptedException;
+     void modifyReview(String email,String writeTime) throws ExecutionException, InterruptedException;
      void update(String email, int reviewScore, List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException;
      StoreReview getOnlyOneReview(String email, String writeTime) throws ExecutionException, InterruptedException;
 }

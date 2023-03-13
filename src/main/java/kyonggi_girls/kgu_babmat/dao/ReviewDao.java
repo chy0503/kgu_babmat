@@ -89,16 +89,12 @@ public class ReviewDao {
      * 리뷰 수정 기능
      */
     public void updates(String email, int reviewScore, List<String> tags, String review, String writeTime) throws ExecutionException, InterruptedException {
-        System.out.println(email + writeTime);
-        System.out.println(reviewScore + review);
         List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("email", email).whereEqualTo("writeTime", writeTime).get().get().getDocuments();
-
         Map<String, Object> updates = new HashMap<>();
         updates.put("reviewScore", reviewScore);
         updates.put("tags", tags);
         updates.put("review", review);
         updates.put("writeTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        System.out.println(documents.size());
         // asynchronously update doc
         db.collection("reviews").document(documents.get(0).getId()).update(updates);
     }

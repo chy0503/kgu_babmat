@@ -72,7 +72,6 @@ public class EditReviewController {
     @GetMapping("/delete")
     public String deleteReview(@RequestParam(required = false) String writeTime,
                                Model model, HttpServletRequest request) throws Exception {
-        System.out.println("delete 왔다");
         // session
         HttpSession session = request.getSession(false);
         if (session == null)
