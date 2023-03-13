@@ -13,14 +13,14 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-
 </head>
 <body>
 <div class="container">
     <header class="py-3 mb-3 border-bottom">
         <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search" action="Searching" method="get"  >
-                <input type="text" name="menu" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+            <form class="col-5" role="search" action="Searching" method="get">
+                <input type="text" name="menu" class="form-control noOutline" style="height: 50px;"
+                       placeholder="Search...">
                 <button type="submit">검색</button>
             </form>
             <div class="row">
@@ -47,57 +47,32 @@
         </div>
     </header>
     <div class="reviewContents" th:each="list : ${storeReviews}">
-        <table>
-            <tr colspan="4"  style="display: none">
+        <p style="display: none" th:text="${list.email}"></p>
+        <p th:utext="${list.storeName}">
+        <div>
+            <p>메뉴 : </p>
+            <p th:text="${list.menu}"></p>
+        </div>
+        <div>
+            <p th:text="${list.writeTime}"></p>
+        </div>
+        <div>
+            <th:block th:each="num : ${#numbers.sequence(1, list.reviewScore)}">
+                <img height="25px" src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
+                     width="25px">
+            </th:block>
+        </div>
+        <div>
+            <p th:text="${list.review}"></p>
+        </div>
+        <div>
+            <p th:text="${list.tags}"></p>
+        </div>
 
-                <td>이메일</td>
+        <div th:text="${list.username}">
+        </div>
 
-                <td th:utext="${list.email}"></td>
 
-            </tr>
-
-            <tr colspan="4">
-
-                <td>식당 이름</td>
-
-                <td th:utext="${list.storeName}"></td>
-
-            </tr>
-            <tr>
-                <td>메뉴</td>
-                <td colspan="4" th:utext="${list.menu}"></td>
-            </tr>
-
-            <tr>
-
-                <td>별점</td>
-
-                <td colspan="4" th:utext="${list.reviewScore}"></td>
-
-            </tr>
-
-            <tr colspan="4" rowspan="3">
-
-                <td th:utext="${list.review}"></td>
-
-            </tr>
-            <tr colspan="4" rowspan="3">
-
-                <td th:utext="${list.tags}"></td>
-
-            </tr>
-
-            <tr>
-
-                <td>작성 시간</td>
-
-                <td colspan="2" th:utext="${list.writeTime}" style="width: 100px">
-
-                </td>
-
-            </tr>
-
-        </table>
     </div>
 </div>
 </body>

@@ -24,4 +24,5 @@ public class LoginService {
     public User getUser(String email) throws ExecutionException, InterruptedException {
         return userDao.getUser(email);
     }
+
 }

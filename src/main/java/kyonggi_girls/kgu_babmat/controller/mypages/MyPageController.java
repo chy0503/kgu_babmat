@@ -43,14 +43,14 @@ public class MyPageController {
 
     @PostMapping("myPage")
     public String reviewCollect(@ModelAttribute StoreReview storeReview,
-    HttpServletRequest request) throws Exception {
+                                HttpServletRequest request) throws Exception {
         // session
         HttpSession session = request.getSession(false);
         if (session == null)
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
 
-        reviewService.createReview(user.getEmail(),storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
+        reviewService.createReview(user.getEmail(), storeReview.getStoreName(), storeReview.getSelectStore(), storeReview.getMenu(),
                 storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
         System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
         return "redirect:/myPage";

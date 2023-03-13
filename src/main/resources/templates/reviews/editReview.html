@@ -95,25 +95,13 @@
                            placeholder="리뷰를 써주세요.">
                 </div>
             </div>
-            <!--           -->
-            <div class="input-group mb-3" style="display: none">
+            <div class="input-group mb-3" style="display:none;" >
                 <div class="input-group-prepend">
-                    <input class="writeTime" id="writeTime" name="writeTime" th:value="${list.writeTime}">
+                    <input name="writeTime" th:value="${list.writeTime}">
                 </div>
             </div>
-            <script>
-                date = new Date();
-                year = date.getFullYear();
-                month = date.getMonth() + 1;
-                day = date.getDate();
-                hours = ('0' + date.getHours()).slice(-2);
-                minutes = ('0' + date.getMinutes()).slice(-2);
-                seconds = ('0' + date.getSeconds()).slice(-2);
-                time = document.getElementById("writeTime").innerHTML = year + "-" + month + "-" + day + "-" + hours + ":" + minutes + ":" + seconds;
-                $('input[class=writeTime]').attr('value', time);
-            </script>
             <button type="submit">작성하기</button>
-            <!--            th:onclick="|location.href='@{/review(storeName=${storeName})}'|"-->
+
         </div>
     </form>
 </div>

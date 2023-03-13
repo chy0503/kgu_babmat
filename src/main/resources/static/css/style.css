@@ -243,8 +243,8 @@ hover-text-black:hover {
 }
 
 .reviewContents {
-    width: 350px;
-    height: 200px;
+    width: 500px;
+    height: 400px;
     padding: 10px;
     box-sizing: border-box;
     border: solid 1.5px #D3D3D3;
