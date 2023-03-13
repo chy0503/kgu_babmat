@@ -15,49 +15,15 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <div style="height: 20px;"></div>
-    <!-- 페이지 로고 및 이름 -->
-    <div class="d-flex justify-content-between row align-items-center m-5">
-        <div id="main_logo" style="user-select: none;">경기대 밥맛┘</div>
-        <a class="btn btn-danger" href="/login">google login</a>
+<div class="position-absolute center-center ">
+    <div class="text-center">
+        <div id="main_logo" class="mb-5" style="user-select: none;">경기대 밥맛┘</div>
+        <a class="btn btn-danger pt-1 pb-2 px-3" style="font-size: 30px;" href="/login">google login</a>
     </div>
-    <div style="height: 50px;"></div>
-
-    <!-- 지도와 식당 버튼 리스트 -->
-    <div onclick="alert('로그인 후 이용 가능합니다')">
-        <div class="row">
-            <div class="col-8">
-                <div id="map" class="rounded-10" style="height:430px;"></div>
-            </div>
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
-            <script type="text/javascript" src="js/kakaoMap.js"></script>
-            <script type="text/javascript" th:inline="javascript">
-                /*[# th:each="list : ${storeList}"]*/
-                makeMarker(/*[[${list.name}]]*/ {}, /*[[${list.selectStore}]]*/ {}, /*[[${list.lat}]]*/ {}, /*[[${list.lng}]]*/ {});
-                /*[/]*/
-            </script>
-
-            <div class="col-4 storeList mb-5">
-                <ul class="list-group" style="height: 430px;">
-                    <th:block th:each="list : ${storeList}">
-                        <button th:if="${list.selectStore == true}"
-                                class="noOutline list-group-item p-4 text-center hover-text-bold">
-                            <div th:text="${list.name}" class="storeName"></div>
-                        </button>
-                        <button th:unless="${list.selectStore == true}"
-                                class="noOutline list-group-item p-4 text-center hover-text-bold">
-                            <div th:text="${list.name}" class="storeName"></div>
-                        </button>
-                    </th:block>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="position-absolute" style="bottom: 0; left: 50%; transform: translate(-50%, 0);"
-         th:insert="~{/fragments/footer :: footerFragment}"></div>
 </div>
+<div style="height: 50px;"></div>
+
+<div class="position-absolute" style="bottom: 0; left: 50%; transform: translate(-50%, 0);"
+     th:insert="~{/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

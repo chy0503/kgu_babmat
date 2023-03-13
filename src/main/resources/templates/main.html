@@ -52,7 +52,7 @@
 
     <!-- 인기 순위 섹션 -->
     <div class="">
-        <div class="my-5 row align-content-between">
+        <div class="my-4 row align-content-between">
             <div class="col-4 p-3" th:each="menu, menuStat : ${menuLanking}" th:if="${menuStat.index < 3}">
                 <div class="d-flex justify-content-center"
                      th:onclick="|location.href='@{/store(selectStoreName=${menu.selectStore}, storeName=${menu.storeName})}'|">
@@ -101,7 +101,6 @@
             </ul>
         </div>
     </div>
-
     <div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </div>
 </body>

@@ -14,7 +14,7 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="min-height: 80vh;">
     <div class="mt-5 ml-2">
         <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
     </div>
@@ -36,5 +36,6 @@
     </div>
 </div>
 </div>
+<div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

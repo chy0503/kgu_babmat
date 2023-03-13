@@ -15,7 +15,7 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="min-height: 80vh;">
     <!-- 페이지 로고 및 이름 -->
     <div id="main_logo" class="d-flex justify-content-center my-5" style="user-select: none;">경기대 밥맛┘</div>
     <!-- 헤더 -->
@@ -83,5 +83,6 @@
         </div>
     </div>
 </div>
+<div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </body>
 </html>
