@@ -34,7 +34,6 @@ public class MainController {
 
         User userTmp = (User) session.getAttribute(SessionConst.sessionId);
         User user = loginService.getUser(userTmp.getEmail());
-        System.out.println("user.getUsername() = " + user.getUsername());
         model.addAttribute("user", user);
 
         // store list

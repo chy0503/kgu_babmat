@@ -59,4 +59,13 @@ public class UserDao {
         // asynchronously update doc
         db.collection("users").document(email).update(updates);
     }
+
+    public void deleteUser(String email) throws ExecutionException, InterruptedException {
+        db.collection("users").document(email).delete();
+        List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("email", email).get().get().getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            String reviewID = document.getId().toString();
+            db.collection("reviews").document(reviewID).delete();
+        }
+    }
 }

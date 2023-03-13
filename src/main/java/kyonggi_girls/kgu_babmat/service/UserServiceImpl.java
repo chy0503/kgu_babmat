@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
     public void updateUser(String email, String username) throws ExecutionException, InterruptedException {
         userDao.updateUser(email, username);
     }
+
+    @Override
+    public void deleteUser(String email) throws ExecutionException, InterruptedException {
+        userDao.deleteUser(email);
+    }
 }

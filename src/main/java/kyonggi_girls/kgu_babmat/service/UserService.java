@@ -10,4 +10,5 @@ public interface UserService {
     User getUserInfo(String email) throws ExecutionException, InterruptedException;
     void updateUser(String email, String username) throws ExecutionException, InterruptedException;
 
+    void deleteUser(String email) throws ExecutionException, InterruptedException;
 }
