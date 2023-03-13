@@ -24,7 +24,6 @@
             <div class="col-7">
                 <div class="mb-3">
                     <h1 th:id="storeName" th:text="${storeName}" class="display-2 font-weight-bold"></h1>
-                    <h1 th:id="selectStoreName" th:text="${selectStoreName}" class="hidden"></h1>
                 </div>
                 <div class="my-2 mx-2">
                     <div class="mb-2">
@@ -70,7 +69,7 @@
                 <div class="d-flex justify-content-end">
                     <div th:text="${list.username}"></div>
                 </div>
-                <div th:text="${list.review}" class="m-3" style="font-size: 18px;"></div>
+                <div th:text="${list.review}" class="mx-2 mb-3 mt-5" style="font-size: 18px;"></div>
                 <div class="row">
                     <th:block th:each="tag : ${list.tags}">
                         <button class="btn btn-warning ml-3" th:text="${'#' + tag}"></button>

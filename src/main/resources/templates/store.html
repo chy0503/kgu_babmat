@@ -57,7 +57,8 @@
         <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
             <div class="col-12 mb-2">
                 <div>
-                    <a th:onclick="|location.href='@{/review(storeName=${storeName}, selectStoreName=${selectStoreName})}'|" class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기</a>
+                    <a th:onclick="|location.href='@{/review(storeName=${storeName}, selectStoreName=${selectStoreName})}'|"
+                       class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기</a>
                 </div>
                 <div>
                     <button id="write_review_btn1" class="btn btn-danger float-right ml-3">리뷰 작성</button>
@@ -186,7 +187,9 @@
                 <button id="write_review_btn2" class="btn btn-danger float-right ml-3">리뷰 작성</button>
             </div>
             <div>
-                <button th:onclick="|location.href='@{/review( storeName=${storeName})}'|" class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기</button>
+                <button th:onclick="|location.href='@{/review( storeName=${storeName})}'|"
+                        class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기
+                </button>
             </div>
         </div>
         <div class="mt-5 row align-content-between">
@@ -206,7 +209,8 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title ml-3" th:utext="${menu.name}"></h5>
-                        <h5 th:id="${menu.name + 'price'}" class="card-title text-secondary text-right mt-1" th:utext="'₩' + ${menu.price}"></h5>
+                        <h5 th:id="${menu.name + 'price'}" class="card-title text-secondary text-right mt-1"
+                            th:utext="'₩' + ${menu.price}"></h5>
                     </div>
                 </div>
             </div>
@@ -225,11 +229,12 @@
                 <div class="border-bottom">
                     <div class="mx-4 my-3 d-flex justify-content-between">
                         <div id="dial_close"
-                             class="hover-decoration-none text-danger focus-none hover-text-black hover-cursor-pointer">←
+                             class="hover-decoration-none text-danger focus-none hover-text-black hover-cursor-pointer">
+                            ←
                         </div>
                         <div>리뷰 작성하기</div>
                         <button id="reviewCreateButton" type="submit"
-                                class="bg-none border-none focus-none text-danger hover-text-black">작성하기
+                                class="bg-none border-none focus-none text-danger hover-text-black">작성
                         </button>
                     </div>
                 </div>
@@ -255,21 +260,24 @@
                     <div class="w-100 mb-4 d-flex justify-content-between">
                         <!-- 식당 이름 -->
                         <div class="col-6">
-                            <input class="w-100 h-100 border-none border-bottom focus-none p-1" type="text" id="storeName"
+                            <input class="w-100 h-100 border-none border-bottom focus-none p-1" type="text"
+                                   id="storeName"
                                    name="storeName" th:value="${storeName}" readonly>
                         </div>
 
                         <!-- 메뉴 -->
                         <div class="col-6 pl-3">
                             <div class="input-group" th:if="${(storeName =='기숙사 식당') }">
-                                <select name="menu" type="text" class="w-100 h-100 border-none focus-none border-bottom p-1"
+                                <select name="menu" type="text"
+                                        class="w-100 h-100 border-none focus-none border-bottom p-1"
                                         required>
                                     <option value="" selected disabled hidden>==메뉴 선택==</option>
                                     <option value="기숙사 한식">기숙사 한식</option>
                                 </select>
                             </div>
                             <div class="input-group" th:if="${(storeName =='감성코어') }">
-                                <select name="menu" type="text" class="w-100 h-100 border-none focus-none border-bottom p-1"
+                                <select name="menu" type="text"
+                                        class="w-100 h-100 border-none focus-none border-bottom p-1"
                                         required>
                                     <option value="" selected disabled hidden>==메뉴 선택==</option>
                                     <option value="감성코어 한식">감성코어 한식</option>
@@ -288,16 +296,16 @@
                     <!-- 태그 -->
                     <div class="col-12 row mb-4 mx-1">
                         <div th:each="tags : ${tags}" class="form-check mr-3">
-                            <input type="radio" th:value="${tags.key}" class="form-check-input" id="tags" name="tags">
-                            <label th:text="${tags.value}" class="form-check-label"></label>
+                            <input type="checkbox" th:value="${tags.key}" th:text="${tags.value}"
+                                   class="form-check-input" id="tags" name="tags">
                         </div>
                     </div>
 
                     <!-- 내용 -->
                     <div class="col-12 mb-4">
-                <textarea type="text" class="w-100 rounded focus-none p-2" id="review" name="review"
-                          style="resize: none; height: 120px; border: 1px solid #dee2e6;"
-                          placeholder="리뷰를 써주세요." required></textarea>
+                        <textarea type="text" class="w-100 rounded focus-none p-2" id="review" name="review"
+                                  style="resize: none; height: 120px; border: 1px solid #dee2e6;"
+                                  placeholder="리뷰를 써주세요." required></textarea>
                     </div>
 
                     <!-- 상위 식당 이름, 현재 시간(display:none) -->
@@ -319,7 +327,6 @@
             </form>
         </div>
     </div>
-
 </div>
 </body>
 </html>

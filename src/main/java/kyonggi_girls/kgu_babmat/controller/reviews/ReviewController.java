@@ -27,7 +27,6 @@ public class ReviewController {
     private final LoginService loginService;
     private final StoreService storeService;
 
-
     public ReviewController(ReviewService reviewService, LoginService loginService, StoreService storeService) {
         this.reviewService = reviewService;
         this.loginService = loginService;

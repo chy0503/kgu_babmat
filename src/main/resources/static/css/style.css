@@ -263,6 +263,9 @@ hover-text-black:hover {
     border: none;
 }
 
+.click-none {
+    pointer-events: none;
+}
 
 .hover-cursor-pointer:hover {
     cursor: pointer;
