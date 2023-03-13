@@ -7,12 +7,14 @@ import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import kyonggi_girls.kgu_babmat.dto.User;
 import kyonggi_girls.kgu_babmat.service.ReviewService;
 import kyonggi_girls.kgu_babmat.service.StoreService;
+import kyonggi_girls.kgu_babmat.service.UserService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -21,10 +23,12 @@ import java.util.concurrent.ExecutionException;
 public class MyPageController {
     private final StoreService storeService;
     private final ReviewService reviewService;
+    private final UserService userService;
 
-    public MyPageController(StoreService storeService, ReviewService reviewService) {
+    public MyPageController(StoreService storeService, ReviewService reviewService, UserService userService) {
         this.storeService = storeService;
         this.reviewService = reviewService;
+        this.userService = userService;
     }
 
     @GetMapping("myReview")
@@ -65,5 +69,31 @@ public class MyPageController {
         storeService.updateLike(user.getEmail(), like.getMenu(), like.getPrice(), like.getSelectStore(), like.getStore());
         System.out.println("좋아요 모아보기 : " + storeService.showLike_all(user.getEmail())); // 지우면 새로고침 해야지 반영됨
         return "redirect:/likedMenu";
+    }
+    @GetMapping("/user")
+    public String UserInfo(Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+        User user = (User) session.getAttribute(SessionConst.sessionId);
+        model.addAttribute("user", user);
+
+        User users =userService.getUserInfo(user.getEmail());
+        model.addAttribute("users", users);
+        model.addAttribute("username", user.getUsername());
+
+        return "users";
+    }
+
+    @PostMapping("/editedUser")
+    public String reviewCollect(@ModelAttribute User users, HttpServletRequest request, RedirectAttributes redirect) throws Exception {
+        // session
+        HttpSession session = request.getSession(false);
+        if (session == null)
+            return "redirect:/";
+
+        userService.updateUser(users.getEmail(), users.getUsername());
+        return "redirect:/main";
     }
 }

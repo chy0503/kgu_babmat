@@ -7,5 +7,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface UserService {
     List<User> getUsers() throws ExecutionException, InterruptedException;
+    User getUserInfo(String email) throws ExecutionException, InterruptedException;
+    void updateUser(String email, String username) throws ExecutionException, InterruptedException;
 
 }

@@ -4,12 +4,17 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
+import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import kyonggi_girls.kgu_babmat.dto.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Repository
@@ -41,5 +46,17 @@ public class UserDao {
     public User getUser(String email) throws ExecutionException, InterruptedException {
         return db.collection(COLLECTION_NAME).document(email)
                 .get().get().toObject(User.class);
+    }
+    public User getUserInfo(String email) throws ExecutionException, InterruptedException {
+        List<QueryDocumentSnapshot> documents = db.collection("users").whereEqualTo("email", email).get().get().getDocuments();
+        return documents.get(0).toObject(User.class);
+    }
+
+
+    public void updateUser(String email, String username) throws ExecutionException, InterruptedException {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("username", username);
+        // asynchronously update doc
+        db.collection("users").document(email).update(updates);
     }
 }

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.dto.User;
+import kyonggi_girls.kgu_babmat.service.LoginService;
 import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,11 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class MainController {
     private final StoreService storeService;
+    private final LoginService loginService;
 
-    public MainController(StoreService storeService) {
+    public MainController(StoreService storeService, LoginService loginService) {
         this.storeService = storeService;
+        this.loginService = loginService;
     }
 
     @GetMapping("main")
@@ -29,7 +32,9 @@ public class MainController {
         if (session == null)
             return "redirect:/";
 
-        User user = (User) session.getAttribute(SessionConst.sessionId);
+        User userTmp = (User) session.getAttribute(SessionConst.sessionId);
+        User user = loginService.getUser(userTmp.getEmail());
+        System.out.println("user.getUsername() = " + user.getUsername());
         model.addAttribute("user", user);
 
         // store list
