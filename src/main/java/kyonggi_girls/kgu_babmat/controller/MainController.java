@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.dto.User;
-import kyonggi_girls.kgu_babmat.service.ReviewService;
 import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
@@ -18,11 +17,9 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class MainController {
     private final StoreService storeService;
-    private final ReviewService reviewService;
 
-    public MainController(StoreService storeService, ReviewService reviewService) {
+    public MainController(StoreService storeService) {
         this.storeService = storeService;
-        this.reviewService = reviewService;
     }
 
     @GetMapping("main")

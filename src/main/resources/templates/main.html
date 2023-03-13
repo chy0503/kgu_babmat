@@ -28,7 +28,9 @@
             </form>
             <div class="row align-items-center mb-1">
                 <h4 class="mr-3 align-self-center">
-                    <div th:text="|${user.getUsername()}님|"></div>
+<!--                    <div th:text="|${user.getUsername()}님|"></div>-->
+                    <div th:text="'Email : ' + ${email}"></div>
+                    <div th:text="'Name : ' + ${name}"></div>
                 </h4>
                 <div class="dropdown mr-4">
                     <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
