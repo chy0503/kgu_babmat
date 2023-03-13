@@ -24,7 +24,7 @@
         <div class="d-flex flex-row justify-content-between">
             <form id="search_form" class="col-5" method="get" action="search">
                 <input id="search_input" name="search" type="search" class="form-control noOutline"
-                       style="height: 50px;" placeholder="Search...">
+                       style="height: 50px;" placeholder="Search here!">
             </form>
             <div class="row align-items-center mb-1">
                 <h4 class="mr-3 align-self-center">
@@ -37,9 +37,9 @@
                              width="40" height="40" class="rounded-circle">
                     </div>
                     <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
-                        <li><a class="dropdown-item" href="/myPage">마이페이지</a></li>
+                        <li><a class="dropdown-item" href="/#">마이페이지</a></li>
+                        <li><a class="dropdown-item" href="/myReview">리뷰 모아보기</a></li>
                         <li><a class="dropdown-item" href="/likedMenu">좋아요 모아보기</a></li>
-                        <li><a class="dropdown-item" href="/writeReview">리뷰 작성하기</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -89,12 +89,12 @@
                 <th:block th:each="list : ${storeList}">
                     <button th:if="${list.selectStore == true}"
                             th:onclick="|location.href='@{/selectStore(storeName=${list.name})}'|"
-                            class="noOutline list-group-item p-4 text-center">
+                            class="noOutline list-group-item p-4 text-center hover-text-bold">
                         <div th:text="${list.name}" class="storeName"></div>
                     </button>
                     <button th:unless="${list.selectStore == true}"
                             th:onclick="|location.href='@{/store(storeName=${list.name})}'|"
-                            class="noOutline list-group-item p-4 text-center">
+                            class="noOutline list-group-item p-4 text-center hover-text-bold">
                         <div th:text="${list.name}" class="storeName"></div>
                     </button>
                 </th:block>

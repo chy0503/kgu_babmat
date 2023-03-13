@@ -16,42 +16,47 @@
 </head>
 <body>
 <div class="container">
-    <header class="py-3 mb-3 border-bottom">
-        <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search" action="Searching" method="get">
-                <input type="text" name="menu" class="form-control noOutline" style="height: 50px;"
-                       placeholder="Search...">
-                <button type="submit">검색</button>
-            </form>
-            <div class="row">
-                <h4 class="mr-3 align-self-center">
-
-                </h4>
-                <div class="dropdown mr-4">
-                    <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
-                         aria-haspopup="true" aria-expanded="false">
-                        <img src="https://user-images.githubusercontent.com/90389517/212916931-321ab7a7-7f29-4c6d-acf7-3c7620f9ed09.jpeg"
-                             width="50" height="50" class="rounded-circle">
+    <div>
+        <div class="mt-5 ml-2">
+            <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+        </div>
+        <div class="row mb-5">
+            <div class="col-7">
+                <div class="mb-3">
+                    <h1 th:id="storeName" th:text="${storeName}" class="display-2 font-weight-bold"></h1>
+                    <h1 th:id="selectStoreName" th:text="${selectStoreName}" class="hidden"></h1>
+                </div>
+                <div class="my-2 mx-2">
+                    <div class="mb-2">
+                        <td th:text="${store[0].businessHours}"></td>
                     </div>
-                    <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
-                        <li><a class="dropdown-item" href="/myPage">마이페이지</a></li>
-                        <li><a class="dropdown-item" href="/writeReview">리뷰 작성하기</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">로그아웃</a></li>
-                    </ul>
+                    <div style="max-width:500px;">
+                        <p th:text="${store[0].description}"></p>
+                    </div>
                 </div>
             </div>
-
+            <div class="col-5">
+                <div id="storeMap-right" class="rounded-10" style="height:85%;"></div>
+                <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f333805471087979c44ca72e4b0e9428"></script>
+                <script type="text/javascript" src="js/kakaoMap.js"></script>
+                <script type="text/javascript" th:inline="javascript">
+                    makeStoreMap("storeMap-right", /*[[${store[0].name}]]*/ {}, /*[[${store[0].lat}]]*/ {}, /*[[${store[0].lng}]]*/ {});
+                </script>
+                <div class="mt-1 ml-1 row">
+                    <p th:text="${store[0].location}"></p>
+                    <th:block th:if="${(selectStoreName != null) && (store[0].location != null)}">
+                        <p>, </p>
+                    </th:block>
+                    <p class="selectStoreName" th:text="${selectStoreName}"></p>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+
     <div class="reviewContents" th:each="list : ${storeReviews}">
-        <p style="display: none" th:text="${list.email}"></p>
-        <p th:utext="${list.storeName}">
         <div>
-            <p>메뉴 : </p>
-            <p th:text="${list.menu}"></p>
+            <p th:text="${list.menu}" class="font-weight-bold" style="font-size: 30px;"></p>
         </div>
         <div>
             <p th:text="${list.writeTime}"></p>
@@ -68,11 +73,7 @@
         <div>
             <p th:text="${list.tags}"></p>
         </div>
-
-        <div th:text="${list.username}">
-        </div>
-
-
+        <div th:text="${list.username}"></div>
     </div>
 </div>
 </body>

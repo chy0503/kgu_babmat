@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <div class="mt-5 ml-2">
-        <a class="text-black hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+        <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
     </div>
     <div class="row mb-5">
         <div class="col-7">
@@ -57,7 +57,7 @@
         <th:block th:if="${(storeName =='기숙사 식당') || (storeName =='감성코어')}">
             <div class="col-12 mb-2">
                 <div>
-                    <a th:onclick="|location.href='@{/review(storeName=${storeName})}'|" class="btn btn-outline-danger float-right ml-3">리뷰 보기</a>
+                    <a th:onclick="|location.href='@{/review(storeName=${storeName}, selectStoreName=${selectStoreName})}'|" class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기</a>
                 </div>
                 <div>
                     <button id="write_review_btn1" class="btn btn-danger float-right ml-3">리뷰 작성</button>
@@ -186,7 +186,7 @@
                 <button id="write_review_btn2" class="btn btn-danger float-right ml-3">리뷰 작성</button>
             </div>
             <div>
-                <button th:onclick="|location.href='@{/review( storeName=${storeName})}'|" class="btn btn-outline-danger float-right ml-3">리뷰 보기</button>
+                <button th:onclick="|location.href='@{/review( storeName=${storeName})}'|" class="btn btn-outline-danger hover-color-white float-right ml-3">리뷰 보기</button>
             </div>
         </div>
         <div class="mt-5 row align-content-between">

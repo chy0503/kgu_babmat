@@ -277,3 +277,11 @@ hover-text-black:hover {
 .hover-decoration-none:hover {
     text-decoration: none;
 }
+
+.hover-color-white:hover {
+    color: white;
+}
+
+.hover-text-bold:hover {
+    font-weight: bold;
+}
