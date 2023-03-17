@@ -1,16 +1,13 @@
 package kyonggi_girls.kgu_babmat.dao;
 
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.cloud.FirestoreClient;
-import kyonggi_girls.kgu_babmat.dto.StoreReview;
+import kyonggi_girls.kgu_babmat.dto.OAuthAttributes;
 import kyonggi_girls.kgu_babmat.dto.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,11 +44,11 @@ public class UserDao {
         return db.collection(COLLECTION_NAME).document(email)
                 .get().get().toObject(User.class);
     }
+
     public User getUserInfo(String email) throws ExecutionException, InterruptedException {
         List<QueryDocumentSnapshot> documents = db.collection("users").whereEqualTo("email", email).get().get().getDocuments();
         return documents.get(0).toObject(User.class);
     }
-
 
     public void updateUser(String email, String username) throws ExecutionException, InterruptedException {
         Map<String, Object> updates = new HashMap<>();
@@ -67,5 +64,17 @@ public class UserDao {
             String reviewID = document.getId().toString();
             db.collection("reviews").document(reviewID).delete();
         }
+    }
+
+    public User createUser(OAuthAttributes attributes) throws ExecutionException, InterruptedException {
+        String email = attributes.getEmail();
+        String username = attributes.getName();
+
+        User user = new User();
+        user.setEmail(email);
+        user.setUsername(username);
+        db.collection("users").document(email).set(user);
+
+        return user;
     }
 }

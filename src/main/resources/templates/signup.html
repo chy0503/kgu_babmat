@@ -14,23 +14,25 @@
 
     <div class="col-md-12 order-md-1">
         <h4 class="mb-3">회원정보</h4>
-        <form class="needs-validation" novalidate th:action="@{/signup}" method="POST">
-
+        <form class="needs-validation" action="signup" method="POST">
+            <div class="mb-3">
+                <label for="email">email</label>
+                <div class="input-group">
+                    <input type="text" name="email" class="form-control" id="email" placeholder="email" required th:value="${email}" readonly >
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="username">username</label>
                 <div class="input-group">
-                <input type="text" class="form-control" id="username" placeholder="Username" required name="username">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required th:value="${username}" >
                 </div>
             </div>
-
 
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
             <hr class="mb-4">
-
         </form>
     </div>
-
 </div>
 
 </body>
