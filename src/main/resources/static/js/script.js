@@ -72,6 +72,9 @@ function clickLogout() {
     f.submit();
 }
 
-
-
-
+function beforeCheck(m) {
+    if (confirm(m)) {
+        return true;
+    }
+    return false;
+}

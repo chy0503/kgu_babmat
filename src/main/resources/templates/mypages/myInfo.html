@@ -48,7 +48,7 @@
     <form method="post" action="deleteUser">
         <input style="display: none;" name="email" th:value="${user.getEmail()}">
         <div class="d-flex justify-content-center mb-2">
-            <button style="width: 350px;" class="btn btn-danger">회원 탈퇴</button>
+            <button style="width: 350px;" class="btn btn-danger" type="submit" onclick="beforeCheck('회원을 탈퇴하시겠습니까?')">회원 탈퇴</button>
         </div>
     </form>
 </div>
