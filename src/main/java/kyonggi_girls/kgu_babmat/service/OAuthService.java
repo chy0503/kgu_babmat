@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 
 @Service
@@ -33,11 +34,10 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
                 .getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        userDao.createUser(attributes);
-//        httpSession.setAttribute("user", new SessionUser(user)); // 여기서 세션 쓸거면 User user = userDao.createUser(attributes); 변경하기
+
         return new DefaultOAuth2User
                 (Collections.singleton(new SimpleGrantedAuthority("USER"))
-        , attributes.getAttributes()
-        , attributes.getNameAttributeKey());
+                        , attributes.getAttributes()
+                        , attributes.getNameAttributeKey());
     }
 }

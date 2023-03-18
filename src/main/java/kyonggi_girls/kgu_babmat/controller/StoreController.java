@@ -2,8 +2,11 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.dao.LikeDao;
+import kyonggi_girls.kgu_babmat.dao.store.CafeteriaMenuDao;
+import kyonggi_girls.kgu_babmat.dao.store.MenuDao;
+import kyonggi_girls.kgu_babmat.dao.store.StoreDao;
 import kyonggi_girls.kgu_babmat.dto.*;
-import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +23,17 @@ import java.util.concurrent.ExecutionException;
 
 @Controller
 public class StoreController {
-    private final StoreService storeService;
 
-    public StoreController(StoreService storeService) {
-        this.storeService = storeService;
+    private final StoreDao storeDao;
+    private final MenuDao menuDao;
+    private final CafeteriaMenuDao cafeteriaMenuDao;
+    private final LikeDao likeDao;
+
+    public StoreController(StoreDao storeDao, MenuDao menuDao, CafeteriaMenuDao cafeteriaMenuDao, LikeDao likeDao) {
+        this.storeDao = storeDao;
+        this.menuDao = menuDao;
+        this.cafeteriaMenuDao = cafeteriaMenuDao;
+        this.likeDao = likeDao;
     }
 
     @GetMapping("store")
@@ -37,19 +47,19 @@ public class StoreController {
 
         // store
         if ((selectStoreName == null) || (selectStoreName == "")) { // 일반 식당일 경우
-            List<Store> store = storeService.getStore(storeName);
+            List<Store> store = storeDao.getStore(storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(null, storeName);
+            List<Menu> menuList = menuDao.getMenu(null, storeName);
             model.addAttribute("menuList", menuList);
         } else { // 푸드코트 내의 식당일 경우
-            List<Store> store = storeService.getInnerStore(selectStoreName, storeName);
+            List<Store> store = storeDao.getInnerStore(selectStoreName, storeName);
             model.addAttribute("store", store);
-            List<Menu> menuList = storeService.getMenu(selectStoreName, storeName);
+            List<Menu> menuList = menuDao.getMenu(selectStoreName, storeName);
             model.addAttribute("menuList", menuList);
         }
-        List<CafeteriaMenu> cafeteriaMenuList = storeService.getCafeteriaMenu(storeName); // 학식 리스트 받기
-        String today = storeService.getToday(); // 오늘 날짜 받기
-        List likedList = storeService.showLike_menu(storeName, user.getEmail()); // 좋아요 눌린 메뉴 리스트 받기
+        List<CafeteriaMenu> cafeteriaMenuList = cafeteriaMenuDao.getCafeteriaMenu(storeName); // 학식 리스트 받기
+        String today = cafeteriaMenuDao.getToday(); // 오늘 날짜 받기
+        List likedList = likeDao.showLike_menu(storeName, user.getEmail()); // 좋아요 눌린 메뉴 리스트 받기
 
         Map<String, String> tags = new LinkedHashMap<>();
         tags.put("추천 해요", "추천 해요");
@@ -75,7 +85,7 @@ public class StoreController {
         if (session == null)
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
-        storeService.updateLike(user.getEmail(), like.getMenu(), like.getPrice(), like.getSelectStore(), like.getStore());
+        likeDao.updateLike(user.getEmail(), like.getMenu(), like.getPrice(), like.getSelectStore(), like.getStore());
         redirect.addAttribute("selectStoreName", like.getSelectStore());
         redirect.addAttribute("storeName", like.getStore());
         return "redirect:/store";
@@ -88,7 +98,7 @@ public class StoreController {
         if (session == null)
             return "redirect:/";
 
-        List<Store> store = storeService.getStore(storeName);
+        List<Store> store = storeDao.getStore(storeName);
         model.addAttribute("store", store);
         model.addAttribute("storeName", storeName);
         return "selectStore";

@@ -2,10 +2,10 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.dao.ReviewDao;
+import kyonggi_girls.kgu_babmat.dao.UserDao;
 import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import kyonggi_girls.kgu_babmat.dto.User;
-import kyonggi_girls.kgu_babmat.service.LoginService;
-import kyonggi_girls.kgu_babmat.service.ReviewService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +16,14 @@ import java.util.concurrent.ExecutionException;
 
 @Controller
 public class SearchController {
-    private final ReviewService reviewService;
-    private final LoginService loginService;
+    private final ReviewDao reviewDao;
+    private final UserDao userDao;
 
-    public SearchController(ReviewService reviewService, LoginService loginService) {
-        this.reviewService = reviewService;
-        this.loginService = loginService;
+    public SearchController(ReviewDao reviewDao, UserDao userDao) {
+        this.reviewDao = reviewDao;
+        this.userDao = userDao;
     }
+
 
     @GetMapping("search")
     public String search(@RequestParam("search") String search, Model model, HttpServletRequest request) throws ExecutionException, InterruptedException {
@@ -34,9 +35,9 @@ public class SearchController {
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
 
-        List<StoreReview> storeReviews = reviewService.Searching(search);
+        List<StoreReview> storeReviews = reviewDao.SearchReview(search);
         for (StoreReview sr : storeReviews) {
-            sr.setUsername(loginService.getUser(sr.getEmail()).getUsername());
+            sr.setUsername(userDao.getUser(sr.getEmail()).getUsername());
         }
         model.addAttribute("storeReviews", storeReviews);
         model.addAttribute("search", search);

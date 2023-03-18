@@ -2,9 +2,9 @@ package kyonggi_girls.kgu_babmat.controller.reviews;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.dao.ReviewDao;
 import kyonggi_girls.kgu_babmat.dto.StoreReview;
 import kyonggi_girls.kgu_babmat.dto.User;
-import kyonggi_girls.kgu_babmat.service.ReviewService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +20,10 @@ import java.util.Map;
 
 @Controller
 public class EditReviewController {
-    private final ReviewService reviewService;
+    private final ReviewDao reviewDao;
 
-    public EditReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public EditReviewController(ReviewDao reviewDao) {
+        this.reviewDao = reviewDao;
     }
 
     @GetMapping("/edit")
@@ -37,12 +37,10 @@ public class EditReviewController {
             return "redirect:/";
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
-        StoreReview storeReviews =reviewService.getOnlyOneReview(user.getEmail(),writeTime);
+        StoreReview storeReviews = reviewDao.getReview(user.getEmail(), writeTime);
         model.addAttribute("reviewList", storeReviews);
-
         model.addAttribute("writeTime", writeTime);
 
-//        System.out.println("->>>>>>>>>>>" + storeReviews);
         Map<String, String> tags = new LinkedHashMap<>();
         tags.put("추천 해요", "추천 해요");
         tags.put("정말 맛있어요", "정말 맛있어요");
@@ -51,7 +49,6 @@ public class EditReviewController {
         tags.put("맛없어요", "맛없어요");
         tags.put("추천 안해요", "추천 안해요");
         model.addAttribute("tags", tags);
-
 
         return "reviews/editReview";
     }
@@ -62,9 +59,10 @@ public class EditReviewController {
         HttpSession session = request.getSession(false);
         if (session == null)
             return "redirect:/";
+
         User user = (User) session.getAttribute(SessionConst.sessionId);
-        reviewService.update(user.getEmail(), storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
-        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
+        reviewDao.updates(user.getEmail(), storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
+        System.out.println("리뷰 모아보기 : " + reviewDao.showReview_all(user.getEmail()));
 
         return "redirect:/myPage";
     }
@@ -80,10 +78,10 @@ public class EditReviewController {
         User user = (User) session.getAttribute(SessionConst.sessionId);
         model.addAttribute("user", user);
 
-        reviewService.modifyReview(user.getEmail(), writeTime);
-        List<StoreReview> storeReviews = reviewService.showReview_all(user.getEmail());
+        reviewDao.modifyAndDeleteReview(user.getEmail(), writeTime);
+        List<StoreReview> storeReviews = reviewDao.showReview_all(user.getEmail());
         model.addAttribute("reviewList", storeReviews);
-        System.out.println("리뷰 모아보기 : " + reviewService.showReview_all(user.getEmail()));
+        System.out.println("리뷰 모아보기 : " + reviewDao.showReview_all(user.getEmail()));
         return "redirect:/myPage";
     }
 }

@@ -43,7 +43,11 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item cursor-pointer" onclick="clickLogout()">로그아웃</a></form></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button class="dropdown-item bg-none border-none" type="submit">로그아웃</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

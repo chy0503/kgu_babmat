@@ -80,7 +80,7 @@ public class ReviewDao {
     /**
      * 수정할 리뷰 선택해서 불러오기
      */
-    public StoreReview getOnlyUpdate(String email, String writeTime) throws ExecutionException, InterruptedException {
+    public StoreReview getReview(String email, String writeTime) throws ExecutionException, InterruptedException {
         List<QueryDocumentSnapshot> documents = db.collection("reviews").whereEqualTo("email", email).whereEqualTo("writeTime", writeTime).get().get().getDocuments();
         return documents.get(0).toObject(StoreReview.class);
     }
@@ -97,6 +97,18 @@ public class ReviewDao {
         updates.put("writeTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         // asynchronously update doc
         db.collection("reviews").document(documents.get(0).getId()).update(updates);
+    }
+
+    public List SearchReview(String search) throws ExecutionException, InterruptedException {
+        List<StoreReview> List = new ArrayList<>();
+        List<QueryDocumentSnapshot> documents = db.collection("reviews").get().get().getDocuments();
+        for(QueryDocumentSnapshot document :documents) {
+            StoreReview review = document.toObject(StoreReview.class);
+            if (review.getMenu().contains(search)) {
+                List.add(review);
+            }
+        }
+        return List;
     }
 }
 

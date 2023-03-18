@@ -30,7 +30,7 @@ public class UserDao {
         return list;
     }
 
-    public boolean isUser(String email) throws ExecutionException, InterruptedException {
+    public boolean isUserExit(String email) throws ExecutionException, InterruptedException {
         List<User> userList = getUsers();
         for (User user : userList) {
             if (user.getEmail().equals(email)) {
@@ -66,10 +66,7 @@ public class UserDao {
         }
     }
 
-    public User createUser(OAuthAttributes attributes) throws ExecutionException, InterruptedException {
-        String email = attributes.getEmail();
-        String username = attributes.getName();
-
+    public User createUser(String email, String username) throws ExecutionException, InterruptedException {
         User user = new User();
         user.setEmail(email);
         user.setUsername(username);
