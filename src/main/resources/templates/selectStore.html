@@ -14,24 +14,28 @@
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="min-height: 80vh;">
     <div class="mt-5 ml-2">
-        <a class="text-black hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+        <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
     </div>
     <div class="mb-5">
         <h1 th:text="${storeName}" class="display-2 font-weight-bold"></h1>
     </div>
+
     <div class="row">
         <th:block th:each="list : ${store}">
-            <button th:onclick="|location.href='@{/store(selectStoreName=${storeName}, storeName=${list.name})}'|"
-                    class="border-0 rounded-8 text-white m-3 bg-danger col-3 noOutline">
-                <h3 th:text="${list.name}" class="mt-3"></h3>
-                <p th:text="${list.businessHours}"></p>
-                <p th:text="${list.description}" class="text-left px-2"></p>
-            </button>
+            <div class="col-4">
+                <button th:onclick="|location.href='@{/store(selectStoreName=${storeName}, storeName=${list.name})}'|"
+                        class="border-0 rounded-8 w-100 text-white m-3 bg-danger noOutline">
+                    <h3 th:text="${list.name}" class="mt-3"></h3>
+                    <p th:text="${list.businessHours}"></p>
+                    <div th:text="${list.description}" class="text-left p-4" style="font-size: 18px; min-height: 150px;"></div>
+                </button>
+            </div>
         </th:block>
     </div>
 </div>
 </div>
+<div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

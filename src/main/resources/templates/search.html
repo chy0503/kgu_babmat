@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>경기대 밥맛</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container" style="min-height: 80vh;">
+    <!-- 페이지 로고 및 이름 -->
+    <div id="main_logo" class="d-flex justify-content-center my-5" style="user-select: none;">경기대 밥맛┘</div>
+    <!-- 헤더 -->
+    <header class="py-3 mb-3 border-bottom">
+        <div class="d-flex flex-row justify-content-between">
+            <form id="search_form" class="col-5" method="get" action="search">
+                <input id="search_input" name="search" type="search" class="form-control noOutline"
+                       style="height: 50px;" placeholder="Search here!">
+            </form>
+            <div class="row align-items-center mb-1">
+                <h4 class="mr-3 align-self-center">
+                    <div th:text="|${user.getUsername()}님|"></div>
+                </h4>
+                <div class="dropdown mr-4">
+                    <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
+                        <img src="https://user-images.githubusercontent.com/90389517/212916931-321ab7a7-7f29-4c6d-acf7-3c7620f9ed09.jpeg"
+                             width="40" height="40" class="rounded-circle">
+                    </div>
+                    <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
+                        <li><a class="dropdown-item" href="/#">마이페이지</a></li>
+                        <li><a class="dropdown-item" href="/myReview">리뷰 모아보기</a></li>
+                        <li><a class="dropdown-item" href="/likedMenu">좋아요 모아보기</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item cursor-pointer" onclick="clickLogout()">로그아웃</a></form></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <p style="display: none" th:text="${search}"></p>
+    <div style="font-size: 20px;" th:text="|${#lists.size(storeReviews)}개 리뷰가 검색되었습니다.|"/>
+    <div class="mb-5">
+        <a class="text-black font-weight-bold hover-noUnderline hover-text-point" href="/main">메인으로 돌아가기</a>
+    </div>
+
+    <div class="row">
+        <div class="col-4 p-2" th:each="list : ${storeReviews}">
+            <div class="reviewContents p-4">
+                <div th:utext="${list.storeName}"></div>
+                <div th:text="${list.menu}" class="font-weight-bold mr-3" style="font-size: 30px;"></div>
+                <div>
+                    <th:block th:each="num : ${#numbers.sequence(1, list.reviewScore)}">
+                        <img height="30px"
+                             src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
+                             width="30px" class="mb-1">
+                    </th:block>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div th:text="${list.writeTime}"></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div th:text="${list.username}"></div>
+                </div>
+                <div th:text="${list.review}" class="mx-2 mb-3 mt-5" style="font-size: 18px;"></div>
+                <div class="row">
+                    <th:block th:each="tag : ${list.tags}">
+                        <button class="btn btn-warning ml-3" th:text="${'#' + tag}"></button>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

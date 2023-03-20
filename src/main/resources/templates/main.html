@@ -17,34 +17,31 @@
 <body>
 <div class="container">
     <!-- 페이지 로고 및 이름 -->
-    <div class="d-flex justify-content-center my-5">
-        <h1>경기대 밥맛</h1>
-    </div>
+    <div id="main_logo" class="d-flex justify-content-center my-5" style="user-select: none;">경기대 밥맛┘</div>
 
     <!-- 헤더 -->
     <header class="py-3 mb-3 border-bottom">
         <div class="d-flex flex-row justify-content-between">
-            <form class="col-5" role="search">
-                <input type="search" class="form-control noOutline" style="height: 50px;" placeholder="Search...">
+            <form id="search_form" class="col-5" method="get" action="search">
+                <input id="search_input" name="search" type="search" class="form-control noOutline"
+                       style="height: 50px;" placeholder="Search here!">
             </form>
-            <div class="row">
+            <div class="row align-items-center mb-1">
                 <h4 class="mr-3 align-self-center">
                     <div th:text="|${user.getUsername()}님|"></div>
                 </h4>
                 <div class="dropdown mr-4">
-                    <div class="d-block link-dark text-decoration-none dropdown-toggle" data-toggle="dropdown"
+                    <div class="d-block link-dark text-decoration-none dropdown-toggle row" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="false">
-                        <img src="https://user-images.githubusercontent.com/90389517/212916931-321ab7a7-7f29-4c6d-acf7-3c7620f9ed09.jpeg"
-                             width="40" height="40" class="rounded-circle">
                     </div>
                     <ul class="shadow dropdown-menu dropdown-menu-right mt-2">
-                        <li><a class="dropdown-item" href="/myPage">마이페이지</a></li>
+                        <li><a class="dropdown-item" href="/myInfo">회원정보 수정/탈퇴</a></li>
+                        <li><a class="dropdown-item" href="/myReview">리뷰 모아보기</a></li>
                         <li><a class="dropdown-item" href="/likedMenu">좋아요 모아보기</a></li>
-                        <li><a class="dropdown-item" href="/writeReview">리뷰 작성하기</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item cursor-pointer" onclick="clickLogout()">로그아웃</a></form></li>
+                        <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,16 +50,19 @@
 
     <!-- 인기 순위 섹션 -->
     <div class="">
-        <div class="my-5 row align-content-between">
+        <div class="my-4 row align-content-between">
             <div class="col-4 p-3" th:each="menu, menuStat : ${menuLanking}" th:if="${menuStat.index < 3}">
-                <div class="d-flex justify-content-center row">
-                    <h4 class="mr-2" th:utext="${menuStat.index+1}+'.'"></h4>
-                    <img height="25px"
-                         src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
-                         width="25px">
-                    <h4 class="mx-1"
-                        th:utext="${menu.getReviewScore() + '(' + menu.getReviewNum() + ')'}"></h4>
-                    <h4 class="ml-3" th:utext="${menu.name}"></h4>
+                <div class="d-flex justify-content-center"
+                     th:onclick="|location.href='@{/store(selectStoreName=${menu.selectStore}, storeName=${menu.storeName})}'|">
+                    <div class="row menuLank px-1">
+                        <h4 class="mr-2" th:utext="${menuStat.index+1}+'.'"></h4>
+                        <img height="25px"
+                             src="https://littledeep.com/wp-content/uploads/2020/09/star-icon-style1.png"
+                             width="25px">
+                        <h4 class="mx-1"
+                            th:utext="${#numbers.formatDecimal(menu.getReviewScore(), 0, 2) + '(' + menu.getReviewNum() + ')'}"></h4>
+                        <h4 class="ml-3" th:utext="${menu.name}"></h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,20 +87,19 @@
                 <th:block th:each="list : ${storeList}">
                     <button th:if="${list.selectStore == true}"
                             th:onclick="|location.href='@{/selectStore(storeName=${list.name})}'|"
-                            class="noOutline list-group-item p-4 text-center">
+                            class="noOutline list-group-item p-4 text-center hover-text-bold">
                         <div th:text="${list.name}" class="storeName"></div>
                     </button>
                     <button th:unless="${list.selectStore == true}"
                             th:onclick="|location.href='@{/store(storeName=${list.name})}'|"
-                            class="noOutline list-group-item p-4 text-center">
+                            class="noOutline list-group-item p-4 text-center hover-text-bold">
                         <div th:text="${list.name}" class="storeName"></div>
                     </button>
                 </th:block>
             </ul>
         </div>
     </div>
-
-    <!-- 푸터 -->
+    <div th:insert="~{/fragments/footer :: footerFragment}"></div>
 </div>
 </body>
 </html>

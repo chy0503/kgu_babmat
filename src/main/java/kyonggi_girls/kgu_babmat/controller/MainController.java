@@ -2,10 +2,12 @@ package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kyonggi_girls.kgu_babmat.dao.MenuLankingDao;
+import kyonggi_girls.kgu_babmat.dao.UserDao;
+import kyonggi_girls.kgu_babmat.dao.store.StoreDao;
 import kyonggi_girls.kgu_babmat.dto.Menu;
 import kyonggi_girls.kgu_babmat.dto.Store;
 import kyonggi_girls.kgu_babmat.dto.User;
-import kyonggi_girls.kgu_babmat.service.StoreService;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +18,16 @@ import java.util.concurrent.ExecutionException;
 
 @Controller
 public class MainController {
-    private final StoreService storeService;
+    private final UserDao userDao;
+    private final StoreDao storeDao;
+    private final MenuLankingDao menuLankingDao;
 
-    public MainController(StoreService storeService) {
-        this.storeService = storeService;
+    public MainController(UserDao userDao, StoreDao storeDao, MenuLankingDao menuLankingDao) {
+        this.userDao = userDao;
+        this.storeDao = storeDao;
+        this.menuLankingDao = menuLankingDao;
     }
+
 
     @GetMapping("main")
     public String main(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
@@ -29,14 +36,15 @@ public class MainController {
         if (session == null)
             return "redirect:/";
 
-        User user = (User) session.getAttribute(SessionConst.sessionId);
+        User userTmp = (User) session.getAttribute(SessionConst.sessionId);
+        User user = userDao.getUser(userTmp.getEmail());
         model.addAttribute("user", user);
 
         // store list
-        List<Store> storeList = storeService.getStores();
+        List<Store> storeList = storeDao.getStores();
         model.addAttribute("storeList", storeList);
 
-        List<Menu> menuLanking = storeService.showMenuLanking();
+        List<Menu> menuLanking = menuLankingDao.showMenuLanking();
         model.addAttribute("menuLanking", menuLanking);
         return "main";
     }

@@ -1,11 +1,16 @@
 package kyonggi_girls.kgu_babmat.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import kyonggi_girls.kgu_babmat.dto.User;
-import kyonggi_girls.kgu_babmat.service.LoginService;
+import kyonggi_girls.kgu_babmat.dao.UserDao;
 import kyonggi_girls.kgu_babmat.session.SessionConst;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,44 +23,64 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final LoginService loginService;
+    private final UserDao userDao;
 
-
-    @GetMapping("login")
-    public String home(HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
+    @GetMapping("/")
+    public String intro(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-
-        if (session == null) {
-            return "login";
+        if (session != null) {
+            session.invalidate();
         }
-
-        User user = (User) session.getAttribute(SessionConst.sessionId);
-        model.addAttribute("user", user);
-
-        return "redirect:/main";
+        return "intro";
     }
 
+    @GetMapping("signup")
+    public String getUsername(@AuthenticationPrincipal OAuth2User principal, HttpServletRequest request, Model model) throws ExecutionException, InterruptedException {
+        String email = principal.getAttribute("email");
+        String username = principal.getAttribute("name");
 
-    @PostMapping("/login")
-    public String login(@RequestParam String email, HttpServletRequest request) throws ExecutionException, InterruptedException {
-        HttpSession session = request.getSession();
-        if (loginService.isUser(email)) {
-            session.setAttribute(SessionConst.sessionId, loginService.getUser(email));
+        // 유저 정보가 있을 경우 : 로그인 성공
+        if (userDao.isUserExit(email)) {
+            HttpSession session = request.getSession();
+            session.setAttribute(SessionConst.sessionId, userDao.getUser(email));
             return "redirect:/main";
         }
-        return "login";
+
+        // 유저 정보가 없을 경우 - 이메일이 kyonggi.ac.kr이 아닐 경우
+        String[] split = email.split("@");
+        if (!split[split.length - 1].equals("kyonggi.ac.kr")) {
+            return "redirect:/alert_rejectSignup";
+        }
+
+        model.addAttribute("email", email);
+        model.addAttribute("username", username);
+        return "signup";
     }
 
+    @GetMapping("/alert_rejectSignup")
+    public String alert() {
+        return "alert_rejectSignup";
+    }
 
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    @PostMapping("/signup")
+    public String updateUsername(@RequestParam("email") String email, @RequestParam("username") String username) throws ExecutionException, InterruptedException {
+        userDao.createUser(email, username);
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/";
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
         session.invalidate();
         return "redirect:/";
     }
-
 }
-
