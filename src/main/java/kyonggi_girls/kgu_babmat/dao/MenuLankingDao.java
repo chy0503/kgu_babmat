@@ -20,19 +20,6 @@ public class MenuLankingDao {
 
     static Firestore db = FirestoreClient.getFirestore();
 
-//    public static List<StoreReview> showAllUsersReviews() throws ExecutionException, InterruptedException {
-//        UserDao userDao = new UserDao();
-//        List<User> users = userDao.getUsers();
-//        List<StoreReview> list = new ArrayList<>();
-//        for (User user : users) {
-//            List<QueryDocumentSnapshot> documents = db.collection("users").document(user.getEmail()).collection("reviews").get().get().getDocuments();
-//            for (QueryDocumentSnapshot document : documents) {
-//                list.add(document.toObject(StoreReview.class));
-//            }
-//        }
-//        return list;
-//    }
-
     public static List<Menu> showMenuLanking() throws ExecutionException, InterruptedException {
         // 리뷰 저장
         List<StoreReview> reviews = new ArrayList<>();
