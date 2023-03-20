@@ -26,7 +26,11 @@ public class LoginController {
     private final UserDao userDao;
 
     @GetMapping("/")
-    public String intro(){
+    public String intro(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "intro";
     }
 
@@ -54,11 +58,7 @@ public class LoginController {
     }
 
     @GetMapping("/alert_rejectSignup")
-    public String alert (HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            return "redirect:/main";
-        }
+    public String alert() {
         return "alert_rejectSignup";
     }
 
@@ -77,7 +77,7 @@ public class LoginController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication != null) {
+        if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
         session.invalidate();
