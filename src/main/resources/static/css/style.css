@@ -282,3 +282,11 @@ hover-text-black:hover {
 .hover-text-bold:hover {
     font-weight: bold;
 }
+#colorBtn{
+    color:#dc3545;
+}
+#colorBtn:hover{
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

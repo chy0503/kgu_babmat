@@ -30,7 +30,6 @@ public class EditReviewController {
     public String myReview(@ModelAttribute StoreReview storeReview, @RequestParam(required = false) String writeTime,
                            Model model, HttpServletRequest request) throws Exception {
 
-
         // session
         HttpSession session = request.getSession(false);
         if (session == null)
