@@ -20,31 +20,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     </head>
 <body>
-<form class="needs-validation" action="signup" method="POST">
-    <div class="mb-3">
-        <label for="email">email</label>
-        <div class="input-group">
-            <input type="text" name="email" class="form-control" id="email" placeholder="email" required
-                   th:value="${email}" readonly>
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="username">username</label>
-        <div class="input-group">
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required
-                   th:value="${username}">
-        </div>
-    </div>
-
-    <hr class="mb-4">
-    <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
-    <hr class="mb-4">
-</form>
 
 <div class="position-absolute" style="left: 50%; top: 40%; transform: translate(-50%, -40%);">
     <div id="main_logo" class="d-flex justify-content-center mb-5" style="user-select: none;">경기대 밥맛┘</div>
     <div class="d-flex justify-content-center">
-        <form method="post" action="sighup">
+        <form method="post" action="signup">
             <div class="d-flex justify-content-center mb-2">
                 <div style="width: 100px;">
                     <label>email</label>

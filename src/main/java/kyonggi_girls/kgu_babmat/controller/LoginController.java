@@ -44,7 +44,7 @@ public class LoginController {
 
         // 유저 정보가 없을 경우 - 이메일이 kyonggi.ac.kr이 아닐 경우
         String[] split = email.split("@");
-        if (split[split.length - 1] != "kyonggi.ac.kr") {
+        if (!split[split.length - 1].equals("kyonggi.ac.kr")) {
             return "redirect:/alert_rejectSignup";
         }
 
@@ -84,4 +84,3 @@ public class LoginController {
         return "redirect:/";
     }
 }
-
