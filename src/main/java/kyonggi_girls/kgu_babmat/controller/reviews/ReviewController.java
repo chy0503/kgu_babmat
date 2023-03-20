@@ -34,7 +34,7 @@ public class ReviewController {
 
 
     @GetMapping("review")
-    public String myReview(@ModelAttribute StoreReview storeReview, Model model, HttpServletRequest request, @RequestParam String selectStoreName, @RequestParam String storeName) throws ExecutionException, InterruptedException {
+    public String myReview(@ModelAttribute StoreReview storeReview, Model model, HttpServletRequest request, @RequestParam(required = false) String selectStoreName, @RequestParam String storeName) throws ExecutionException, InterruptedException {
         // session
         HttpSession session = request.getSession(false);
         if (session == null)

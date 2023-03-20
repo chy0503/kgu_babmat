@@ -64,7 +64,7 @@ public class EditReviewController {
         reviewDao.updates(user.getEmail(), storeReview.getReviewScore(), storeReview.getTags(), storeReview.getReview(), storeReview.getWriteTime());
         System.out.println("리뷰 모아보기 : " + reviewDao.showReview_all(user.getEmail()));
 
-        return "redirect:/myPage";
+        return "redirect:/myReview";
     }
 
     @GetMapping("/delete")
@@ -82,7 +82,7 @@ public class EditReviewController {
         List<StoreReview> storeReviews = reviewDao.showReview_all(user.getEmail());
         model.addAttribute("reviewList", storeReviews);
         System.out.println("리뷰 모아보기 : " + reviewDao.showReview_all(user.getEmail()));
-        return "redirect:/myPage";
+        return "redirect:/myReview";
     }
 }
 
