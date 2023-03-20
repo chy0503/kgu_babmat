@@ -54,7 +54,11 @@ public class LoginController {
     }
 
     @GetMapping("/alert_rejectSignup")
-    public String alret () {
+    public String alert (HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            return "redirect:/main";
+        }
         return "alert_rejectSignup";
     }
 

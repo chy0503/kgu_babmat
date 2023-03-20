@@ -25,11 +25,15 @@ public class SecurityConfig {
                 .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
-                .and().oauth2Login()
-                .loginPage("/loginForm")          // 인증이 필요한 URL에 접근하면 /loginForm으로 이동
-                .defaultSuccessUrl("/signup")     // 로그인 성공시
-                .failureUrl("/loginForm")         // 로그인 실패 시
-                .userInfoEndpoint()               // 로그인 성공 후 사용자정보 가져옴
+                .and()
+                .logout()
+                .logoutSuccessUrl("/") // 로그아웃시
+                .and()
+                .oauth2Login()
+                .loginPage("/loginForm")
+                .defaultSuccessUrl("/signup") // 로그인 성공시
+                .failureUrl("/") // 로그인 실패시
+                .userInfoEndpoint()
                 .userService(oAuthService);
 
         return http.build();
